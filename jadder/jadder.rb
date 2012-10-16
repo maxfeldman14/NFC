@@ -13,7 +13,7 @@ def jadder(dir, jad_loc)
       # Check if class
       if File.basename(path.downcase).split(".").last == "class"
         # JAD it
-        `#{jad_loc} -o #{path}`
+        `#{jad_loc} -r -o #{path}`
       end
     end
   end
