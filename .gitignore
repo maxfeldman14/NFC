@@ -18,3 +18,8 @@ _yardoc
 doc/
 .*.swp
 .*.swo
+
+#Android
+*.d
+*.apk
+*.ap_

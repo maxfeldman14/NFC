@@ -21,7 +21,6 @@ import android.nfc.NdefRecord;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
-import android.net.Uri;
 
 public class ReadUrlActivity extends Activity {
     /** Called when the activity is first created. */
@@ -45,35 +44,26 @@ public class ReadUrlActivity extends Activity {
         // TODO Auto-generated catch block
         e1.printStackTrace();
       }
-      String url = null;      
+      String data = null;      
       try {
-        url = myNDEF.getNdefMessage().getRecords()[0].toUri().toString();
+        data = myNDEF.getNdefMessage().getRecords()[0].toString();
       } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
-        url = "ERROR";
+        data = "ERROR";
       } catch (FormatException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
-        url = "ERROR";
+        data = "ERROR";
       } catch (Exception e) {
         e.printStackTrace();
       }
      
-      /*
       setContentView(R.layout.main);
       
       TextView tv1 = (TextView) findViewById(R.id.TextView01);
-      tv1.setText(url);
-      */
+      tv1.setText(data);
 
-      /* Open browser to url */
-      Intent i = new Intent(Intent.ACTION_VIEW);
-      i.setData(Uri.parse(url));
-      startActivity(i);
-      
   }
-
-  
   
 }
