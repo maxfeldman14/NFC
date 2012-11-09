@@ -22,7 +22,7 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 
-public class ReadUrlActivity extends Activity {
+public class ReadGenericActivity extends Activity {
     /** Called when the activity is first created. */
   
   //NFC-related variables
