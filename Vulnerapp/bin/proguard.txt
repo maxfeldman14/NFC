@@ -1,3 +1,6 @@
+# view AndroidManifest.xml #generated:36
+-keep class com.cs261.vulnerapp.ReadGenericActivity { <init>(...); }
+
 # view AndroidManifest.xml #generated:24
 -keep class com.cs261.vulnerapp.ReadUrlActivity { <init>(...); }
 

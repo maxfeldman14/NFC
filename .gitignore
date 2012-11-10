@@ -23,3 +23,4 @@ doc/
 *.d
 *.apk
 *.ap_
+*.class
