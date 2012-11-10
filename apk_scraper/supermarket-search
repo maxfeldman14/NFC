@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'supermarket'
+
+session = Supermarket::Session.new
+
+# Change start to get a different page of results
+start = 0
+result = session.search("search_term", nil, true, start, 10)

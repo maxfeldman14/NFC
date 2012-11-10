@@ -7,7 +7,10 @@ Install Android Market API: http://code.google.com/p/android-market-api/
 
 Install JRuby
   Install the supermarket gem: gem install supermarket
+    Make sure you create a ~/.supermarket.yml file as described here:
+      https://github.com/jberkel/supermarket
   Optionally install the prettyjson gem as well
 
 To run:
   ./apk-scraper login password androidId assetId
+  ./supermarket-search # This thing is not really implemented yet
