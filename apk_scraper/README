@@ -1,0 +1,12 @@
+Install Android Market API: http://code.google.com/p/android-market-api/
+  You'll need something at least from February 22, 2012. At the time of this
+  writing, this has not been bundled into an official release, so you'll have to
+  check out the latest version from svn and copy over the AndroidMarketApi.jar
+  and protobuf-java-2.4.1.jar into ./lib
+
+Install JRuby
+  Install the supermarket gem: gem install supermarket
+  Optionally install the prettyjson gem as well
+
+To run:
+  ./apk-scraper login password androidId assetId
