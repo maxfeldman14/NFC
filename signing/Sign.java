@@ -38,7 +38,7 @@ public class Sign {
 
         /* 
          * Update and sign the data (while the buffer still has data) 
-         * from the given file 
+         * from the given file. This can take another input stream. 
          */
 
         FileInputStream fis = new FileInputStream(args[0]);
