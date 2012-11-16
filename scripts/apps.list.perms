@@ -3,9 +3,9 @@ modify/delete USB storage contents modify/delete SD card contents
 prevent tablet from sleeping prevent phone from sleeping
 use the authentication credentials of an account
 fine (GPS) location
-create Bluetooth connections
-full Internet access
-Bluetooth administration
+1 create Bluetooth connections
+7 full Internet access #WHAT
+2 Bluetooth administration
 modify global system settings
 change Wi-Fi state
 write sync settings
@@ -15,10 +15,8 @@ discover known accounts
 control vibrator
 view Wi-Fi state
 view network state
-set alarm in alarm clock
 read sync settings
 modify secure system settings
-change your audio settings
 display system-level alerts
 send sticky broadcast
 coarse (network-based) location
@@ -26,18 +24,16 @@ read calendar events plus confidential information
 read contact data
 read Browser's history and bookmarks
 read phone state and identity
-directly call phone numbers
+3 directly call phone numbers #WHAT
 send SMS messages
 add or modify calendar events and send email to guests without owners' knowledge
-Market license check
 take pictures and videos
-control flashlight
 modify battery statistics
 access extra location provider commands
 automatically start at boot
 write Browser's history and bookmarks
 write contact data
-receive data from Internet
+7 receive data from Internet #WHAT
 Broadcast data messages to apps.
 control location update notifications
 kill background processes
@@ -51,9 +47,7 @@ reorder running apps
 change your UI settings
 modify phone state
 read sync statistics
-set wallpaper
-set wallpaper size hints
-directly call any phone numbers
+3? directly call any phone numbers #WHAT
 monitor and control all app launching
 receive SMS
 power tablet on or off power phone on or off
@@ -70,7 +64,6 @@ read your profile data
 delete all app cache data
 change/intercept network settings and traffic
 expand/collapse status bar
-measure app storage space
 View WiMAX state
 Change WiMAX state
 manage preferences and permissions for USB devices
@@ -97,7 +90,4 @@ delete other apps' data
 access checkin properties
 update component usage statistics
 move app resources
-control system backup and restore
-change pointer speed
-bind to a wallpaper
 delete apps
