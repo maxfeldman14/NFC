@@ -30,6 +30,11 @@ class PlayScraper
     end
     
     app[:permissions] = Hash[perm_names.zip(perm_descriptions)]
+
+    # Filter out apps which do not actually use NFC
+    unless app[:permissions].has_key?("control Near Field Communication")
+      return nil
+    end
     print app.inspect
     puts ','
     return app
