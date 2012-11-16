@@ -30,7 +30,7 @@ class PlayScraper
     end
     
     app[:permissions] = Hash[perm_names.zip(perm_descriptions)]
-    puts app.inspect
+    print app.inspect
     puts ','
     return app
   end
