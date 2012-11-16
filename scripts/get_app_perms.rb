@@ -30,6 +30,8 @@ class PlayScraper
     end
     
     app[:permissions] = Hash[perm_names.zip(perm_descriptions)]
+    puts app.inspect
+    puts ','
     return app
   end
 
@@ -40,6 +42,7 @@ class PlayScraper
     params = {q: query, num: 48, c: "apps"}
     params[:price] = 1 if free
     i = 0
+    puts '['
     loop do
       # Iterate through all apps from google play corresponding to the query,
       # then call handle_app on each app.
@@ -59,8 +62,7 @@ class PlayScraper
   rescue Mechanize::ResponseCodeError => e
     $stderr.puts e
   ensure
-    puts @apps.inspect
-  
+    puts ']'
   end
 
 end
