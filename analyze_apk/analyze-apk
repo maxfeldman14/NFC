@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+require 'tmpdir'
+require 'rexml/document'
+require 'open3'
+
+ANDROID_MANIFEST = "AndroidManifest.xml"
+
+def parse filename
+  Dir.mktmpdir do |tmpdir|
+    Dir.chdir tmpdir
+    Open3.popen2e("apktool decode --no-src #{filename}") do |stdin, stdout, wait_thr|
+      pid = wait_thr.value
+    end
+    dirname = File.basename filename, '.apk'
+    permissions = find_permissions File.join(tmpdir, dirname)
+    puts permissions
+  end
+end
+
+def find_permissions dir
+  file = File.open(File.join(dir, ANDROID_MANIFEST), "r") {|f| f.read}
+  xml = REXML::Document.new file
+  permissions = []
+  xml.elements.collect("/manifest/uses-permission") do |element|
+    element.attribute("android:name")
+  end
+end
+
+def main
+  ARGV.each do |filename|
+    puts filename
+    parse File.expand_path filename
+  end
+end
+
+if __FILE__ == $0
+  main
+end
