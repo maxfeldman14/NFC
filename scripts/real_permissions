@@ -1,0 +1,46 @@
+modify/delete USB storage contents modify/delete SD card contents:WRITE_EXTERNAL_STORAGE
+create Bluetooth connections:BLUETOOTH
+full Internet access:INTERNET
+Bluetooth administration:BLUETOOTH_ADMIN
+modify global system settings:WRITE_SETTINGS
+modify secure system settings:WRITE_SECURE_SETTINGS
+change Wi-Fi state:CHANGE_WIFI_STATE
+write sync settings:WRITE_SYNC_SETTINGS
+change network connectivity:CHANGE_NETWORK_STATE
+control vibrator:VIBRATE
+view Wi-Fi state:ACCESS_WIFI_STATE
+view network state:ACCESS_NETWORK_STATE
+read contact data:READ_CONTACTS
+read calendar events plus confidential information:READ_CALENDAR
+read Browser's history and bookmarks:READ_HISTORY_BOOKMARKS
+read phone state and identity:READ_PHONE_STATE
+directly call phone numbers:CALL_PHONE
+send SMS messages:SEND_SMS,SEND_SMS_NO_CONFIRMATION
+use the authentication credentials of an account:USE_CREDENTIALS
+add or modify calendar events and send email to guests without owners' knowledge:WRITE_CALENDAR
+take pictures and videos:CAMERA
+write Browser's history and bookmarks:WRITE_HISTORY_BOOKMARKS
+write contact data:WRITE_CONTACTS
+read SMS or MMS:READ_SMS
+edit SMS or MMS:WRITE_SMS
+Market billing service:COM.ANDROID.VENDING.BILLING
+record audio:RECORD_AUDIO
+manage the accounts list:MANAGE_ACCOUNTS
+read sync statistics:READ_SYNC_STATS
+directly call any phone numbers:CALL_PHONE
+receive SMS:RECEIVE_SMS
+power tablet on or off power phone on or off:DEVICE_POWER
+read sensitive log data:READ_LOGS
+allow Wi-Fi Multicast reception:CHANGE_WIFI_MULTICAST_STATE
+mount and unmount filesystems:MOUNT_UNMOUNT_FILESYSTEMS
+intercept outgoing calls:PROCESS_OUTGOING_CALLS
+read your profile data:READ_PROFILE
+change/intercept network settings and traffic:CHANGE_NETWORK_STATE
+expand/collapse status bar:STATUS_BAR
+disable or modify status bar:STATUS_BAR
+receive WAP:RECEIVE_WAP_PUSH
+set preferred apps:SET_PREFERRED_APPLICATIONS
+change screen orientation:SET_ORIENTATION
+force tablet reboot force phone reboot:REBOOT
+read user-defined dictionary:READ_USER_DICTIONARY
+access checkin properties:ACCESS_CHECKIN_PROPERTIES
