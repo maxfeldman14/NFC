@@ -11,20 +11,30 @@ import java.io.IOException;
 public class WriteTagActivity extends Activity
 {
     private static final String TAG = "WriteTagActivity";
-    public void writeTag(Tag tag, String tagText) {
+    public boolean writeUri(Tag tag, String uri) {
         Ndef classic = Ndef.get(tag);
         try {
             classic.connect();
-            //classic.writeBlock(4, "abcd".getBytes(Charset.forName("US-ASCII")));
+            NdefRecord record = NdefRecord.createUri(uri);
+            NdefRecord signature = NdefRecord.createUri("http://facebook.com/");
+            NdefMessage msg = new NdefMessage(record, signature);
+            classic.writeNdefMessage(msg);
+            classic.close();
         } catch (IOException e) {
             Log.e(TAG, "IOException while closing Ndef...", e);
+            return false;
+        } catch (Exception e) {
+            Log.e(TAG, "Exception while closing Ndef...", e);
+            return false;
         } finally {
             try {
                 classic.close();
             } catch (IOException e) {
                 Log.e(TAG, "IOException while closing Ndef...", e);
+                return false;
             }
         }
+        return true;
     }
 
     public void readTag(Tag tag, TextView text) {
@@ -43,6 +53,14 @@ public class WriteTagActivity extends Activity
 
         Tag tag = getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG); 
 
-        readTag(tag, text);
+        //String uri = "http://www.google.com/Maecenas-quam-dolor,-sollicitudin-eu-tristique-vel,-vestibulum-nec-lacus.-Class-aptent-taciti-sociosqu-ad-litora-torquent-per-conubia-nostra,-per-inceptos-himenaeos.-Etiam-laoreet-leo-vitae-quam-venenatis-at-lacinia-elit-adipiscing.-Sed-bibendum-pharetra-quam,-sit-amet-mollis-sapien-hendrerit-vel";
+        String uri = "http://www.google.com/";
+        if (writeUri(tag, uri)) {
+            text.setText("Success");
+        } else {
+            text.setText("Failure");
+        }
+
+        //readTag(tag, text);
     }
 }

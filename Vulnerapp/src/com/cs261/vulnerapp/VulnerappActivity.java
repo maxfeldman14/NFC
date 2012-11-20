@@ -32,12 +32,16 @@ public class VulnerappActivity extends Activity {
 
     public void onPause() {
         super.onPause();
-        mAdapter.disableForegroundDispatch(this);
+        if (mAdapter!= null) {
+            mAdapter.disableForegroundDispatch(this);
+        }
     }
 
     public void onResume() {
         super.onResume();
-        mAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters, mTechLists);
+        if (mAdapter!= null) {
+            mAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters, mTechLists);
+        }
     }
 
     public void onNewIntent(Intent intent) {
@@ -54,6 +58,8 @@ public class VulnerappActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        mAdapter = NfcAdapter.getDefaultAdapter(this);
   
         mPendingIntent = PendingIntent.getActivity(
             this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
