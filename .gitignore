@@ -24,3 +24,7 @@ doc/
 *.apk
 *.ap_
 *.class
+local.properties
+Vulnerapp/bin/
+Vulnerapp/gen/
+*.dex
