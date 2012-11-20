@@ -8,18 +8,18 @@ import android.widget.TextView;
 import android.util.Log;
 import java.io.IOException;
 
+import org.cs261.NdefSec.SignedNdef;
+
 public class WriteTagActivity extends Activity
 {
     private static final String TAG = "WriteTagActivity";
     public boolean writeUri(Tag tag, String uri) {
-        Ndef classic = Ndef.get(tag);
+        SignedNdef classic = SignedNdef.get(tag);
         try {
             classic.connect();
             NdefRecord record = NdefRecord.createUri(uri);
-            NdefRecord signature = NdefRecord.createUri("http://facebook.com/");
-            NdefMessage msg = new NdefMessage(record, signature);
+            NdefMessage msg = new NdefMessage(record);
             classic.writeNdefMessage(msg);
-            classic.close();
         } catch (IOException e) {
             Log.e(TAG, "IOException while closing Ndef...", e);
             return false;
@@ -37,9 +37,12 @@ public class WriteTagActivity extends Activity
         return true;
     }
 
-    public void readTag(Tag tag, TextView text) {
-        Ndef ndef = Ndef.get(tag);
-        text.setText("Tag Type: " + ndef.getType());
+    public void readTag(Tag tag, TextView text) throws Exception {
+        SignedNdef ndef = SignedNdef.get(tag);
+        ndef.connect();
+        NdefMessage message = ndef.getNdefMessage();
+        text.setText("Contents: " + message.describeContents());
+        ndef.close();
     }
 
     /** Called when the activity is first created. */
@@ -55,12 +58,17 @@ public class WriteTagActivity extends Activity
 
         //String uri = "http://www.google.com/Maecenas-quam-dolor,-sollicitudin-eu-tristique-vel,-vestibulum-nec-lacus.-Class-aptent-taciti-sociosqu-ad-litora-torquent-per-conubia-nostra,-per-inceptos-himenaeos.-Etiam-laoreet-leo-vitae-quam-venenatis-at-lacinia-elit-adipiscing.-Sed-bibendum-pharetra-quam,-sit-amet-mollis-sapien-hendrerit-vel";
         String uri = "http://www.google.com/";
-        if (writeUri(tag, uri)) {
-            text.setText("Success");
-        } else {
-            text.setText("Failure");
-        }
+        //if (writeUri(tag, uri)) {
+        //    text.setText("Success");
+        //} else {
+        //    text.setText("Failure");
+        //}
 
-        //readTag(tag, text);
+        try {
+            readTag(tag, text);
+        } catch (Exception e) {
+            Log.e(TAG, "Exception readTag...", e);
+            text.setText("Failed");
+        }
     }
 }

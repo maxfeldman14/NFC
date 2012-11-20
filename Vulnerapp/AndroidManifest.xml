@@ -6,6 +6,8 @@
 
     <uses-sdk android:minSdkVersion="15" />
 	<uses-permission android:name="android.permission.NFC" />
+  <uses-library android:name="org.cs261.NdefSec"
+      android:required="true" />
 	<uses-feature android:name="android.hardware.nfc" android:required="true" />
     <application
         android:icon="@drawable/ic_launcher"
