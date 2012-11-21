@@ -36,3 +36,7 @@ paper/*.aux
 paper/*.temp
 paper/*.fls
 paper/*.pdf
+
+#eclipse
+*.classpath
+*.properties

@@ -1,107 +1,14 @@
-package org.cs261.NdefSec;
+package org.cs261.NdefSec.KeyMgmt;
 
-import java.io.IOException;
-
-import android.nfc.Tag;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
-import android.nfc.tech.TagTechnology;
-import android.nfc.tech.Ndef;
-
-/* Probably refactor these */
 import java.security.*;
 import java.security.spec.*;
 
-public class SignedNdef implements TagTechnology
+public class KeyManager
 {
-    private Ndef ndef;
-    private NdefMessage ndefMessage;
-
-    public static SignedNdef get(Tag tag)
+    public KeyPair staticKeys;
+    public KeyManager() throws GeneralSecurityException
     {
-        return new SignedNdef(tag);
-    }
-
-    protected SignedNdef(Tag tag)
-    {
-        ndef = Ndef.get(tag);
-    }
-
-    /* TagTechnology methods */
-
-    public void close() throws IOException { ndef.close(); }
-
-    public void connect() throws IOException { ndef.connect(); }
-
-    public Tag getTag() { return ndef.getTag(); }
-
-    public boolean isConnected() { return ndef.isConnected(); }
-
-    /* Ndef methods */
-
-    public boolean canMakeReadOnly() throws Exception { return ndef.canMakeReadOnly(); }
-
-    public int getMaxSize() { return ndef.getMaxSize(); }
-
-    public String getType() { return ndef.getType(); }
-
-    public boolean isWritable() { return ndef.isWritable(); }
-
-    public boolean makeReadOnly() throws Exception { return ndef.makeReadOnly(); }
-
-    /* Overriding Ndef methods */
-
-    public NdefMessage getCachedNdefMessage()
-    {
-        return ndefMessage;
-    }
-
-    public void writeNdefMessage(NdefMessage msg) throws Exception
-    {
-        NdefRecord[] oldNdefRecords = msg.getRecords();
-
-        KeyPair keyPair = generateKey();
-        NdefRecord signature = generateSignature(msg, keyPair);
-
-        NdefRecord[] ndefRecords = new NdefRecord[oldNdefRecords.length+1];
-        System.arraycopy(oldNdefRecords, 0, ndefRecords, 0, oldNdefRecords.length);
-        ndefRecords[ndefRecords.length-1] = signature;
-
-        NdefMessage newMsg = new NdefMessage(ndefRecords);
-
-        ndef.writeNdefMessage(newMsg);
-    }
-
-    public NdefMessage getNdefMessage() throws Exception
-    {
-        NdefMessage originalMessage = ndef.getNdefMessage();
-        NdefRecord[] records = originalMessage.getRecords();
-        NdefRecord signatureRecord = records[records.length-1];
-
-        KeyPair keyPair = generateKey();
-
-        NdefRecord[] newRecords = new NdefRecord[records.length-1];
-        System.arraycopy(records, 0, newRecords, 0, newRecords.length);
-        NdefMessage newMessage = new NdefMessage(newRecords);
-
-        if (verifySignature(newMessage, keyPair, signatureRecord)) {
-            return newMessage;
-        } else {
-            throw new Exception("Could not verify");
-        }
-    }
-
-    /* TODO: Refactor into its own class */
-    private KeyPair generateKey() throws Exception
-    {
-        //KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA");
-        //byte[] seed = {0};
-        //SecureRandom random = SecureRandom(seed);
-
-        //keyGen.initialize(1024, random);
-
-        //KeyPair keyPair = keyGen.generateKeyPair();
-
+        /* Generate a static key pair for testing purposes */
         KeyFactory keyFactory = KeyFactory.getInstance("DSA");
         byte[] privKey = {48, -126, 1, 75, 2, 1, 0, 48, -126, 1, 44, 6, 7, 42, -122, 72, -50, 56, 4, 1, 48, -126, 1, 31, 2, -127, -127, 0, -3, 127, 83, -127, 29, 117, 18, 41, 82, -33, 74, -100, 46, -20, -28, -25, -10, 17, -73, 82, 60, -17, 68, 0, -61, 30, 63, -128, -74, 81, 38, 105, 69, 93, 64, 34, 81, -5, 89, 61, -115, 88, -6, -65, -59, -11, -70, 48, -10, -53, -101, 85, 108, -41, -127, 59, -128, 29, 52, 111, -14, 102, 96, -73, 107, -103, 80, -91, -92, -97, -97, -24, 4, 123, 16, 34, -62, 79, -69, -87, -41, -2, -73, -58, 27, -8, 59, 87, -25, -58, -88, -90, 21, 15, 4, -5, -125, -10, -45, -59, 30, -61, 2, 53, 84, 19, 90, 22, -111, 50, -10, 117, -13, -82, 43, 97, -41, 42, -17, -14, 34, 3, 25, -99, -47, 72, 1, -57, 2, 21, 0, -105, 96, 80, -113, 21, 35, 11, -52, -78, -110, -71, -126, -94, -21, -124, 11, -16, 88, 28, -11, 2, -127, -127, 0, -9, -31, -96, -123, -42, -101, 61, -34, -53, -68, -85, 92, 54, -72, 87, -71, 121, -108, -81, -69, -6, 58, -22, -126, -7, 87, 76, 11, 61, 7, -126, 103, 81, 89, 87, -114, -70, -44, 89, 79, -26, 113, 7, 16, -127, -128, -76, 73, 22, 113, 35, -24, 76, 40, 22, 19, -73, -49, 9, 50, -116, -56, -90, -31, 60, 22, 122, -117, 84, 124, -115, 40, -32, -93, -82, 30, 43, -77, -90, 117, -111, 110, -93, 127, 11, -6, 33, 53, 98, -15, -5, 98, 122, 1, 36, 59, -52, -92, -15, -66, -88, 81, -112, -119, -88, -125, -33, -31, 90, -27, -97, 6, -110, -117, 102, 94, -128, 123, 85, 37, 100, 1, 76, 59, -2, -49, 73, 42, 4, 22, 2, 20, 123, -95, 123, 77, -110, -98, -30, 19, 123, 47, -1, -39, -127, 88, -41, -20, -58, -79, 112, -96};
         PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privKey);
@@ -113,28 +20,10 @@ public class SignedNdef implements TagTechnology
 
         KeyPair keyPair = new KeyPair(publicKey, privateKey);
 
-        return keyPair;
+        staticKeys = keyPair;
     }
 
-    private NdefRecord generateSignature(NdefMessage message, KeyPair keyPair) throws Exception
-    {
-        Signature dsa = Signature.getInstance("SHA1withDSA");
-        dsa.initSign(keyPair.getPrivate());
-        byte[] data = message.toByteArray();
-        dsa.update(data, 0, data.length);
-        byte[] sig = dsa.sign();
-
-        NdefRecord signature = NdefRecord.createMime("application/pkcs7-signature", sig);
-        return signature;
-    }
-
-    private boolean verifySignature(NdefMessage message, KeyPair keyPair, NdefRecord signatureRecord) throws Exception
-    {
-        Signature dsa = Signature.getInstance("SHA1withDSA");
-        dsa.initVerify(keyPair.getPublic());
-        byte[] data = message.toByteArray();
-        dsa.update(data, 0, data.length);
-        byte[] signature = signatureRecord.getPayload();
-        return dsa.verify(signature);
+    public KeyPair getStaticKeys() {
+        return staticKeys;
     }
 }
