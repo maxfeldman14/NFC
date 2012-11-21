@@ -24,3 +24,15 @@ doc/
 *.apk
 *.ap_
 *.class
+local.properties
+Vulnerapp/bin/
+Vulnerapp/gen/
+*.dex
+
+#Latex paper
+paper/*.log
+paper/*.make
+paper/*.aux
+paper/*.temp
+paper/*.fls
+paper/*.pdf
