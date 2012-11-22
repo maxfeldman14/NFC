@@ -23,7 +23,37 @@ public class KeyManager
         staticKeys = keyPair;
     }
 
-    public KeyPair getStaticKeys() {
+    public KeyPair getStaticKeys()
+    {
+        // Return the static keypair (created in the constructor) for testing.
         return staticKeys;
     }
+
+    public void addKey(PublicKey pub) 
+    {
+        // TODO: implement
+        // Add a key to the trusted keys.
+    }
+
+    public void revokeKey(PublicKey pub)
+    {
+        // TODO: implement
+        // Remove a key from the trusted keys. Do nothing if it was not already
+        // trusted.
+    }
+
+    public PublicKey lookup(byte[] fingerprint) throws KeyException
+    {
+        // TODO: implement
+        // Find a public key in the trusted keys based on the fingerprint.
+        // Throw exception if key not found.
+    }
+
+    public byte[] fingerprint(PublicKey pub)
+    {
+        // TODO: implement
+        // Hash a public key to generate a fingerprint
+        // TODO: Should we use MD5, SHA1, or SHA2? (SHA1/2 can be truncated)
+    }
+
 }
