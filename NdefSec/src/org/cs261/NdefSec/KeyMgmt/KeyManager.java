@@ -2,10 +2,19 @@ package org.cs261.NdefSec.KeyMgmt;
 
 import java.security.*;
 import java.security.spec.*;
+import java.util.HashMap;
 
 public class KeyManager
 {
-    public KeyPair staticKeys;
+    protected KeyPair staticKeys;
+    // TODO: Use Android's shared preferences:
+    // http://developer.android.com/reference/android/content/SharedPreferences.html
+    // in the meantime, a hack using a hashmap
+    
+    // TODO: sharedpreferences use primitives, so using byte arrays or bigints
+    // won't work... look into other storage means
+    protected HashMap<byte[], PublicKey> keyFile;
+     
     public KeyManager() throws GeneralSecurityException
     {
         /* Generate a static key pair for testing purposes */
@@ -21,6 +30,10 @@ public class KeyManager
         KeyPair keyPair = new KeyPair(publicKey, privateKey);
 
         staticKeys = keyPair;
+        
+        /* Fetch the keyfile */
+        // TODO: refactor or use the actual android library
+        keyFile = new HashMap<byte[], PublicKey>();
     }
 
     public KeyPair getStaticKeys()
@@ -31,29 +44,43 @@ public class KeyManager
 
     public void addKey(PublicKey pub) 
     {
-        // TODO: implement
         // Add a key to the trusted keys.
+        keyFile.put(fingerprint(pub), pub);
     }
 
     public void revokeKey(PublicKey pub)
     {
-        // TODO: implement
         // Remove a key from the trusted keys. Do nothing if it was not already
-        // trusted.
+        // trusted. First get the fingerprint, for removal.
+        keyFile.remove(fingerprint(pub));       
+
     }
 
     public PublicKey lookup(byte[] fingerprint) throws KeyException
     {
-        // TODO: implement
         // Find a public key in the trusted keys based on the fingerprint.
         // Throw exception if key not found.
+        if (keyFile.containsKey(fingerprint)) {
+            return keyFile.get(fingerprint);
+        } else 
+        {
+            throw new KeyException("Key not in keyfile");
+        }
+
     }
 
     public byte[] fingerprint(PublicKey pub)
     {
-        // TODO: implement
-        // Hash a public key to generate a fingerprint
-        // TODO: Should we use MD5, SHA1, or SHA2? (SHA1/2 can be truncated)
+        // Hash a public key to generate a fingerprint, using MD5
+        // Get encoded bytes of key, hash them
+        try {
+        return MessageDigest.getInstance("MD5").digest(pub.getEncoded());
+        } catch (NoSuchAlgorithmException e) {
+            // TODO: what should standard behavior be?
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
+
