@@ -40,7 +40,6 @@ paper/*.pdf
 #eclipse
 *.classpath
 *.properties
-Vulnerapp/project.properties
 
 #leftover from symlink?
 Vulnerapp/src/org
