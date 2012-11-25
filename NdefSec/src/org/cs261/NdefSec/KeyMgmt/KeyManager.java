@@ -3,6 +3,7 @@ package org.cs261.NdefSec.KeyMgmt;
 import java.security.*;
 import java.security.spec.*;
 import java.util.HashMap;
+import java.math.*;
 
 public class KeyManager
 {
@@ -11,9 +12,7 @@ public class KeyManager
     // http://developer.android.com/reference/android/content/SharedPreferences.html
     // in the meantime, a hack using a hashmap
     
-    // TODO: sharedpreferences use primitives, so using byte arrays or bigints
-    // won't work... look into other storage means
-    protected HashMap<byte[], PublicKey> keyFile;
+    protected HashMap<String, PublicKey> keyFile;
      
     public KeyManager() throws GeneralSecurityException
     {
@@ -33,7 +32,7 @@ public class KeyManager
         
         /* Fetch the keyfile */
         // TODO: refactor or use the actual android library
-        keyFile = new HashMap<byte[], PublicKey>();
+        keyFile = new HashMap<String, PublicKey>();
     }
 
     public KeyPair getStaticKeys()
@@ -56,7 +55,7 @@ public class KeyManager
 
     }
 
-    public PublicKey lookup(byte[] fingerprint) throws KeyException
+    public PublicKey lookup(String fingerprint) throws KeyException
     {
         // Find a public key in the trusted keys based on the fingerprint.
         // Throw exception if key not found.
@@ -69,18 +68,52 @@ public class KeyManager
 
     }
 
-    public byte[] fingerprint(PublicKey pub)
+    public String fingerprint(PublicKey pub)
     {
         // Hash a public key to generate a fingerprint, using MD5
-        // Get encoded bytes of key, hash them
+        // Get encoded bytes of key, hash them, return string of hex digest
         try {
-        return MessageDigest.getInstance("MD5").digest(pub.getEncoded());
+        byte[] bytes = MessageDigest.getInstance("MD5").digest(pub.getEncoded());
+        String fingerprint = new BigInteger(1, bytes).toString(16);
+        return fingerprint;
         } catch (NoSuchAlgorithmException e) {
             // TODO: what should standard behavior be?
             e.printStackTrace();
             return null;
         }
     }
+    
+    public String pubKeyToString(PublicKey pub)
+    {
+        // Return the string representation of a public key
+        byte[] pubBytes = pub.getEncoded();
+        BigInteger pubBigInt = new BigInteger(pubBytes);
+        String pubString = pubBigInt.toString(16);
+        return pubString;
+    }
+    
+    public PublicKey stringToPubKey (String pub)
+    {
+        // Construct a public key from the string representation of the key
+        // The string representation is the string of the BigInteger
+        // representing the encoded bytes of the key
+        BigInteger pubBigInt = new BigInteger(pub, 16);
+        byte[] pubBytes = pubBigInt.toByteArray();
+        X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(pubBytes);
+
+        try {
+            KeyFactory keyFactory = KeyFactory.getInstance("DSA");
+            PublicKey pubKey = keyFactory.generatePublic(pubKeySpec);
+            return pubKey;
+
+        } catch (GeneralSecurityException e) {
+            // (either invalid spec, or nosuchalgorithm
+            e.printStackTrace();
+        }
+        return null;
+
+    }
 
 }
+
 

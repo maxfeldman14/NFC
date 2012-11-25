@@ -8,6 +8,8 @@ import android.nfc.NdefRecord;
 import android.nfc.tech.TagTechnology;
 import android.nfc.tech.Ndef;
 
+import org.cs261.NdefSec.KeyMgmt.*;
+
 /* Probably refactor these */
 import java.security.*;
 import java.security.spec.*;
