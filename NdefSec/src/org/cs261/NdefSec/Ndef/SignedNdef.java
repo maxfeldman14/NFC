@@ -7,6 +7,8 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.tech.TagTechnology;
 import android.nfc.tech.Ndef;
+import android.app.Activity;
+import android.content.*;
 
 import org.cs261.NdefSec.KeyMgmt.*;
 
@@ -61,8 +63,9 @@ public class SignedNdef implements TagTechnology
     public void writeNdefMessage(NdefMessage msg) throws Exception
     {
         NdefRecord[] oldNdefRecords = msg.getRecords();
+        SharedPreferences prefs = Activity.getPreferences(Activity.MODE_PRIVATE);
 
-        KeyManager mgr = new KeyManager();
+        KeyManager mgr = new KeyManager(prefs);
         KeyPair keyPair = generateKey();
         NdefRecord signature = generateSignature(msg, keyPair);
 
