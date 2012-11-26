@@ -20,15 +20,17 @@ public class SignedNdef implements TagTechnology
 {
     private Ndef ndef;
     private NdefMessage ndefMessage;
+    private SharedPreferences prefs;
 
-    public static SignedNdef get(Tag tag)
+    public static SignedNdef get(Tag tag, SharedPreferences prefs)
     {
-        return new SignedNdef(tag);
+        return new SignedNdef(tag, prefs);
     }
 
-    protected SignedNdef(Tag tag)
+    protected SignedNdef(Tag tag, SharedPreferences preferences)
     {
         ndef = Ndef.get(tag);
+        this.prefs = preferences;
     }
 
     /* TagTechnology methods */
@@ -63,9 +65,9 @@ public class SignedNdef implements TagTechnology
     public void writeNdefMessage(NdefMessage msg) throws Exception
     {
         NdefRecord[] oldNdefRecords = msg.getRecords();
-        SharedPreferences prefs = Activity.getPreferences(Activity.MODE_PRIVATE);
 
-        KeyManager mgr = new KeyManager(prefs);
+        KeyFile keyFile = new KeyFile(prefs);
+        KeyManager mgr = new KeyManager(keyFile);
         KeyPair keyPair = generateKey();
         NdefRecord signature = generateSignature(msg, keyPair);
 
