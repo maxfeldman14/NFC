@@ -7,14 +7,15 @@ import android.nfc.tech.Ndef;
 import android.widget.TextView;
 import android.util.Log;
 import java.io.IOException;
+import android.content.*;
 
-import org.cs261.NdefSec.SignedNdef;
+import org.cs261.NdefSec.Ndef.SignedNdef;
 
 public class WriteTagActivity extends Activity
 {
     private static final String TAG = "WriteTagActivity";
     public boolean writeUri(Tag tag, String uri) {
-        SignedNdef classic = SignedNdef.get(tag);
+        SignedNdef classic = SignedNdef.get(tag, getPreferences(MODE_PRIVATE));
         try {
             classic.connect();
             NdefRecord record = NdefRecord.createUri(uri);
@@ -38,7 +39,7 @@ public class WriteTagActivity extends Activity
     }
 
     public void readTag(Tag tag, TextView text) throws Exception {
-        SignedNdef ndef = SignedNdef.get(tag);
+        SignedNdef ndef = SignedNdef.get(tag, getPreferences(MODE_PRIVATE));
         ndef.connect();
         NdefMessage message = ndef.getNdefMessage();
         text.setText("Contents: " + message.describeContents());
