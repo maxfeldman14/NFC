@@ -15,8 +15,8 @@ public class KeyManager
      
     public KeyManager(KeyFile inKeyFile) throws GeneralSecurityException
     {
-        /* Generate a static key pair for testing purposes */
         keyFile = inKeyFile;
+        /* TODO: see KeyFile.java todo for generating keypair if necessary */
 
     }
 
@@ -24,6 +24,15 @@ public class KeyManager
     {
         // Return the static keypair (created in the constructor) for testing.
         return StaticKeyPair.getStaticKeyPair();
+    }
+
+    public static KeyPair generateKeyPair()
+    {
+        // Generate a DSA keypair
+        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA");
+        SecureRandom rand = SecureRandom.getInstance("SHA1PRNG");
+        keyGen.initialize(1024, rand);
+        return keyGen.generateKeyPair();
     }
 
     public void addKey(PublicKey pub) 

@@ -13,6 +13,11 @@ public class KeyFile
 
     public KeyFile(SharedPreferences prefs)
     {
+        /* TODO: create DSA Key Pair, if it doesn't exist already
+         * store pub as both "pub":pubKey, and <fingerprint>:pubKey,
+         * and store priv as "priv":privKey.
+         * Easier to do this in keyManager.
+         */
         storage = prefs;
     }
 
