@@ -59,13 +59,6 @@ public class ReadUrlActivity extends Activity {
       } catch (Exception e) {
         e.printStackTrace();
       }
-     
-      /*
-      setContentView(R.layout.main);
-      
-      TextView tv1 = (TextView) findViewById(R.id.TextView01);
-      tv1.setText(url);
-      */
 
       /* Open browser to url */
       Intent i = new Intent(Intent.ACTION_VIEW);

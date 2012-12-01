@@ -29,7 +29,7 @@ public class KeyManager
     public void addKey(PublicKey pub) 
     {
         // Add a key to the trusted keys.
-        keyFile.put(fingerprint(pub), pubKeyToString(pub));
+        keyFile.put(fingerprint(pub), keyToString(pub));
     }
 
     public void revokeKey(PublicKey pub)
@@ -68,13 +68,14 @@ public class KeyManager
         }
     }
     
-    public String pubKeyToString(PublicKey pub)
+
+    public String keyToString(Key key)
     {
-        // Return the string representation of a public key
-        byte[] pubBytes = pub.getEncoded();
-        BigInteger pubBigInt = new BigInteger(pubBytes);
-        String pubString = pubBigInt.toString(16);
-        return pubString;
+        // Return the string representation of a key
+        byte[] bytes = key.getEncoded();
+        BigInteger keyVal = new BigInteger(bytes);
+        String keyString = keyVal.toString(16);
+        return keyString;
     }
     
     public PublicKey stringToPubKey (String pub)
@@ -96,7 +97,27 @@ public class KeyManager
             e.printStackTrace();
         }
         return null;
+    }
 
+    public PrivateKey stringToPrivKey (String priv)
+    {
+        // Construct a private key from the string representation of the key
+        // The string representation is the string of the BigInteger
+        // representing the encoded bytes of the key
+        BigInteger privBigInt = new BigInteger(priv, 16);
+        byte[] privBytes = privBigInt.toByteArray();
+        PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privBytes);
+
+        try {
+            KeyFactory keyFactory = KeyFactory.getInstance("DSA");
+            PrivateKey privKey = keyFactory.generatePrivate(privateKeySpec);
+            return privKey;
+
+        } catch (GeneralSecurityException e) {
+            // (either invalid spec, or nosuchalgorithm
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
