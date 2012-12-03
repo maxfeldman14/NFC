@@ -126,6 +126,16 @@ Prompts:
 * We should alway state why we make any choice
 
 \section{Implementation}
+We implemented our authentication system as an Android library that other Android applications can include into their own projects.
+We developed a special tag interface class we call \texttt{SignedNdef} which encapsulates all communication with our secure NDEF tags.
+\texttt{SignedNdef} expects a tag to contain an extra record at the end of an NDEF message which contains a signature of the other NDEF records.
+Android developers can use the API we developed for interfacing with a \texttt{SignedNdef} object, which we designed to closely mimic the existing official Android \texttt{Ndef}\footnote{http://developer.android.com/reference/android/nfc/tech/Ndef.html} object for reading and writing NDEF tags.
+
+On instantiation, a \texttt{SignedNdef} object will attempt to open up the list of authorized keys saved on the Android device.
+It provides methods for opening, closing, reading, and writing NDEF-formatted tags by delegating to a private instance of the \texttt{Ndef} class.
+In addition, it will automatically enforce the security protocols described earlier.
+When reading, it will query the \texttt{KeyManager} to find a public key which matches the signature of the
+
 * implementation
 ** proof of concept
 ** recommendations
