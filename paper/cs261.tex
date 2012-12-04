@@ -1,6 +1,9 @@
 \documentclass[12pt]{article}
 
 \usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+
+\newcommand\TODO[1]{\textcolor{red}{#1}}
 
 \begin{document}
 \title{Defense Against W NFC}
@@ -55,6 +58,27 @@ Android applications run in a sandbox which allows areas of the system to be iso
 ** malware
 
 \section{Related Work}
+%Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development, and still growing in popularity. The NFC forum (http://www.nfc-forum.org/), which publishes NFC standards (http://www.nfc-forum.org/specs/spec_list/) and best practices, was only formed in 2004. NFC also relies on the interface and protocol specification (http://www.iso.org/iso/catalogue_detail.htm?csnumber=38578) published in 2004. The relative youth of this field has resulted in many aspects remaining largely unexplored. In this section we present relevant past work in the area of NFC security, as well as mobile phone application security in general.
+%
+%One major foray into the analysis of application-level NFC vulnerabilities was presented by Charlie Miller at BlackHat 2012 (http://media.blackhat.com/bh-us-12/Briefings/C_Miller/BH_US_12_Miller_NFC_attack_surface_WP.pdf). Miller employs fuzz testing to evaluate the security of both the NFC protocol layer implemented on various mobile phones, and subsequently to evaluate application-level security. Miller discusses the successes of fuzzing in identifying various NFC messages which will crash a device. Further, Miller provides evidence that carefully crafted NFC payloads can do much more than just crash a device- in some cases phones can be forced to parse arbitrary data or open web pages without user interaction. Miller’s work provides a wide analysis of the NFC attack surface, but our research will seek to provide much more depth in the exploration of application-level vulnerabilities.
+%
+%Kortvedts’s “Securing Near Field Communications” (http://ntnu.diva-portal.org/smash/get/diva2:347744/FULLTEXT01) is a precursor to Miller’s Blackhat presentation, and presents a view of NFC vulnerabilities and privacy concerns which remains largely unchanged since the paper’s publication. Kortvedt explains means of intercepting NFC data, even outside of the advertised 10 cm range, as well as existing attempts at providing a cryptographically secure interface for NFC communication. Some applications employ cryptography (the majority being payment applications), but no current secure-NFC framework enjoys widespread use. Kortvedt proposes a framework which attempts to provide solutions to several issues, but from experience it has not gained widespread adoption. We also seek to analyze the issue of providing a simple, secure NFC API for casual and inexperienced application developers.
+%
+%RFID, a precursor to and superset of NFC, has also raised several security issues in the past. Though RFID is a much older technology, it is remains relevant as both the foundation for NFC, and as a technology which is still employed in various applications (most prominently touch-activated credit cards). Heydt-Benjamin et al. (http://people.cs.umass.edu/~kevinfu/papers/RFID-CC-LNCS.pdf) discuss issues involved in early generation deployments of RFID credit cards, and were successfully able to initiate various attacks on three major RFID enabled credit cards (including attacks which access private information or enable arbitrary purchases by the attacker). Such attacks remain important considerations due to the growing prominence of smartphone payment applications  (such as Google Wallet), so we keep all of these vulnerabilities in mind as we explore NFC security vulnerabilities. This paper presents some countermeasures, but some may be impractical (such as shielding) and others can be improved upon due to more flexible computing options of smartphones.
+%
+%"Security in NFC, Strengths and Weaknesses" (http://events.iaik.tugraz.at/RFIDSec06/Program/papers/002%20-%20Security%20in%20NFC.pdf) discusses general security issues with NFC (beyond the scope of just mobile phones). The paper discusses threats of eavesdropping, data corruption, data modification, data insertion, and man-in-the-middle attacks (though MITM is dismissed as practically impossible). The paper recommends establishing a secure channel between devices in order to prevent such attacks, and provides valuable discussion of how this channel would work. The paper does not, however, provide an implementation (as the purpose of the paper was to illustrate general NFC issues). As our focus is restricted to Android devices, we have the ability to recommend and implement Android-specific solutions.
+%
+%Francis et al. (http://eprint.iacr.org/2011/618.pdf) discuss the potential for relay attacks on NFC transactions, and implement a software version of this attack which can be used on an NFC-enabled device. A relay attack exploits the assumption that two devices engaged in an NFC transaction are actually adjacent (by placing a proxy in between the two devices). This is a serious potential exploit which must be defended against by any security-conscious application (as it may allow for arbitrary credit card purchases, for example). The paper suggests several potential counters to such attacks; our analysis examines how popular applications employ relay-attack countermeasures, and to what degree they are effective.
+%
+%"Using QR tags to Attack SmartPhones (Attaging)" presents a discussion of potential attacks which leverage scanning QR codes (Which can then open malicious links). The attacks made possible by malicious QR codes may in many cases be possible via NFC; some NFC applications will open arbitrary links transmitted, or load other content. An attacker could provide a malicious NFC tag which causes the user's phone to navigate to a malicious link (the user may not even be aware of this action, as was previously discussed). In addition to new potential exploits and leakage of private data resulting from NFC applications, previously encountered attacks may also be possible.
+%
+%Analysis of smartphone applications in general (though we restrict our focus to Android devices, as iPhones do not yet offer NFC) is a much more thoroughly explored field, and several projects provide valuable insight into application testing.
+%
+%TaintDroid (http://static.usenix.org/event/osdi10/tech/full_papers/Enck.pdf), in order to evaluate privacy leakage, surveyed the 50 most popular free applications on the Android marketplace. This approach provided valuable data regarding how private data is handled by common Android applications, and presents a good technique for large-scale application evaluation. Surveying popular NFC applications will be an important facet of our project, and the TaintDroid approach was able to gather highly representative data of the application area. We intended to leverage a similar approach in order to gather useful data regarding common NFC usage and potential leakage of information over NFC channels.
+%
+%There are several other tools for both static and dynamic analysis of Android applications, including Droidbox (http://code.google.com/p/droidbox/), which attempts to provide thorough analysis of an application, including its information leakage, data sent over the network, and use of Android cryptography operations, for example. Analysis such as this is valuable for determining whether or not an application even attempts to prevent information leakage when NFC transmission is used.
+%
+%While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities. We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
 
 \section{Analysis of Apps}
 * Why analyze
@@ -85,6 +109,16 @@ Android applications run in a sandbox which allows areas of the system to be iso
 * permission scraping etc
 
 \section{Proposed Solution}
+We propose a novel solution to the aforementioned issues which provides users 
+
+\TODO{write all of this}
+
+talking points:
+trust model
+authentication
+key management
+usability
+
 * Goals/non-goals
 * architecture
 ** distributed authentication
@@ -147,6 +181,20 @@ Prompts:
 * We should alway state why we make any choice
 
 \section{Implementation}
+We implemented our authentication system as an Android library that Android developers can include into their projects.
+Our data format for secure NDEF tags adds an extra record at the end of an NDEF message which contains a signature of the other NDEF records in the message.
+We developed a class for interfacing with secure NDEF tags we call \texttt{SignedNdef}, providing all the necessary methods for securely reading and writing tags.
+Android developers can use the API we developed for interfacing with a \texttt{SignedNdef} object, which we designed to closely mimic the existing official Android \texttt{Ndef}\footnote{http://developer.android.com/reference/android/nfc/tech/Ndef.html} object for reading and writing NDEF tags.
+
+On instantiation, a \texttt{SignedNdef} object will attempt to open up the list of authorized keys saved on the Android device.
+It provides methods for opening, closing, reading, and writing NDEF-formatted tags by delegating to a private instance of the \texttt{Ndef} class.
+In addition, it will automatically enforce the security protocols described earlier.
+When reading a tag, it will query the \texttt{KeyManager} to find a public key which matches the signature of the signed Ndef tag.
+If it can locate a valid public key which matches the signature, it will transparently return the non-signature records on the tag.
+In case of any errors or failure to locate a valid public key, it will throw an exception. \TODO{Actually talk about what happens; key manager, etc}
+
+When writing a tag, the \texttt{SignedNdef} object will automatically create an extra signature record DSA
+
 * implementation
 ** proof of concept
 ** recommendations
