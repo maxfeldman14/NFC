@@ -210,16 +210,24 @@ This record contains both information regarding the public key used for signing 
 \TODO{Show figure for the new record format}
 
 \subsection{Key Management}
+Users need to be able to add and remove keys from their base of trusted authors (either manually, or through a tag reader application).
+For our API, we use Android's \texttt{SharedPreferences}, which provides persistent key-value storage.
+Our current implementation provides a unique instance of this key storage (a \texttt{KeyFile}) to an individual application (ie. a given application can only access and modify its own keys).
+Key sharing between applications is a useful feature which would be simpler to implement securely at OS-level.
+When a user reads a tag, the tag's signature record will either contain a public key in its entirety, or contain a URI pointer to a public key.
+If this public key has been added to the Key File, it is considered trusted, otherwise, the user must add this key.
+\TODO{``tag providers''? or ``tag authors''? what should we name them?}
+When a user writes a tag using this API, the private key for the phone is accessed and a DSA signature is generated and appended.
 
+\subsection{Application Flow}
 On instantiation, a \texttt{SignedNdef} object will attempt to open up the list of authorized keys saved on the Android device.
 It provides methods for opening, closing, reading, and writing NDEF-formatted tags by delegating to a private instance of the \texttt{Ndef} class.
 In addition, it will automatically enforce the security protocols described earlier.
-When reading a tag, it will 
 When reading a tag, it will query the \texttt{KeyManager} to find a public key which matches the signature of the signed Ndef tag.
 If it can locate a valid public key which matches the signature, it will transparently return the non-signature records on the tag.
-In case of any errors or failure to locate a valid public key, it will throw an exception. \TODO{Actually talk about what happens; key manager, etc}
+In case of any errors or failure to locate a valid public key, it will throw an exception.
+\TODO{include figure for application flow}
 
-When writing a tag, the \texttt{SignedNdef} object will automatically create an extra signature record DSA
 
 * implementation
 ** proof of concept
