@@ -3,6 +3,8 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
 
 \newcommand\TODO[1]{\textcolor{red}{#1}}
 
@@ -78,11 +80,23 @@ The last threat model we consider is that of an attacker creating his/her own ma
 
 
 \section{Related Work}
-%Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development, and still growing in popularity. The NFC forum (http://www.nfc-forum.org/), which publishes NFC standards (http://www.nfc-forum.org/specs/spec_list/) and best practices, was only formed in 2004. NFC also relies on the interface and protocol specification (http://www.iso.org/iso/catalogue_detail.htm?csnumber=38578) published in 2004. The relative youth of this field has resulted in many aspects remaining largely unexplored. In this section we present relevant past work in the area of NFC security, as well as mobile phone application security in general.
-%
-%One major foray into the analysis of application-level NFC vulnerabilities was presented by Charlie Miller at BlackHat 2012 (http://media.blackhat.com/bh-us-12/Briefings/C_Miller/BH_US_12_Miller_NFC_attack_surface_WP.pdf). Miller employs fuzz testing to evaluate the security of both the NFC protocol layer implemented on various mobile phones, and subsequently to evaluate application-level security. Miller discusses the successes of fuzzing in identifying various NFC messages which will crash a device. Further, Miller provides evidence that carefully crafted NFC payloads can do much more than just crash a device- in some cases phones can be forced to parse arbitrary data or open web pages without user interaction. Miller’s work provides a wide analysis of the NFC attack surface, but our research will seek to provide much more depth in the exploration of application-level vulnerabilities.
-%
-%Kortvedts’s “Securing Near Field Communications” (http://ntnu.diva-portal.org/smash/get/diva2:347744/FULLTEXT01) is a precursor to Miller’s Blackhat presentation, and presents a view of NFC vulnerabilities and privacy concerns which remains largely unchanged since the paper’s publication. Kortvedt explains means of intercepting NFC data, even outside of the advertised 10 cm range, as well as existing attempts at providing a cryptographically secure interface for NFC communication. Some applications employ cryptography (the majority being payment applications), but no current secure-NFC framework enjoys widespread use. Kortvedt proposes a framework which attempts to provide solutions to several issues, but from experience it has not gained widespread adoption. We also seek to analyze the issue of providing a simple, secure NFC API for casual and inexperienced application developers.
+Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development, and still growing in popularity.
+The NFC Forum\footnote{\url{http://www.nfc-forum.org/}}, which publishes NFC standards\footnote{\url{http://www.nfc-forum.org/specs/spec_list/}} and best practices, was only formed in 2004.
+NFC also relies on the interface and protocol specification\footnote{\url{http://www.iso.org/iso/catalogue_detail.htm?csnumber=38578}} published in 2004.
+The relative youth of this field has resulted in many aspects remaining largely unexplored.
+In this section we present relevant past work in the area of NFC security, as well as mobile phone application security in general.
+
+One major foray into the analysis of application-level NFC vulnerabilities was presented by Charlie Miller at BlackHat 2012\cite{miller2012}.
+Miller employs fuzz testing to evaluate the security of both the NFC protocol layer implemented on various mobile phones, and subsequently to evaluate application-level security.
+Miller discusses the successes of fuzzing in identifying various NFC messages which will crash a device.
+Further, Miller provides evidence that carefully crafted NFC payloads can do much more than just crash a device--in some cases phones can be forced to parse arbitrary data or open web pages without user interaction.
+Miller's work provides a wide analysis of the NFC attack surface, but our research will seek to provide much more depth in the exploration of application-level vulnerabilities.
+
+Kortvedt's ``Securing Near Field Communications''\cite{kortvedt2009} is a precursor to Miller's Blackhat presentation, and presents a view of NFC vulnerabilities and privacy concerns which remains largely unchanged since the paper's publication.
+Kortvedt explains means of intercepting NFC data, even outside of the advertised 10 cm range, as well as existing attempts at providing a cryptographically secure interface for NFC communication.
+Some applications employ cryptography (the majority being payment applications), but no current secure-NFC framework enjoys widespread use.
+Kortvedt proposes a framework which attempts to provide solutions to several issues, but from experience it has not gained widespread adoption.
+We also seek to analyze the issue of providing a simple, secure NFC API for casual and inexperienced application developers.
 %
 %RFID, a precursor to and superset of NFC, has also raised several security issues in the past. Though RFID is a much older technology, it is remains relevant as both the foundation for NFC, and as a technology which is still employed in various applications (most prominently touch-activated credit cards). Heydt-Benjamin et al. (http://people.cs.umass.edu/~kevinfu/papers/RFID-CC-LNCS.pdf) discuss issues involved in early generation deployments of RFID credit cards, and were successfully able to initiate various attacks on three major RFID enabled credit cards (including attacks which access private information or enable arbitrary purchases by the attacker). Such attacks remain important considerations due to the growing prominence of smartphone payment applications  (such as Google Wallet), so we keep all of these vulnerabilities in mind as we explore NFC security vulnerabilities. This paper presents some countermeasures, but some may be impractical (such as shielding) and others can be improved upon due to more flexible computing options of smartphones.
 %
@@ -248,34 +262,47 @@ There are several advantages to kernel modifications, which are discussed below.
 The Android NFC API provides access to \texttt{Ndef}, which allows access to the NDEF message contained on a tag.
 Our API offers \texttt{SignedNdef}, which offers the same methods as \texttt{Ndef}, but implicitly handles authentication.
 Android developers can use the API we developed for interfacing with a \texttt{SignedNdef} object, which we designed to closely mimic the existing official Android \texttt{Ndef}\footnote{http://developer.android.com/reference/android/nfc/tech/Ndef.html} object for reading and writing NDEF tags.
-The approach we use for authentication is to use the Digital Signature Algorithm (DSA) to sign the contents of a message, thus allowing the reader of a tag to verify that the tag was written by a trusted tag author.
+The approach we use for authentication is to use the Elliptic Curve Digital Signature Algorithm (ECDSA) to sign the contents of a message, thus allowing the reader of a tag to verify that the tag was written by a trusted tag author.
 Our data format for secure NDEF tags appends an extra NDEF record to the end of an NDEF message.
-This record contains both information regarding the public key used for signing (discussed in further detail below) and the DSA signature of the original Ndef message.
+This record contains both information regarding the public key used for signing (discussed in further detail below) and the ECDSA signature of the original Ndef message.
 \TODO{Show figure for the new record format}
 
 \subsection{Key Management}
+Users need to be able to add and remove keys from their base of trusted authors (either manually, or through a tag reader application).
+For our API, we use Android's \texttt{SharedPreferences}, which provides persistent key-value storage.
+Our current implementation provides a unique instance of this key storage (a \texttt{KeyFile}) to an individual application (ie. a given application can only access and modify its own keys).
+Key sharing between applications is a useful feature which would be simpler to implement securely at OS-level.
+When a user reads a tag, the tag's signature record will either contain a public key in its entirety, or contain a URI pointer to a public key.
+If this public key has been added to the Key File, it is considered trusted, otherwise, the user must add this key.
+\TODO{``tag providers''? or ``tag authors''? what should we name them?}
+When a user writes a tag using this API, the private key for the phone is accessed and a ECDSA signature is generated and appended.
 
+\subsection{Application Flow}
 On instantiation, a \texttt{SignedNdef} object will attempt to open up the list of authorized keys saved on the Android device.
 It provides methods for opening, closing, reading, and writing NDEF-formatted tags by delegating to a private instance of the \texttt{Ndef} class.
 In addition, it will automatically enforce the security protocols described earlier.
-When reading a tag, it will 
 When reading a tag, it will query the \texttt{KeyManager} to find a public key which matches the signature of the signed Ndef tag.
 If it can locate a valid public key which matches the signature, it will transparently return the non-signature records on the tag.
-In case of any errors or failure to locate a valid public key, it will throw an exception. \TODO{Actually talk about what happens; key manager, etc}
+In case of any errors, failure to verify the signature or failure to locate a valid public key, reading the tag will throw an exception.
+\TODO{include figure for application flow}
 
-When writing a tag, the \texttt{SignedNdef} object will automatically create an extra signature record DSA
+\subsection{Cryptographic protocols}
+One issue regarding the storage of additional authentication data on an NFC tag is the limited size of the tag.
+To address this, we use ECDSA, which is able to use smaller keys to provide the same security as DSA with a larger key.
+For example, a 160-bit ECDSA key provides the same security level as a 1024-bit DSA key.
+\TODO{verify the above, which is from wikipedia}
+We use SHA-2 for the hashing function.
+\TODO{currently we actually use DSA with SHA1, not ECDSA with SHA2}
 
-* implementation
-** proof of concept
-** recommendations
-* key file
-* key add/remove
-* warnings
-* (a duplicate app w/ some functionality but no auth, for demo)
-* API
-* warning for invalid signature
+\subsection{Recommendations for Kernel Implementation}
+Implementing this scheme at OS-level will allow for simpler sharing of keys between applications, by providing a single, shared Key File.
+We recommend an additional application permission in order to make a modification of this Key File; this will provide greater control over which applications have been granted permission to influence the set of trusted tag authors.
+This implementation would also allow Android itself to display messages to the user, in order to centralize and standardize any necessary error reporting or warnings.
+
+
 
 \section{Evaluation}
+\subsection{Usability}
 * simplicity/overhead for user (warning message?)
 * how many apps can benefit from this?
 * applicability
@@ -323,5 +350,8 @@ brainstorm                         works for                           bad
 \section{Acknowledgements}
 
 \section{References}
+
+\bibliographystyle{abbrv}
+\bibliography{cs261}
 
 \end{document}
