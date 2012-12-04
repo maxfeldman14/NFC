@@ -34,16 +34,19 @@ Near Field Communication (NFC) is an emerging technology for wireless communicat
 The Android system sends and receives NFC data in the form of NDEF (NFC Data Exchange Format) messages. These messages, which are stored in the NFC tag, act as a container for one or more NDEF Records which is further broken up into a header and a payload, which contain typed data such as MIME-type media, a URI or a custom application payload.
 
 \begin{figure}[h!]
+\begin{minipage}{\textwidth}
 	\centering
 		\includegraphics[width=0.5\textwidth]{NDEF_Format.png}
-	\caption{NDEF Message Format$^{3}$}
+	\caption[Caption for LOF]%
+		{NDEF Message Format\footnote{\url{http://www.developer.nokia.com/Community/Wiki/Understanding_NFC_Data_Exchange_Format_(NDEF)_messages}}}
+
+\end{minipage} 
 \end{figure}
 
-
-Specifically, the Android system offers the ability to read and write NFC tags for passive mode, and beam NDEF messages from one device to another with Android Beam$^{2}$ for active mode. 
+Specifically, the Android system offers the ability to read and write NFC tags for passive mode, and beam NDEF messages from one device to another with Android Beam\footnote{\url{http://developer.android.com/guide/topics/connectivity/nfc/nfc.html}} for active mode. 
 
 \subsection{Android Intents}
-The core components of an Android application are activated through messages called intents.$^{1}$ Intents are used for inter-application and intra-application communication by sending messages with relevant information about operations to be performed to various applications.  
+The core components of an Android application are activated through messages called intents.\footnote{\url{http://developer.android.com/guide/components/intents-filters.html}} Intents are used for inter-application and intra-application communication by sending messages with relevant information about operations to be performed to various applications.  
 
 When NFC is enabled and the screen is unlocked, Android devices will always be searching for input from an NFC tag or device. When the device discovers an NFC tag, an intent is sent to the phone with information including which application is most appropriate to handle the data contained in the NFC tag. This information is processed by Android's special tag dispatch system to determine which activity to launch. In the case that more than one application can handle the type of data contained in the tag, the phone will open a prompt for the user to choose among the several applications; however, if there is only one application, the phone will automatically launch this application and process the tag. It turns out that through NFC one can force some phones to parse images, videos, contacts, ofﬁce documents, call arbitrary phone numbers and even open up web pages in the browser, all without user interaction.  
 
@@ -70,13 +73,6 @@ In Securing Near Field Communication, Kortvedt, proves that it is possible to ea
 The last threat model we consider is that of an attacker creating his/her own malicious application. Given the fact that a majority of users ignore the permissions requested in a given application, an NFC application could easily request unnecessary and misleading permissions that give access to sensitive information from the phone itself. The application could then have access to such things as the contacts list, phone data, emails, and more. If the application also had some way to relay this information back to the attacker, for example, permission to access the Internet, then all of the user's information would be compromised. Since several NFC applications require multiple permissions, a user might not be as easily able to discern the necessary permissions or understand what the permission is being used for, thus making it more likely for the user to simply trust the application. However, this is possible for applications outside of NFC specific ones, and thus we choose not to focus on this attack. 
 
 \TODO{How is this different than any other application? Talk more about that. More NFC applications need certain permissions than normal applications, so a user giving access to certain resources might be more likely?}
-\\
-\\
-1. http://developer.android.com/guide/components/intents-filters.html
-\\
-2. http://developer.android.com/guide/topics/connectivity/nfc/nfc.html
-\\
-3. http://www.developer.nokia.com/Community/Wiki/Understanding\_NFC\_Data\_Exchange\_Format\_\(NDEF\)\_messages
 
 
 \section{Related Work}
