@@ -3,6 +3,8 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
 
 \newcommand\TODO[1]{\textcolor{red}{#1}}
 
@@ -76,9 +78,17 @@ The last threat model we consider is that of an attacker creating his/her own ma
 
 
 \section{Related Work}
-%Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development, and still growing in popularity. The NFC forum (http://www.nfc-forum.org/), which publishes NFC standards (http://www.nfc-forum.org/specs/spec_list/) and best practices, was only formed in 2004. NFC also relies on the interface and protocol specification (http://www.iso.org/iso/catalogue_detail.htm?csnumber=38578) published in 2004. The relative youth of this field has resulted in many aspects remaining largely unexplored. In this section we present relevant past work in the area of NFC security, as well as mobile phone application security in general.
-%
-%One major foray into the analysis of application-level NFC vulnerabilities was presented by Charlie Miller at BlackHat 2012 (http://media.blackhat.com/bh-us-12/Briefings/C_Miller/BH_US_12_Miller_NFC_attack_surface_WP.pdf). Miller employs fuzz testing to evaluate the security of both the NFC protocol layer implemented on various mobile phones, and subsequently to evaluate application-level security. Miller discusses the successes of fuzzing in identifying various NFC messages which will crash a device. Further, Miller provides evidence that carefully crafted NFC payloads can do much more than just crash a device- in some cases phones can be forced to parse arbitrary data or open web pages without user interaction. Miller’s work provides a wide analysis of the NFC attack surface, but our research will seek to provide much more depth in the exploration of application-level vulnerabilities.
+Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development, and still growing in popularity.
+The NFC Forum\footnote{\url{http://www.nfc-forum.org/}}, which publishes NFC standards\footnote{\url{http://www.nfc-forum.org/specs/spec_list/}} and best practices, was only formed in 2004.
+NFC also relies on the interface and protocol specification\footnote{\url{http://www.iso.org/iso/catalogue_detail.htm?csnumber=38578}} published in 2004.
+The relative youth of this field has resulted in many aspects remaining largely unexplored.
+In this section we present relevant past work in the area of NFC security, as well as mobile phone application security in general.
+
+One major foray into the analysis of application-level NFC vulnerabilities was presented by Charlie Miller at BlackHat 2012\cite{miller2012}.
+Miller employs fuzz testing to evaluate the security of both the NFC protocol layer implemented on various mobile phones, and subsequently to evaluate application-level security.
+Miller discusses the successes of fuzzing in identifying various NFC messages which will crash a device.
+Further, Miller provides evidence that carefully crafted NFC payloads can do much more than just crash a device- in some cases phones can be forced to parse arbitrary data or open web pages without user interaction.
+Miller's work provides a wide analysis of the NFC attack surface, but our research will seek to provide much more depth in the exploration of application-level vulnerabilities.
 %
 %Kortvedts’s “Securing Near Field Communications” (http://ntnu.diva-portal.org/smash/get/diva2:347744/FULLTEXT01) is a precursor to Miller’s Blackhat presentation, and presents a view of NFC vulnerabilities and privacy concerns which remains largely unchanged since the paper’s publication. Kortvedt explains means of intercepting NFC data, even outside of the advertised 10 cm range, as well as existing attempts at providing a cryptographically secure interface for NFC communication. Some applications employ cryptography (the majority being payment applications), but no current secure-NFC framework enjoys widespread use. Kortvedt proposes a framework which attempts to provide solutions to several issues, but from experience it has not gained widespread adoption. We also seek to analyze the issue of providing a simple, secure NFC API for casual and inexperienced application developers.
 %
@@ -329,5 +339,8 @@ brainstorm                         works for                           bad
 \section{Acknowledgements}
 
 \section{References}
+
+\bibliographystyle{abbrv}
+\bibliography{cs261}
 
 \end{document}
