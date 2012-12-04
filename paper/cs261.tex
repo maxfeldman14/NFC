@@ -13,19 +13,37 @@
 \section{Introduction}
 1-2 page version of paper
 
+As with any new technology, comes the potential for vulnerabilities within the system. Our paper attempts to analyze the coding practices and patterns at the application level of NFC applications. (intro?)
+
 Related NFC Technology and Security - authenticating tags rather than users
 * MiFare: hardware that allows the locking of data and allows symmetric mutual authentication of users and write protection to defend against reading and writing of the tag (privacy)
 * FeliCa: authentication and write protection 
 * AFAICT: lock the data (not overwritable), but no authentication!
 
 \section{Background}
-describe NFC
+\subsection{NFC}
 
-Android/permission system
+Near Field Communication (NFC) is an emerging technology for wireless communication which allows NFC-enabled devices to transfer small amounts of data at a close proximity, usually no more than a few centimeters. NFC offers current and predicted functionality of contactless transactions, data exchange and an alternative to traditional contactless technologies such as RFID and QR codes. Specifically aimed at mobile phones, devices have the ability to communicate with other NFC-enabled mobile phones to transfer data peer-to-peer in active mode or read information stored on NFC tags and cards in passive mode. 
 
-intents
+\subsection{NFC with regards to the Android system}
 
-* current apps, what permissions do they use
+The Android system sends and receives NFC data in the form of NDEF (NFC Data Exchange Format) messages. These messages, which are stored in the NFC tag, act as a container for one or more NDEF Records which contain typed data such as MIME-type media, a URI or a custom application payload (plagarism).  
+
+Specifically, the Android system offers the ability to read and write NFC tags for passive mode, and beam NDEF messages from one device to another with Android Beam$^{2}$ for active mode. 
+
+\subsection{Android Intents}
+The core components of an Android application are activated through messages called intents.$^{1}$ Intents are used for inter-application and intra-application communication by sending messages with relevant information about operations to be performed to various applications.  
+
+When NFC is enabled and the screen is unlocked, Android devices will always be searching for input from an NFC tag or device. When the device discovers an NFC tag, an intent is sent to the phone with information including which application is most appropriate to handle the data contained in the NFC tag. This information is processed by Android's special tag dispatch system to determine which activity to launch. It turns out that through NFC one can force some phones to parse images, videos, contacts, ofﬁce documents, call arbitrary phone numbers and even open up web pages in the browser, all without user interaction.  
+
+\subsection{Android Permission System}
+Android applications run in a sandbox which allows areas of the system to be isolated and thus limit access to the system's resources. However, access to these security-related parts of the Android API can be granted to an application if the developer requests the appropriate permissions in the application's manifest. Android developers are expected to follow the idea of least-privilege with their permission requests and thus limit the permissions requested to only those that are absolutely necessary for the function and purpose of their application. By analyzing the use of permissions among applications, one can learn a lot about the potential vulnerabilities introduced in an application. 
+
+1. http://developer.android.com/guide/components/intents-filters.html
+
+2. http://developer.android.com/guide/topics/connectivity/nfc/nfc.html
+
+\subsection{outline}
 ** characteristics of apps
 *** tiny
 *** superapps
@@ -50,6 +68,9 @@ intents
 ** Beam
 ** Use of crypto libs
 ** Overwriting tags- do apps in general 0 out prior data, or not?
+
+* current apps, what permissions do they use
+<ML Classifier here>
 
 * dynamic
 ** taintdroid
