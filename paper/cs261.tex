@@ -16,7 +16,7 @@
 \section{Introduction}
 1-2 page version of paper
 
-As with any new technology, comes the potential for vulnerabilities within the system. Our paper attempts to analyze the coding practices and patterns at the application level of NFC applications. (intro?)
+
 
 Related NFC Technology and Security - authenticating tags rather than users
 * MiFare: hardware that allows the locking of data and allows symmetric mutual authentication of users and write protection to defend against reading and writing of the tag (privacy)
@@ -24,11 +24,9 @@ Related NFC Technology and Security - authenticating tags rather than users
 * AFAICT: lock the data (not overwritable), but no authentication!
 
 \section{Background}
-\subsection{NFC}
-
 Near Field Communication (NFC) is an emerging technology for wireless communication which allows NFC-enabled devices to transfer small amounts of data at a close proximity, usually no more than a few centimeters. NFC offers current and predicted functionality of contactless transactions, data exchange and an alternative to traditional contactless technologies such as RFID and QR codes. Specifically aimed at mobile phones, devices have the ability to communicate with other NFC-enabled mobile phones to transfer data peer-to-peer in active mode or read information stored on NFC tags and cards in passive mode. 
 
-\subsection{NFC with regards to the Android system}
+\subsection{Android NFC}
 
 The Android system sends and receives NFC data in the form of NDEF (NFC Data Exchange Format) messages. These messages, which are stored in the NFC tag, act as a container for one or more NDEF Records which contain typed data such as MIME-type media, a URI or a custom application payload (plagarism).  
 
@@ -40,22 +38,38 @@ The core components of an Android application are activated through messages cal
 When NFC is enabled and the screen is unlocked, Android devices will always be searching for input from an NFC tag or device. When the device discovers an NFC tag, an intent is sent to the phone with information including which application is most appropriate to handle the data contained in the NFC tag. This information is processed by Android's special tag dispatch system to determine which activity to launch. It turns out that through NFC one can force some phones to parse images, videos, contacts, ofﬁce documents, call arbitrary phone numbers and even open up web pages in the browser, all without user interaction.  
 
 \subsection{Android Permission System}
-Android applications run in a sandbox which allows areas of the system to be isolated and thus limit access to the system's resources. However, access to these security-related parts of the Android API can be granted to an application if the developer requests the appropriate permissions in the application's manifest. Android developers are expected to follow the idea of least-privilege with their permission requests and thus limit the permissions requested to only those that are absolutely necessary for the function and purpose of their application. By analyzing the use of permissions among applications, one can learn a lot about the potential vulnerabilities introduced in an application. 
+Android applications run in a sandbox which allows areas of the system to be isolated and thus limit access to the security-related parts of the Android API. However, access to these resources can be granted to an application if the developer requests the appropriate permissions in the application's manifest. Android developers are expected to use least-privilege with their permission requests: limit the permissions requested to only those that are absolutely necessary for the function of their applications. By analyzing the use of permissions, one can learn about the potential vulnerabilities introduced in an application. 
 
-1. http://developer.android.com/guide/components/intents-filters.html
-
-2. http://developer.android.com/guide/topics/connectivity/nfc/nfc.html
-
-\subsection{outline}
-** characteristics of apps
+\subsection{Application Characteristics}
 *** tiny
 *** superapps
 
-* threat model
-** writing sensitive data
-** malicious tags which cause automatic running of apps which can cost money
-** eavesdropping
-** malware
+\subsection{Threat Model}
+As with any new technology, comes the potential for vulnerabilities within the system. Our paper attempts to analyze the potential threats that this new technology may introduce and how the coding practices of NFC applications relate to these threats. We focus predominantly on the ability of an attacker to force a device to scan a malicious tag. However, we consider other threat models including reading a tag in which sensitive data was written to, eavesdropping on the data transferred over the NFC connection, and creating a malicious NFC application. 
+
+\subsubsection{Malicious Tags}
+It is possible to have a device scan a tag and perform the action specified by the tag without any user interaction, as mentioned previously. If an attacker can scan a tag unnoticed by the user, then the attacker can force the device to perform an arbitrary NFC action simply by writing it as part of a malicious tag. This opens the opportunity to have a phone open an arbitrary web url in the browser or call a specified phone number. 
+
+If the url is malicious in any way, opening it in the browser can cause... \TODO{issues should be talked about here. Talk about how the malicious application might have access to the sensitive information on the phone itself or corrupt the phone in some way. I am not entirely sure what to say here.} 
+
+If the attacker has the ability to automatically have the phone call a specified number, then a tolled number could easily be inserted and thus result in a monetary loss on the part of the user. This is a direct and obvious vulnerability in any application the calls an arbitrary phone number specified by a tag. An example of an application that does so is Samsung's Tectile application which, when scanning a tag with a phone number and directions to call this number, will do so without any further consideration. 
+
+\subsubsection{Writing Sensitive Data}
+Several NFC applications have the possibility of writing information to an NFC tag. This means that users have the ability to write anything they want to their own tags. It may be beneficial for some users to use these tag writing applications to write sensitive or critical information to tags they keep in specific locations. \TODO{An example of this might be... }. If the attacker was ever able to gain access to these tags, there is no security stopping him/her from reading the tag and viewing the contents with the sensitive data. 
+
+\subsubsection{Eavesdropping}
+
+
+\subsubsection{Malware}
+The last threat model we consider is that of an attacker creating his/her own malicious application. Given the fact that a majority of users ignore the permissions requested in a given application, an NFC application could easily request unnecessary and misleading permissions that give access to sensitive information from the phone itself. The application could then have access to such things as the contacts list, phone data, emails, and more. If the application also had some way to relay this information back to the attacker, for example, permission to access the Internet, then all of the user's information would be compromised. Since several NFC applications require multiple permissions, a user might not be as easily able to discern the necessary permissions or understand what the permission is being used for, thus making it more likely for the user to simply trust the application. However, this is possible for applications outside of NFC specific ones, and thus we choose not to focus on this attack. 
+
+\TODO{How is this different than any other application? Talk more about that. More NFC applications need certain permissions than normal applications, so a user giving access to certain resources might be more likely?}
+\\
+\\
+1. http://developer.android.com/guide/components/intents-filters.html
+\\
+2. http://developer.android.com/guide/topics/connectivity/nfc/nfc.html
+
 
 \section{Related Work}
 %Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development, and still growing in popularity. The NFC forum (http://www.nfc-forum.org/), which publishes NFC standards (http://www.nfc-forum.org/specs/spec_list/) and best practices, was only formed in 2004. NFC also relies on the interface and protocol specification (http://www.iso.org/iso/catalogue_detail.htm?csnumber=38578) published in 2004. The relative youth of this field has resulted in many aspects remaining largely unexplored. In this section we present relevant past work in the area of NFC security, as well as mobile phone application security in general.
