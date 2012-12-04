@@ -168,10 +168,11 @@ Android developers can use the API we developed for interfacing with a \texttt{S
 On instantiation, a \texttt{SignedNdef} object will attempt to open up the list of authorized keys saved on the Android device.
 It provides methods for opening, closing, reading, and writing NDEF-formatted tags by delegating to a private instance of the \texttt{Ndef} class.
 In addition, it will automatically enforce the security protocols described earlier.
-When reading, it will query the \texttt{KeyManager} to find a public key which matches the signature of the signed Ndef tag.
+When reading a tag, it will query the \texttt{KeyManager} to find a public key which matches the signature of the signed Ndef tag.
 If it can locate a valid public key which matches the signature, it will transparently return the non-signature records on the tag.
 In case of any errors or failure to locate a valid public key, it will throw an exception. \TODO{Actually talk about what happens; key manager, etc}
 
+When writing a tag, the \texttt{SignedNdef} object will automatically create an extra signature record DSA
 
 * implementation
 ** proof of concept
