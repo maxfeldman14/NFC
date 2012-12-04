@@ -246,9 +246,9 @@ There are several advantages to kernel modifications, which are discussed below.
 The Android NFC API provides access to \texttt{Ndef}, which allows access to the NDEF message contained on a tag.
 Our API offers \texttt{SignedNdef}, which offers the same methods as \texttt{Ndef}, but implicitly handles authentication.
 Android developers can use the API we developed for interfacing with a \texttt{SignedNdef} object, which we designed to closely mimic the existing official Android \texttt{Ndef}\footnote{http://developer.android.com/reference/android/nfc/tech/Ndef.html} object for reading and writing NDEF tags.
-The approach we use for authentication is to use the Digital Signature Algorithm (DSA) to sign the contents of a message, thus allowing the reader of a tag to verify that the tag was written by a trusted tag author.
+The approach we use for authentication is to use the Elliptic Curve Digital Signature Algorithm (ECDSA) to sign the contents of a message, thus allowing the reader of a tag to verify that the tag was written by a trusted tag author.
 Our data format for secure NDEF tags appends an extra NDEF record to the end of an NDEF message.
-This record contains both information regarding the public key used for signing (discussed in further detail below) and the DSA signature of the original Ndef message.
+This record contains both information regarding the public key used for signing (discussed in further detail below) and the ECDSA signature of the original Ndef message.
 \TODO{Show figure for the new record format}
 
 \subsection{Key Management}
@@ -259,7 +259,7 @@ Key sharing between applications is a useful feature which would be simpler to i
 When a user reads a tag, the tag's signature record will either contain a public key in its entirety, or contain a URI pointer to a public key.
 If this public key has been added to the Key File, it is considered trusted, otherwise, the user must add this key.
 \TODO{``tag providers''? or ``tag authors''? what should we name them?}
-When a user writes a tag using this API, the private key for the phone is accessed and a DSA signature is generated and appended.
+When a user writes a tag using this API, the private key for the phone is accessed and a ECDSA signature is generated and appended.
 
 \subsection{Application Flow}
 On instantiation, a \texttt{SignedNdef} object will attempt to open up the list of authorized keys saved on the Android device.
@@ -267,21 +267,26 @@ It provides methods for opening, closing, reading, and writing NDEF-formatted ta
 In addition, it will automatically enforce the security protocols described earlier.
 When reading a tag, it will query the \texttt{KeyManager} to find a public key which matches the signature of the signed Ndef tag.
 If it can locate a valid public key which matches the signature, it will transparently return the non-signature records on the tag.
-In case of any errors or failure to locate a valid public key, it will throw an exception.
+In case of any errors, failure to verify the signature or failure to locate a valid public key, reading the tag will throw an exception.
 \TODO{include figure for application flow}
 
+\subsection{Cryptographic protocols}
+One issue regarding the storage of additional authentication data on an NFC tag is the limited size of the tag.
+To address this, we use ECDSA, which is able to use smaller keys to provide the same security as DSA with a larger key.
+For example, a 160-bit ECDSA key provides the same security level as a 1024-bit DSA key.
+\TODO{verify the above, which is from wikipedia}
+We use SHA-2 for the hashing function.
+\TODO{currently we actually use DSA with SHA1, not ECDSA with SHA2}
 
-* implementation
-** proof of concept
-** recommendations
-* key file
-* key add/remove
-* warnings
-* (a duplicate app w/ some functionality but no auth, for demo)
-* API
-* warning for invalid signature
+\subsection{Recommendations for Kernel Implementation}
+Implementing this scheme at OS-level will allow for simpler sharing of keys between applications, by providing a single, shared Key File.
+We recommend an additional application permission in order to make a modification of this Key File; this will provide greater control over which applications have been granted permission to influence the set of trusted tag authors.
+This implementation would also allow Android itself to display messages to the user, in order to centralize and standardize any necessary error reporting or warnings.
+
+
 
 \section{Evaluation}
+\subsection{Usability}
 * simplicity/overhead for user (warning message?)
 * how many apps can benefit from this?
 * applicability
