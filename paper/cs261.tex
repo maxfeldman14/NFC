@@ -160,14 +160,26 @@ Prompts:
 * We should alway state why we make any choice
 
 \section{Implementation}
-We implemented our authentication system as an Android library that Android developers can include into their projects.
-Our data format for secure NDEF tags adds an extra record at the end of an NDEF message which contains a signature of the other NDEF records in the message.
-We developed a class for interfacing with secure NDEF tags we call \texttt{SignedNdef}, providing all the necessary methods for securely reading and writing tags.
+We implemented our authentication system as an Android library that Android developers can include and access in their projects.
+Our current implementation provides both means of writing and reading tags using our authentication scheme, allowing developers of both tag-reading and tag-writing applications to benefit from increased security.
+We present this implementation as a proof-of-concept; ideally, such additions to the Android NFC stack would be implemented at OS-level.
+There are several advantages to kernel modifications, which are discussed below.
+
+\subsection{SignedNdef}
+The Android NFC API provides access to \texttt{Ndef}, which allows access to the NDEF message contained on a tag.
+Our API offers \texttt{SignedNdef}, which offers the same methods as \texttt{Ndef}, but implicitly handles authentication.
 Android developers can use the API we developed for interfacing with a \texttt{SignedNdef} object, which we designed to closely mimic the existing official Android \texttt{Ndef}\footnote{http://developer.android.com/reference/android/nfc/tech/Ndef.html} object for reading and writing NDEF tags.
+The approach we use for authentication is to use the Digital Signature Algorithm (DSA) to sign the contents of a message, thus allowing the reader of a tag to verify that the tag was written by a trusted tag author.
+Our data format for secure NDEF tags appends an extra NDEF record to the end of an NDEF message.
+This record contains both information regarding the public key used for signing (discussed in further detail below) and the DSA signature of the original Ndef message.
+\TODO{Show figure for the new record format}
+
+\subsection{Key Management}
 
 On instantiation, a \texttt{SignedNdef} object will attempt to open up the list of authorized keys saved on the Android device.
 It provides methods for opening, closing, reading, and writing NDEF-formatted tags by delegating to a private instance of the \texttt{Ndef} class.
 In addition, it will automatically enforce the security protocols described earlier.
+When reading a tag, it will 
 When reading a tag, it will query the \texttt{KeyManager} to find a public key which matches the signature of the signed Ndef tag.
 If it can locate a valid public key which matches the signature, it will transparently return the non-signature records on the tag.
 In case of any errors or failure to locate a valid public key, it will throw an exception. \TODO{Actually talk about what happens; key manager, etc}
