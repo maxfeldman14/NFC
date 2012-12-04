@@ -25,7 +25,7 @@ Related NFC Technology and Security - authenticating tags rather than users
 * AFAICT: lock the data (not overwritable), but no authentication!
 
 \section{Background}
-Near Field Communication (NFC) is an emerging technology for wireless communication which allows NFC-enabled devices to transfer small amounts of data at a close proximity, usually no more than a few centimeters. At the most basic level, NFC specifies a set of protocols for this wireless communication based off of the radio-frequency identification (RFID) standards. NFC offers current and predicted functionality of contactless transactions, data exchange and an alternative to traditional contactless technologies such as RFID and QR codes. Specifically aimed at mobile phones, devices use NFC in two ways labeled active and passive mode. In passive mode, there is a device actively generating a radio frequency (RF) field that initiates contact to the passive NFC tag. In this case, the device can read or write information stored on NFC tags and cards without the passive targets needing any power source. Additionally, NFC phones have the ability to communicate with other NFC-enabled mobile phones to transfer data peer-to-peer in active mode in which case both devices are generating their own RF fields.
+Near Field Communication (NFC) is an emerging technology for wireless communication which allows NFC-enabled devices to transfer small amounts of data at a close proximity, usually no more than a few centimeters. At the most basic level, NFC specifies a set of protocols for this wireless communication based off of the radio-frequency identification (RFID) standards. NFC offers current and predicted functionality of contactless transactions, data exchange and an alternative to traditional contactless technologies such as RFID and QR codes. Aimed at mobile phones, devices use NFC in two ways, labeled active and passive mode. In passive mode, there is a device actively generating a radio frequency (RF) field that initiates contact to the passive NFC tag. In this case, the device can read or write information stored on NFC tags and cards without the passive targets needing any power source. Additionally, NFC phones have the ability to communicate with other NFC-enabled mobile phones to transfer data peer-to-peer in active mode. In this case both devices are generating their own RF fields.
 
 \subsection{Android NFC}
 
@@ -62,10 +62,7 @@ If the attacker has the ability to automatically have the phone call a specified
 Several NFC applications have the possibility of writing information to an NFC tag. This means that users have the ability to write anything they want to their own tags. It may be beneficial for some users to use these tag writing applications to write sensitive or critical information to tags they keep in specific locations. \TODO{An example of this might be... }. If the attacker was ever able to gain access to these tags, there is no security stopping him/her from reading the tag and viewing the sensitive content. 
 
 \subsubsection{Eavesdropping}
-In master's thesis thing, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods. Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code.
-
-\TODO{Talk about more in analysis portion when we discuss the use of crypto within application's code - the fact that developers aren't using known crypto libraries means they are either implementing crypto themselves or not securing their data at all} 
-\TODO{Talked a lot about in the student's master thesis}
+In Securing Near Field Communication, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods. Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code. 
 
 \subsubsection{Malware}
 The last threat model we consider is that of an attacker creating his/her own malicious application. Given the fact that a majority of users ignore the permissions requested in a given application, an NFC application could easily request unnecessary and misleading permissions that give access to sensitive information from the phone itself. The application could then have access to such things as the contacts list, phone data, emails, and more. If the application also had some way to relay this information back to the attacker, for example, permission to access the Internet, then all of the user's information would be compromised. Since several NFC applications require multiple permissions, a user might not be as easily able to discern the necessary permissions or understand what the permission is being used for, thus making it more likely for the user to simply trust the application. However, this is possible for applications outside of NFC specific ones, and thus we choose not to focus on this attack. 
@@ -102,37 +99,40 @@ The last threat model we consider is that of an attacker creating his/her own ma
 %While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities. We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
 
 \section{Analysis of Apps}
-* Why analyze
+* Intro: Why analyze
 ** general coding practices re: NFC
 ** what practices contribute to vulnerabilities of NFC apps
 ** As for as we know, no broad analysis of NFC app level stuff
 ** provide suggestion for NFC app devs (we are in a unique position in that this tech is up and coming)
-* static
-** trace where data read from NFC tags is ended
-** other static tools?
-** Beam
-** Use of crypto libs
-** Overwriting tags- do apps in general 0 out prior data, or not?
 
 \subsection{Application Characteristics}
 *** tiny - have a specific function and only does one specific thing given a tag. These only require a small subset of permissions. 
 \\
 *** superapps - use a lot of permissions and perform several different actions ranging from reading and writing tags, to handling monetary transactions, performing actions on the phone, or transferring musics, pictures, or other data.
 
-* current apps, what permissions do they use
-<ML Classifier here>
+\subsection{Static Analysis}
+* static
+\subsubsection{Permissions}
+* current apps, what permissions do they use - ML Classifier here
+\subsubsection{Taint Tracking}
+trace where data read from NFC tags is ended
+** other static tools? 
+\subsubsection{Crypto/Eavesdropping}
+\TODO{Eavesdropping - Talk about more in analysis portion when we discuss the use of crypto within application's code - the fact that developers aren't using known crypto libraries means they are either implementing crypto themselves or not securing their data at all} 
+** Overwriting tags- do apps in general 0 out prior data, or not?
 
+\subsection{Dynamic Analysis - might not exist}
 * dynamic
 ** taintdroid
 ** droidblaze
 
+\subsection{Manual Analysis}
 * manual
-** looked at source code
+** looked at source code of ~10 applications
 ** played with apps
 ** trace exec paths if possible
 ** BEAM
 *** If you scan an app, it'll take you to the app store
-* permission scraping etc
 
 \section{Proposed Solution}
 % talking points:
