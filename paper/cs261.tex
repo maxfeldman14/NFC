@@ -117,6 +117,14 @@ This paper presents some countermeasures, but some may be impractical (such as s
 %
 %While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities. We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
 
+We don't think certificate authorities is the right approach for securing NFC. CAs can only verify that a tag came from a specific source, but it doesn't authorize.
+
+\url{http://www.nfc-forum.org/resources/white_papers/Using_ECQV_ECPVS_on_NFC_Tags.pdf}: elliptic curve signatures
+
+\url{http://www.nfc-forum.org/apps/group_public/download.php/9052/doi_10.1109_NFC.2011.9.pdf}: security flaws in signature spec
+
+\url{http://www.auto.tuwien.ac.at/bib/pdf_TR/TR0156.pdf}: bachelor's thesis, security overview
+
 \section{Analysis of Apps}
 * Intro: Why analyze
 ** general coding practices re: NFC
