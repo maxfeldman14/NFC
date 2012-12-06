@@ -15,6 +15,16 @@
 
 \section{Abstract}
 1-3 paragraph version of introduction
+Near Field Communication (NFC) is a form of contactless communication which allows devices to transfer data over radio.
+It is similar to RFID, but with a much shorter range (about 10 cm).
+NFC has existed for some time, but only recently has begun being deployed in Android phones (along with an API for developers).
+The Android NFC API offers application developers a new, more powerful means to access NFC capabilities in mobile devices, but this brings with it an increased attack space and additional potential for vulnerability.
+Android provides access to an NFC Data Exchange Format (NDEF) API, but does not offer various security measures which have been proposed.
+
+We examine the growing space of NFC applications offered for Android, and provide a cursory categorization of the functionality and general security practices of these applications.
+We attempt to address the issue of resource access on behalf of external data, in the context of NFC.
+We discuss known issues and vulnerabilities with NDEF security, and how our proposal mitigates some of these concerns.
+We also keep in mind the importance of usability, especially in applications which must perform quickly and smoothly (as is the case with NFC applications), and present a user study which can effectively evaluate the tradeoffs between secure access control and usability.
 
 \section{Introduction}
 1-2 page version of paper
