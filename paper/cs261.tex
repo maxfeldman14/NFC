@@ -22,7 +22,7 @@ The Android NFC API offers application developers a new, more powerful means to 
 Android provides access to an NFC Data Exchange Format (NDEF) API, but does not offer various security measures which have been proposed.
 
 We examine the growing space of NFC applications offered for Android, and provide a cursory categorization of the functionality and general security practices of these applications.
-Alarmingly, several applications implement features such as calling or SMS messaging arbitrary phone numbers, or accessing arbitrary URLs, which are read from an NFC tag (without authentication). 
+Alarmingly, several applications implement features such as calling or SMS messaging arbitrary phone numbers, or accessing arbitrary URLs, which are read from an NFC tag, without even prompting the user.
 We attempt to address the issue of resource access on behalf of external data, in the context of NFC.
 We discuss known issues and vulnerabilities with NDEF security, and how our proposal mitigates some of these concerns.
 We also keep in mind the importance of usability, especially in applications which must perform quickly and smoothly (as is the case with NFC applications), and present the description of a user study which can effectively evaluate the tradeoffs between secure access control and usability.
