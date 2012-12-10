@@ -7,6 +7,7 @@
 \usepackage{hyperref}
 
 \newcommand\TODO[1]{\textcolor{red}{#1}}
+\newcommand\todo[1]{\textcolor{red}{#1}}
 
 \begin{document}
 \title{Fine-grained Access for Securing NFC:  Distributed Key Association}
@@ -89,7 +90,7 @@ When a user swipes the tag to view the event's website, their phone will place a
 Fraudulent data inputs refer to tags and other means of inputting NFC data which is not intended.
 For example, this applies to an attacker initiating an NFC connection handover, which results in malicious data transfer from the attacker's phone to the victim's.
 
-\todo{This is for 294, and should possibly be omitted from other versions}
+\TODO{This is for 294, and should possibly be omitted from other versions}
 \subsubsection{Privacy Concerns}
 Several NFC applications have the possibility of writing information to an NFC tag.
 This means that users have the ability to write anything they want to their own tags.
@@ -105,7 +106,7 @@ Since the NFC communication protocol does not offer any security or encryption i
 \subsection{Relay, Replay, Denial of Service}
 A relay attack results when the attacker positions himself between a sender and receiver of information.
 However, the sender and receiver may not be aware that they are actually communicating with each other.
-\todo{describe this? are these descriptions worth it}
+\TODO{describe this? are these descriptions worth it}
 A replay attack consists of an attacker listening to data transmitted by a victim, and using that information again at a later time.
 Denial of service in the case of NFC applications would result in preventing NFC transactions from occurring.
 This could come from exploiting logic flaws in NFC applications, or merely jamming radio transmissions, for example.
@@ -320,6 +321,17 @@ brainstorm                         works for                           bad
 - length exclused signature        above                               violates standards
   + above                          app viewing variable \# of records   
 
+%Possible things to consider when measuring security
+%- Economy of mechanism. Designs which are smaller and simpler are easier to inspect and trust.
+%- Fail-safe defaults. By default, access should be denied unless it is explicitly granted.
+%- Complete mediation. Every access to every object should be checked.
+%- Least privilege. Every program should operate with the minimum set of privileges necessary to do its job. This prevents accidental mistakes becoming security problems.
+%- Least common mechanism. Anything which is shared among different programs can be a path for communication and a potential security hole, so as little data as possible should be shared.
+%- Accountability. The system should be able to accurately record “who” is responsible for using a particular privilege.
+%- Psychological acceptability. The system should not place an undue burden on its users. Several other practical issues arise when designing a security system for Java.
+%- Performance. We must consider how our designs constrain system performance. Security checks which must be performed at run-time will have performance costs.
+%- Compatibility. We must consider the number and depth of changes necessary to integrate the security system with the existing Java virtual machine and standard libraries. Some changes may be impractical.
+%- Remote calls. If the security system can be extended cleanly to remote method invocation, that would be a beneﬁt for building secure, distributed systems.
 
 %\section{Discussion}
 % I don't think we need this section -SR
