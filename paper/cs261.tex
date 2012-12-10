@@ -230,6 +230,11 @@ The system must also be simple, for both users and application developers.
 Users should be able to understand what access policies they choose to grant, and administer these policies with ease.
 This includes granting additional access and revoking existing access.
 \subsection{Non-goals}
+We do not seek to provide trust mechanisms for users.
+At best, we wish to leverage existing trust mechanisms (such as certificates included in Signed NDEF records), but present the information regarding the identity of an author in an easy-to-read format.
+If the signer of a tag is identified in a certificate chain, then it is important to present the user with that identity so that the user can make an informed decision regarding access control.
+We do not seek to offer integrity or authentication.
+These are both goals of the NDEF Signature RTD, and as such we leverage these properties but do not duplicate the effort of providing them.
 
 
 
@@ -283,6 +288,8 @@ When a user writes a tag using this API, the private key for the phone is access
 
 \subsection{Application Flow}
 On instantiation, a \texttt{SignedNdef} object will attempt to open up the list of authorized keys saved on the Android device.
+We do not seek to provide trust mechanisms for users.
+At best, we wish to leverage existing trust mechanisms (such as certificates included in Signed NDEF records), 
 It provides methods for opening, closing, reading, and writing NDEF-formatted tags by delegating to a private instance of the \texttt{Ndef} class.
 In addition, it will automatically enforce the security protocols described earlier.
 When reading a tag, it will query the \texttt{KeyManager} to find a public key which matches the signature of the signed Ndef tag.
@@ -291,12 +298,12 @@ In case of any errors, failure to verify the signature or failure to locate a va
 \TODO{include figure for application flow}
 
 \subsection{Cryptographic protocols}
+\todo{this is an issue with SignedNDEF}
 One issue regarding the storage of additional authentication data on an NFC tag is the limited size of the tag.
-To address this, we use ECDSA, which is able to use smaller keys to provide the same security as DSA with a larger key.
+NDEF Signatures support various signature algorithms, with ECDSA among them.
+ECDSA is able to use smaller keys to provide the same security as DSA with a larger key.
 For example, a 160-bit ECDSA key provides the same security level as a 1024-bit DSA key.
 \TODO{verify the above, which is from wikipedia}
-We use SHA-2 for the hashing function.
-\TODO{currently we actually use DSA with SHA1, not ECDSA with SHA2}
 
 \subsection{Recommendations for Kernel Implementation}
 Implementing this scheme at OS-level will allow for simpler sharing of keys between applications, by providing a single, shared Key File.
