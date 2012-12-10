@@ -68,7 +68,7 @@ When NFC is enabled and the screen is unlocked, Android devices will always be s
 When the device discovers an NFC tag, an intent is sent to the phone with information including which application is most appropriate to handle the data contained in the NFC tag.
 This information is processed by Android's special tag dispatch system to determine which activity to launch.
 In the case that more than one application can handle the type of data contained in the tag, the phone will open a prompt for the user to choose among the several applications; however, if there is only one application, the phone will automatically launch this application and process the tag.
-NFC input can force Android phones (with certain settings) to parse images, videos, contacts, and office documents, call or text arbitrary phone numbers, and open web pages via the browser, all without user interaction.  
+NFC input can force Android phones (with certain settings) to parse images, videos, contacts, and office documents, call or text arbitrary phone numbers, establish bluetooth connections, and open web pages via the browser, all without user interaction.  
 
 \subsection{Android Permission System}
 Android applications run in a sandbox which allows areas of the system to be isolated and thus limit access to the security-related parts of the Android API.
@@ -219,6 +219,9 @@ This system must be fast and unobtrusive, so that the short duration of an NFC i
 The system must also be simple, for both users and application developers.
 Users should be able to understand what access policies they choose to grant, and administer these policies with ease.
 This includes granting additional access and revoking existing access.
+\subsection{Non-goals}
+
+
 
 % talking points:
 % trust model
