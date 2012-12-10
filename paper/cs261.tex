@@ -65,9 +65,14 @@ The Android system sends and receives NFC data in the form of NDEF (NFC Data Exc
 Specifically, the Android system offers the ability to read and write NFC tags for passive mode, and beam NDEF messages from one device to another with Android Beam\footnote{\url{http://developer.android.com/guide/topics/connectivity/nfc/nfc.html}} for active mode. 
 
 \subsection{Android Intents}
-The core components of an Android application are activated through messages called intents.\footnote{\url{http://developer.android.com/guide/components/intents-filters.html}} Intents are used for inter-application and intra-application communication by sending messages with relevant information about operations to be performed to various applications.  
+The core components of an Android application are activated through messages called intents.\footnote{\url{http://developer.android.com/guide/components/intents-filters.html}}
+Intents are used for inter-application and intra-application communication by sending messages with relevant information about operations to be performed to various applications.  
 
-When NFC is enabled and the screen is unlocked, Android devices will always be searching for input from an NFC tag or device. When the device discovers an NFC tag, an intent is sent to the phone with information including which application is most appropriate to handle the data contained in the NFC tag. This information is processed by Android's special tag dispatch system to determine which activity to launch. In the case that more than one application can handle the type of data contained in the tag, the phone will open a prompt for the user to choose among the several applications; however, if there is only one application, the phone will automatically launch this application and process the tag. It turns out that through NFC one can force some phones to parse images, videos, contacts, ofﬁce documents, call arbitrary phone numbers and even open up web pages in the browser, all without user interaction.  
+When NFC is enabled and the screen is unlocked, Android devices will always be searching for input from an NFC tag or device. 
+When the device discovers an NFC tag, an intent is sent to the phone with information including which application is most appropriate to handle the data contained in the NFC tag.
+This information is processed by Android's special tag dispatch system to determine which activity to launch.
+In the case that more than one application can handle the type of data contained in the tag, the phone will open a prompt for the user to choose among the several applications; however, if there is only one application, the phone will automatically launch this application and process the tag.
+NFC input can force Android phones (with certain settings) to parse images, videos, contacts, and office documents, call or text arbitrary phone numbers, and open web pages via the browser, all without user interaction.  
 
 \subsection{Android Permission System}
 Android applications run in a sandbox which allows areas of the system to be isolated and thus limit access to the security-related parts of the Android API. However, access to these resources can be granted to an application if the developer requests the appropriate permissions in the application's manifest. Android developers are expected to use least-privilege with their permission requests: limit the permissions requested to only those that are absolutely necessary for the function of their applications. By analyzing the use of permissions, one can learn about the potential vulnerabilities introduced in an application. \TODO{Which we do later...}
@@ -202,95 +207,8 @@ This paper presents some countermeasures, but some may be impractical (such as s
 % ** distributed authentication
 % *** generalizable to arbitrary inputs to phone?
 % 
-% * Goals
-% 
-% As a user
-% I want to be able to verify a tag came from a given author
-% In order to ensure I am not acting on malicious inputs
-% 
-% As a user
-% I want to be able to keep track of tag authors
-% In order to expand the scope of tags I can trust
-% 
-% As a user
-% I want to be able to verify my own tags
-% In order to ensure use my own tags
-% 
-% As a user
-% I want to be able to encrypt my own tags
-% In order to ensure no one else can read my tags
-% 
-% As a user
-% I want to keep the identities of trusted tag authors correct
-% In case if good authors go bad
-% 
-% As a user
-% I want to report malicious tag authors
-% To warn other users of bad authors
-% 
-% As a tag author
-% I want to share my key with a user
-% To prevent others from impersonating me
-% 
-% ** integrity
-% ** authentication
 
-We propose a novel solution which provides way for users to only read tags that have been written by tag providers that they trust.
-There are three types of actors in our security model: application authors, tag authors, and users.
-The main threat model we consider is when malicious tag authors trick users into scanning malicious tags.
-In order to prevent users from reading malicious tags, we force tags to prove their authenticity through the use of digital signatures.
-Users or applications will then be able to act on tags based on whether or not they trust the tag author or whether the tag can successfully prove its authenticity.
 
-Under our proposal, each NFC tag contains an additional record containing a tag author's signature.
-Each tag author has a unique key pair comprising a public and a private key.
-The tag author generates the signature record from his or her private key and the other data records on the tag.
-The signature record can be validated with the tag author's public key, which is can be shared with users.
-
-Users may add the public keys of any tag authors they trust, allowing tags written by those authors to be automatically used by applications which implement the protocol.
-Keys are stored on the Android phone.
-\TODO{Verify that this is right. Or figure out how the scheme works with sharing keys between apps?}
-While we did not restrict access to the key file, we believe that it would be trivial to modify the Android kernel to restrict applications with special permissions to read or write the key file.
-
-\subsection{Key Distribution and Management}
-% How to get keys?
-% * Go to website of tag author you trust, DL their key
-% * see it for the first time (good info in prompt?)
-% * No signature: different prompt
-% 
-% Prompts:
-% * disable all pmopts
-% * never allow this key?
-% * allow key once
-% * allow key always
-% * allow all keys
-% 
-% * We should alway state why we make any choice
-
-For usability reasons, we provide two ways for a user to add a trusted key: (1) a public key can be stored on the tag itself, or if storage space on the tag is limited, (2) a tag may contain a URL pointing to the location of a public key.
-In both cases, a user only needs to scan a tag with his or her phone in order to receive a public key.
-While the application author can determine how it wants to handle unrecognized or untrusted public keys, we recommend the following scheme for maximum usability and security:
-If a user does not already have a tag's public key, they are prompted to either (1) accept the tag and store the public key, (2) accept the tag this time only and do not store the public key, or (3) reject the tag.
-
-A user must trust the source of a public key, so we recommend that if a tag author chooses to distribute a key through a tag, that the tag is in a location that is constantly monitored so that malicious users cannot simply replace the tag.
-Similarly, if a tag author chooses to distribute a key through a URL, we recommend that the author chooses an easily verifiable location for the key, such as on an SSL-protected, well-recognized domain.
-As a special case, if a user wishes to write their own tags, we can automatically add the user's public key to the user's key file when initially generating a key pair.  
-We believe that these methods of key distribution cover the majority of application use cases. \TODO{Why?}
-
-To revoke a key, a user can simply remove the offending key from the key file.
-To improve usability for the most common use case, we provide a method for revoking the most recently added key, as a user will usually know whether a tag is malicious moments after adding a new public key.
-
-\subsection{Caveats}
-% * Non goals
-% ** confidentiality of tag data
-% ** ignoring malicious applications
-% ** no central authority
-% ** not ensuring security of key exchange
-
-We do not make any privacy guarantees with the scheme that we propose.
-A tag author cannot assume that any private data written to a tag will only be read by authorized users, since the data on the tag in unencrypted.
-
-Similarly, our scheme assumes that applications are not malicious.
-If an application is malicious, then securing tag data will not protect users from malicious behavior since we rely on an application to correctly authorize tag data.
 
 \section{Implementation}
 We implemented our authentication system as an Android library that Android developers can include and access in their projects.
