@@ -26,7 +26,7 @@ We attempt to address the issue of resource access on behalf of external data, i
 We discuss known issues and vulnerabilities with NDEF security, and how our proposal mitigates some of these concerns.
 We also keep in mind the importance of usability, especially in applications which must perform quickly and smoothly--as is the case with NFC applications. Finally, we present the description of a user study which can effectively evaluate the tradeoffs between secure access control and usability.
 
-\section{Introduction}
+\TODO{\section{Introduction}}
 1-2 page version of paper
 
 Related NFC Technology and Security - authenticating tags rather than users
@@ -191,7 +191,7 @@ This paper presents some countermeasures, but some may be impractical (such as s
 %** BEAM
 %*** If you scan an app, it'll take you to the app store
 
-\section{Proposed Solution}
+\TODO{\section{Proposed Solution}}
 % talking points:
 % trust model
 % authentication
@@ -203,6 +203,24 @@ This paper presents some countermeasures, but some may be impractical (such as s
 % ** distributed authentication
 % *** generalizable to arbitrary inputs to phone?
 % 
+
+* idea: associate a tag type or permission with a key in order to trust authors with specific NFC abilities/actions (i.e. let Safeway open URLs, let Yelp call phone numbers)
+
+* Why it's better than the other solution
+
+* Contrary arguments to our solution
+
+* Why it's still fast and usable for a developer and a user
+
+* Central Authority - implicit trust vs. every user gets to specify what they want to trust
+ 
+* ACLs for NFC tags - mapping of which application are allowed to read which data types from nfc tags signed by certain public keys (ACL: this thing can do this)
+
+Fine-grained access control
+
+Per-app storage of approved tag-type/public key
+
+Allow access addition and revocation
 
 
 
@@ -253,28 +271,7 @@ Implementing this scheme at OS-level will allow for simpler sharing of keys betw
 We recommend an additional application permission in order to make a modification of this Key File; this will provide greater control over which applications have been granted permission to influence the set of trusted tag authors.
 This implementation would also allow Android itself to display messages to the user, in order to centralize and standardize any necessary error reporting or warnings.
 
-
-\section{Fine-grained Access/New Trust Model}
-* idea: associate a tag type or permission with a key in order to trust authors with specific NFC abilities/actions (i.e. let Safeway open URLs, let Yelp call phone numbers)
-
-* Why it's better than the other solution
-
-* Contrary arguments to our solution
-
-* Why it's still fast and usable for a developer and a user
-
-* Central Authority - implicit trust vs. every user gets to specify what they want to trust
- 
-* ACLs for NFC tags - mapping of which application are allowed to read which data types from nfc tags signed by certain public keys (ACL: this thing can do this)
-
-Fine-grained access control
-
-Per-app storage of approved tag-type/public key
-
-Allow access addition and revocation
-
-
-\section{Evaluation}
+\TODO{\section{Evaluation}}
 \subsection{Space Performance}
 \subsection{Usability}
 \subsection{Security}
@@ -312,8 +309,8 @@ brainstorm                         works for                           bad
   + above                          app viewing variable \# of records   
 
 
-\section{Discussion}
-* this seems like it's throughout the paper already?
+%\section{Discussion}
+% I don't think we need this section -SR
 
 \section{Recommended User Study}
 There are several potential use cases for the NFC technology which have yet to be established. It is important to consider the usability of a solution such as ours for the various cases in which the technology would or could be used. Thus, we propose a well thought out and detailed user study to test the obstrusiveness and effectiveness of access controls in a realistic setting. 
@@ -326,16 +323,16 @@ The study will focus on three main use cases of the NFC technology and thus ther
 
 We would be highly interested in measuring the effectiveness, as well as the usability of the system. We suggest trying two main approaches, including pop up menus to ask the user for their approval for each given tag, as well as incorporating untrusted tags as a warning into the phone rather than blatant pop ups. Things like how often the warning were ignored and in what cases they were ignored should be measured during the experiment. Asking the users a series of questions after their tests, including which tags they believed to be malicious and how easy or intuitive the access control scheme presented was to use on a scale from 1-10, would offer additional insight. 
 
-\section{Future Work}
+\TODO{\section{Future Work}}
 * compression/optimization
 * OS perms, kernel mods to support this
 * application sharing and how to do this well
 
-\section{Conclusion}
+\TODO{\section{Conclusion}}
 
-\section{Acknowledgements}
+\TODO{\section{Acknowledgements}}
 
-\section{References}
+\TODO{\section{References}}
 
 \bibliographystyle{abbrv}
 \bibliography{cs261}
