@@ -92,7 +92,7 @@ NFC is also used as a means of initiating connections on higher-bandwidth media 
 \TODO{An example of this might be... }. If the attacker was ever able to gain access to these tags, there is no security stopping him/her from reading the tag and viewing the sensitive content. 
 
 \subsubsection{Eavesdropping}
-In Securing Near Field Communication, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods. Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code. 
+In "Securing Near Field Communication"\cite{kortvedt2009}, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods. Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code. 
 
 \TODO{I think the part below is irrelevant}
 %\subsubsection{Malware}
@@ -110,7 +110,7 @@ In this section we present relevant past work in the area of NFC security, as we
 
 \TODO{cite the signed ndef papers}
 
-Kortvedt's ``Securing Near Field Communications''\cite{kortvedt2009} presents a view of NFC vulnerabilities and privacy concerns which remains largely unchanged since the paper's publication.
+Kortvedt's "Securing Near Field Communications''\cite{kortvedt2009} presents a view of NFC vulnerabilities and privacy concerns which remains largely unchanged since the paper's publication.
 %Kortvedt explains a means of intercepting NFC data, even outside of the advertised 10 cm range. %, as well as existing attempts at providing a cryptographically secure interface for NFC communication.
 %Some applications employ cryptography (the majority being payment applications), but mostly as a means of authenticating users and thwarting malicious users. %, but no current secure-NFC framework enjoys widespread use.
 Kortvedt proposes a framework which attempts to provide solutions for establishing a secure channel with mutual authentication via NFC, but it has not gained widespread adoption.
@@ -145,7 +145,7 @@ This paper presents some countermeasures, but some may be impractical (such as s
 %
 %While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities. We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
 
-\todo{A bit on certificate authorities, perhaps?}
+\TODO{A bit on certificate authorities, perhaps?}
 
 \url{http://www.nfc-forum.org/resources/white_papers/Using_ECQV_ECPVS_on_NFC_Tags.pdf}: elliptic curve signatures
 
@@ -153,7 +153,7 @@ This paper presents some countermeasures, but some may be impractical (such as s
 
 \url{http://www.auto.tuwien.ac.at/bib/pdf_TR/TR0156.pdf}: bachelor's thesis, security overview
 
-\todo{anything in analysis goes into background}
+\TODO{anything in analysis goes into background}
 %\section{Analysis of Apps}
 %* Intro: Why analyze
 %** general coding practices re: NFC
@@ -397,25 +397,13 @@ brainstorm                         works for                           bad
 \section{Recommended User Study}
 There are several potential use cases for the NFC technology which have yet to be established. It is important to consider the usability of a solution such as ours for the various cases in which the technology would or could be used. Thus, we propose a well thought out and detailed user study to test the obstrusiveness and effectiveness of access controls in a realistic setting. 
 
-Using human participants, measure the overhead imposed by warnings/approvals presented by our proposed system. As the majority of our study is focused on Android phones, we would provide each user with an Android phone, inform them of what is expected, and have them swipe tags to emulate the particular test cases which have been explained below in more detail.
+Using human participants, the study would attempt to measure the overhead imposed by warnings/approvals presented by our proposed system. As the majority of our study is focused on mobile phones, we would provide each user with an NFC-enabled Android phone, inform them of what is expected at each stage, and have them swipe tags to emulate the particular use cases which have been explained in more detail below.
 
-The overall structure of the experiment is broken down into four main parts. First, we will have users attempt to swipe tags, but present them with no access control approval. These tags will not be malicious. In the second phase, random users will receive malicious tags, again with no access control. We will ask the users to identify what tags were malicious or fake at the end of the experiment in order to avoid priming. Next, we introduce access control and explain the purpose. Again, we will randomly give users malicious tags, and this time the user has the ability to deny or accept with the access control enabled.  
+The overall structure of the experiment is broken down into four main parts. First, we will have users attempt to swipe non-malicious tags, and present them with no access control approval. In the second phase, random users will receive malicious tags, again with no access control functionality. We plan to ask the users to identify what tags they believed were malicious or fake, but not until the end of the experiment in order to avoid priming the subjects. For the second half of the experiment, the users would be introduced to the access control of our system. In one stage users would be presented with only non-malicious tags, and in the final stage of the experiement randomly chosen users will be presented with malicious tags. 
 
+The study will focus on three main use cases of the NFC technology and thus there will be a total of three different tests that can be run with all four portions above. The first will be using the tag scanning technology to shop at a grocery store. In this case, one key could be provided that will encompass all tags and items in the store to allow the user to easily shop for food with little effort. In the second use case, the user will attempt to buy a bus ticket with SMS payment. In the final use case, a tag will be kept on a smart poster that is meant to advertise information about the given content on the poster via the NFC technology by having the user scan the tag. 
 
-* user study, human testing
-* overhead imposed by warnings/approvals
-** delves into usable security
-Goal:
-Test obtrusiveness and effectiveness of access controls in a realistic setting
-Test cases:
-Smart poster
-Grocery store shopping 
-Buy a bus ticket with SMS payment
-Examine:
-Malicious/non-malicious tags
-Presence/absence of access control
-* important issues and how to deal with them
-
+We would be highly interested in measuring the effectiveness, as well as the usability of the system. We suggest trying two main approaches, including pop up menus to ask the user for their approval for each given tag, as well as incorporating untrusted tags as a warning into the phone rather than blatant pop ups. Things like how often the warning were ignored and in what cases they were ignored should be measured during the experiment. Asking the users a series of questions after their tests, including which tags they believed to be malicious and how easy or intuitive the access control scheme presented was to use on a scale from 1-10, would offer additional insight. 
 
 \section{Future Work}
 * compression/optimization
