@@ -272,13 +272,16 @@ Additionally, if a certificate has been found which is outside its validity peri
 One access control method we considered was requiring approval when data was handed over to another process, as opposed to approval upon 
 
 \section{Implementation}
-We implemented our access control system as an Android library that Android developers can include and access in their projects.
-Our current implementation provides both means of writing and reading tags using our authentication scheme, allowing developers of both tag-reading and tag-writing applications to benefit from increased security.
+We begin implementing our access control system as an Android library that Android developers can include and access in their projects.
+Unfortunately, Android does not yet support the NDEF Signature RTD, so much of our work involved working around this.
+We provide an API as a proof-of-concept for the proposed access control scheme, through which developers can add, verify, and revoke access.
+Our current implementation simply creates a makeshift signature record consisting of a digital signature (created by DSA) appended to the public key used for the signature.
+This emulates the PKI infrastructure provided by certificates, but in a simpler manner, as the focus of our proof-of-concept is the access control itself.
 We present this implementation as a proof-of-concept; ideally, such additions to the Android NFC stack would be implemented at OS-level.
 There are several advantages to kernel modifications, which are discussed below.
 
-
 \subsection{Key Management}
+\todo{fix all of this}
 Users need to be able to add and remove keys from their base of trusted authors (either manually, or through a tag reader application).
 For our API, we use Android's \texttt{SharedPreferences}, which provides persistent key-value storage.
 Our current implementation provides a unique instance of this key storage (a \texttt{KeyFile}) to an individual application (ie. a given application can only access and modify its own keys).
@@ -289,6 +292,7 @@ If this public key has been added to the Key File, it is considered trusted, oth
 When a user writes a tag using this API, the private key for the phone is accessed and a ECDSA signature is generated and appended.
 
 \subsection{Application Flow}
+\todo{fix all of this}
 On instantiation, a \texttt{SignedNdef} object will attempt to open up the list of authorized keys saved on the Android device.
 We do not seek to provide trust mechanisms for users.
 At best, we wish to leverage existing trust mechanisms (such as certificates included in Signed NDEF records), 
@@ -300,7 +304,7 @@ In case of any errors, failure to verify the signature or failure to locate a va
 \TODO{include figure for application flow}
 
 \subsection{Cryptographic protocols}
-\todo{this is an issue with SignedNDEF}
+\todo{talk about this in background?! or here?}
 One issue regarding the storage of additional authentication data on an NFC tag is the limited size of the tag.
 NDEF Signatures support various signature algorithms, with ECDSA among them.
 ECDSA is able to use smaller keys to provide the same security as DSA with a larger key.
@@ -308,6 +312,7 @@ For example, a 160-bit ECDSA key provides the same security level as a 1024-bit 
 \TODO{verify the above, which is from wikipedia}
 
 \subsection{Recommendations for Kernel Implementation}
+\todo{refactor}
 Implementing this scheme at OS-level will allow for simpler sharing of keys between applications, by providing a single, shared Key File.
 We recommend an additional application permission in order to make a modification of this Key File; this will provide greater control over which applications have been granted permission to influence the set of trusted tag authors.
 This implementation would also allow Android itself to display messages to the user, in order to centralize and standardize any necessary error reporting or warnings.
