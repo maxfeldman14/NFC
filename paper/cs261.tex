@@ -257,6 +257,14 @@ The OS will then attempt to deliver the most readable identifier of the public k
 In most cases, extracting the identifying information from the certificate will be sufficient to present the user with a concise identity of the content author.
 The user then chooses the type of access they wish to grant to that public key, and this access choice is written to the access control list for that app.
 \subsubsection{Revoking Access}
+\todo{make this better}
+Users will be provided an interface to the access control lists for their applications by the OS.
+Through this interface, the user can view all authors to which they have granted access (including the human-readable name associated with the public key).
+The user can then choose to revoke access to an author by removing associated entries of that author in relevant lists.
+The user can also remove only one access grant to an author, if they so choose.
+Revocation should additionally support certificate revocation lists; ie. if a tag with a revoked certificate is encountered, that revocation should propagate to the access control list.
+Additionally, if a certificate has been found which is outside its validity period, the access associated with that identity should be revoked.
+
 
 \subsection{Alternatives}
 % talking points:
