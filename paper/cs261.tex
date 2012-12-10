@@ -71,19 +71,6 @@ Android applications run in a sandbox which allows areas of the system to be iso
 However, access to these resources can be granted to an application if the developer requests the appropriate permissions in the application's manifest.
 Android developers are expected to use least-privilege with their permission requests: limit the permissions requested to only those that are absolutely necessary for the function of their applications. 
 
-\TODO{\subsection{Current Solutions}}
-Related NFC Technology and Security - authenticating tags rather than users
-
-* MiFare: hardware that allows the locking of data and allows symmetric mutual authentication of users and write protection to defend against reading and writing of the tag (privacy)
-
-* FeliCa: authentication and write protection 
-
-* AFAICT: lock the data (not overwritable), but no authentication!
-
-* Signature NDEF Records
-
-* Certificates 
-
 \section{Threat Model}
 While NFC is still an emerging technology, there are several vulnerabilities which can afflict applications.
 In our work, we address three of these: malicious NFC tags, more generally, fraudulent data inputs, and threats on user privacy.
@@ -123,13 +110,20 @@ We omit discussion of these attacks from our paper.
 \todo{himself or herself}
 Relay, replay, and denial of service attacks are omitted from our discussion as well.
 
+\TODO{\subsection{Current Solutions}}
+Related NFC Technology and Security - authenticating tags rather than users
 
-\section{Related Work}
-Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development and still growing in popularity.
-The NFC Forum\footnote{\url{http://www.nfc-forum.org/}}, which publishes NFC standards\footnote{\url{http://www.nfc-forum.org/specs/spec_list/}} and best practices, was only formed in 2004.
-The relative youth of this field has resulted in many aspects remaining largely unexplored.
-In this section we present relevant past work in the area of NFC security, as well as mobile phone application security in general.
+* MiFare: hardware that allows the locking of data and allows symmetric mutual authentication of users and write protection to defend against reading and writing of the tag (privacy)
 
+* FeliCa: authentication and write protection 
+
+* AFAICT: lock the data (not overwritable), but no authentication!
+
+* Signature NDEF Records
+
+* Certificates 
+
+\subsubsection{ \TODO{Dump of things from related work}}
 \textbf{Application level attacks.}
 Kerschberger\cite{kerschberger2011} presents an overview of NFC security and vulnerabilities.
 
@@ -146,12 +140,6 @@ Heydt-Benjamin et al.\cite{heydtbenjamin2007} discuss issues involved in early g
 Such attacks remain important considerations due to the growing prominence of smartphone payment applications  (such as Google Wallet), so we keep all of these vulnerabilities in mind as we explore NFC security vulnerabilities.
 This paper presents some countermeasures, but some may be impractical (such as shielding) and others can be improved upon due to more flexible computing options of smartphones.
 
-\textbf{Establishing secure channels.}
-Kortvedt\cite{kortvedt2009} presents a view of NFC vulnerabilities and privacy concerns which remains largely unchanged since the paper's publication in 2009.
-He proposes a framework which attempts to provide solutions for establishing a secure channel with mutual authentication via NFC, but it has not gained widespread adoption.
-He suggests using a centralized key authority for distributing keys, which we believe is impractical and unscalable, given that both tag authors and application authors may wish to distribute keys, and users should be able to choose which authors they trust.
-We, on the other hand, seek to provide a decentralized mechanism for trusting and granting trust to a user-defined set of NFC tag authors.
-
 Haselsteiner et al\cite{haselsteiner2006} discuss general security issues with NFC (beyond the scope of just mobile phones).
 The paper discusses threats of eavesdropping, data corruption, data modification, data insertion, and man-in-the-middle attacks (though MITM is dismissed as practically impossible).
 The paper recommends establishing a secure channel between devices in order to prevent such attacks, and provides valuable discussion of how this channel would work.
@@ -163,10 +151,17 @@ A relay attack exploits the assumption that two devices engaged in an NFC transa
 This is a serious potential exploit which must be defended against by any security-conscious application (as it may allow for arbitrary credit card purchases, for example).
 The paper suggests several potential counters to such attacks; our analysis examines how popular applications employ relay-attack countermeasures, and to what degree they are effective.
 
-Analysis of smartphone applications in general (though we restrict our focus to Android devices, as iPhones do not yet offer NFC) is a much more thoroughly explored field, and several projects provide valuable insight into application testing.
+\section{Related Work}
+Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development and still growing in popularity.
+The NFC Forum\footnote{\url{http://www.nfc-forum.org/}}, which publishes NFC standards\footnote{\url{http://www.nfc-forum.org/specs/spec_list/}} and best practices, was only formed in 2004.
+The relative youth of this field has resulted in many aspects remaining largely unexplored.
+In this section we present relevant past work in the area of NFC security, as well as mobile phone application security in general.
 
-While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities.
-We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
+\textbf{Establishing secure channels.}
+Kortvedt\cite{kortvedt2009} presents a view of NFC vulnerabilities and privacy concerns which remains largely unchanged since the paper's publication in 2009.
+He proposes a framework which attempts to provide solutions for establishing a secure channel with mutual authentication via NFC, but it has not gained widespread adoption.
+He suggests using a centralized key authority for distributing keys, which we believe is impractical and unscalable, given that both tag authors and application authors may wish to distribute keys, and users should be able to choose which authors they trust.
+We, on the other hand, seek to provide a decentralized mechanism for trusting and granting trust to a user-defined set of NFC tag authors.
 
 \textbf{Signatures and Certificates}
 \TODO{Cite the standard for ndef signatures}
@@ -175,6 +170,12 @@ The standard now focuses on being able to trust the data through a central autho
 However, several vulnerabilities arise with these Signature Record Types due to certain implementation details including different parties being authenticated in partial signatures within the same NDEF message and third party entities having the ability to give trust to other arbitrary entities through certificate chains\cite{roland2011}. 
 
 \TODO{A bit on certificate authorities, perhaps?}
+
+\textbf{Random shit}
+Analysis of smartphone applications in general (though we restrict our focus to Android devices, as iPhones do not yet offer NFC) is a much more thoroughly explored field, and several projects provide valuable insight into application testing.
+
+While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities.
+We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
 
 \TODO{anything in analysis goes into background}
 %\section{Analysis of Apps}
