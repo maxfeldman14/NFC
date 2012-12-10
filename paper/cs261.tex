@@ -204,8 +204,15 @@ This paper presents some countermeasures, but some may be impractical (such as s
 %*** If you scan an app, it'll take you to the app store
 
 \section{Proposed Solution}
+\todo{make ``tag author'' more general}
 We propose a system of controlling the access that NFC inputs are granted by the Android OS.
-This access control system aims 
+This access control system aims to provide a simple and usable means for phone users to grant access to certain capabilities to trusted tag authors.
+A capability in this case refers to the ability to access a system resource, such as to call a phone or open a URL.
+We differentiate this from a permission (which individual applications must request), in that it is more restrictive, and specific to a tag author (as identified by their public key).
+This system uses per-application access control to specify approved, unapproved, and unencountered access-requestors.
+We specify the goals and non-goals of our system and then outline the approach in detail.
+\subsection{Goals}
+
 
 % talking points:
 % trust model
