@@ -31,6 +31,7 @@ We also keep in mind the importance of usability, especially in applications whi
 1-2 page version of paper
 
 \section{Background}
+\todo{mention NDEF TNF, type (maybe show a bit level NDEF record layout)
 Near Field Communication (NFC) is an emerging technology for wireless communication which allows NFC-enabled devices to transfer small amounts of data at a close proximity, usually no more than a few centimeters.
 At the most basic level, NFC specifies a set of protocols for this wireless communication based off of the radio-frequency identification (RFID) standards.
 NFC offers current and predicted functionality of contactless transactions, data exchange and an alternative to traditional contactless technologies such as RFID and QR codes.
@@ -221,7 +222,7 @@ This access control system aims to provide a simple and usable means for phone u
 A capability in this case refers to the ability to access a system resource, such as to call a phone or open a URL.
 We differentiate this from a permission (which individual applications must request), in that it is more restrictive, and specific to a tag author (as identified by their public key).
 This system uses per-application access control to specify approved, unapproved, and unencountered access-requestors.
-We specify the goals and non-goals of our system and then outline the approach in detail.
+We specify the goals and non-goals of our system and then outline the approach in detail, as well as discuss our implementation.
 \subsection{Goals}
 The principal goal of this system is to allow users to link their trust with their access policies.
 The user's trust should define the access granted to external entities.
@@ -236,9 +237,28 @@ At best, we wish to leverage existing trust mechanisms (such as certificates inc
 If the signer of a tag is identified in a certificate chain, then it is important to present the user with that identity so that the user can make an informed decision regarding access control.
 We do not seek to offer integrity or authentication.
 These are both goals of the NDEF Signature RTD, and as such we leverage these properties but do not duplicate the effort of providing them.
+This system does not offer an alternative to the certificate scheme support by the NDEF Signature RTD.
+\subsection{Approach}
+In order to provide fine-grained access control, each application maintains its own access control list.
+An entry in this list consists of the TNF of the NDEF record, the Type of the NDEF record, and the public key extracted from the signature which applies to that record.
+This system is intended to be an OS library which allows developers to grant, revoke, and verify access within the context of their application.
+When a tag is read, its data will be marshalled to the appropriate application, if that application is not already running.
+\subsubsection{Verifying Access}
+Before an application acts on NDEF input data, it verifies that the NDEF record's type and public key (from the associated signature record) exist in the access control list.
+The OS provides a method call which allows the application developer to easily check whether this content author has been approved.
+This content author can either be approved for a specific type (TNF and Type field), or for all types.
+For example, an author with public key Ka may have a record /[001:55:Ka/], indicating that their key is trusted for all URI inputs within the context of that application.
+Another author with public key Kb may have a record /[*:*:Kb/], indicating that they will always be granted access by this application.
+If the lookup of \todo{how to phrase this?} /[TNF:TYPE:Key/] returns true, then the data's provider has been granted access and operation proceeds uninterrupted.
+If the lookup fails, then a user will be prompted to either allow the operation to proceed once (ie. without granting permanent access), grant permanent access, or deny access and abort the operation.
+\subsubsection{Granting Access}
+If a user elects to grant access upon receipt of NDEF data, then they will be given the option of granting the input author permanent access for that NDEF type (TNF and Type fields), or for all types (a wildcard match on the TNF and Type fields).
+The OS will then attempt to deliver the most readable identifier of the public key which the user is about to approve.
+In most cases, extracting the identifying information from the certificate will be sufficient to present the user with a concise identity of the content author.
+The user then chooses the type of access they wish to grant to that public key, and this access choice is written to the access control list for that app.
+\subsubsection{Revoking Access}
 
-
-
+\subsection{Alternatives}
 % talking points:
 % trust model
 % authentication
