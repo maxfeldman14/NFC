@@ -14,24 +14,20 @@
 \maketitle
 
 \section{Abstract}
-1-3 paragraph version of introduction
-
-Near Field Communication (NFC) is a form of contactless communication which allows devices to transfer data over radio;  it is similar to RFID, but with a much shorter range (about 10 cm).
-NFC has existed for some time, but its implementation in Android phones (along with an API for developers) has only recently begun.
-Upon scanning an NFC tag, Android will automatically (without user interaction) run the application which has been associated with the type of data on that tag.
-The Android NFC API offers application developers a new, more powerful means to access NFC capabilities in mobile devices, but this brings with it an increased attack space and additional potential for vulnerability.
-Android provides access to an NFC Data Exchange Format (NDEF) API, but does not offer various security measures which have been proposed.
+Near Field Communication (NFC) is a form of contactless communication which allows devices to transfer data over radio; it is similar to RFID, but with a much smaller range of use.
+NFC has existed for some time, but its implementation in Android phones, along with an API for developers, has only recently gained popularity.
+Upon scanning an NFC tag, Android will automatically run the application which has been associated with the type of data on that tag, sometimes without user interaction or approval.
+The Android NFC API offers application developers a new, more powerful means to access NFC capabilities in mobile devices, but this introduces an increased attack space and additional potential for vulnerability.
+Android provides access to an NFC Data Exchange Format (NDEF) API, but does not offer any of the various security measures which have been proposed.
 
 We examine the growing space of NFC applications offered for Android, and provide a cursory categorization of the functionality and general security practices of these applications.
-Alarmingly, several applications implement features such as calling or SMS messaging arbitrary phone numbers, or accessing arbitrary URLs, which are read from an NFC tag, without even prompting the user.
+Alarmingly, several applications implement features such as SMS messaging or calling given phone numbers, or accessing arbitrary URLs, which are provided by an NFC tag without even prompting the user.
 We attempt to address the issue of resource access on behalf of external data, in the context of NFC.
 We discuss known issues and vulnerabilities with NDEF security, and how our proposal mitigates some of these concerns.
-We also keep in mind the importance of usability, especially in applications which must perform quickly and smoothly (as is the case with NFC applications), and present the description of a user study which can effectively evaluate the tradeoffs between secure access control and usability.
+We also keep in mind the importance of usability, especially in applications which must perform quickly and smoothly--as is the case with NFC applications. Finally, we present the description of a user study which can effectively evaluate the tradeoffs between secure access control and usability.
 
 \section{Introduction}
 1-2 page version of paper
-
-
 
 Related NFC Technology and Security - authenticating tags rather than users
 * MiFare: hardware that allows the locking of data and allows symmetric mutual authentication of users and write protection to defend against reading and writing of the tag (privacy)
@@ -270,6 +266,13 @@ This implementation would also allow Android itself to display messages to the u
 * Central Authority - implicit trust vs. every user gets to specify what they want to trust
  
 * ACLs for NFC tags - mapping of which application are allowed to read which data types from nfc tags signed by certain public keys (ACL: this thing can do this)
+
+Fine-grained access control
+
+Per-app storage of approved tag-type/public key
+
+Allow access addition and revocation
+
 
 \section{Evaluation}
 \subsection{Space Performance}
