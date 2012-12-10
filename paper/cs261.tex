@@ -212,7 +212,13 @@ We differentiate this from a permission (which individual applications must requ
 This system uses per-application access control to specify approved, unapproved, and unencountered access-requestors.
 We specify the goals and non-goals of our system and then outline the approach in detail.
 \subsection{Goals}
-
+The principal goal of this system is to allow users to link their trust with their access policies.
+The user's trust should define the access granted to external entities.
+If a user trusts a particular tag author to provide non-malicious URLs, then the user can grant that tag author approval for all URLs in the context of that application.
+This system must be fast and unobtrusive, so that the short duration of an NFC interaction is not impeded.
+The system must also be simple, for both users and application developers.
+Users should be able to understand what access policies they choose to grant, and administer these policies with ease.
+This includes granting additional access and revoking existing access.
 
 % talking points:
 % trust model
