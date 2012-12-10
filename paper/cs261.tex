@@ -152,31 +152,11 @@ A relay attack exploits the assumption that two devices engaged in an NFC transa
 This is a serious potential exploit which must be defended against by any security-conscious application (as it may allow for arbitrary credit card purchases, for example).
 The paper suggests several potential counters to such attacks; our analysis examines how popular applications employ relay-attack countermeasures, and to what degree they are effective.
 
-\section{Related Work}
-Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development and still growing in popularity.
-The NFC Forum\footnote{\url{http://www.nfc-forum.org/}}, which publishes NFC standards\footnote{\url{http://www.nfc-forum.org/specs/spec_list/}} and best practices, was only formed in 2004.
-The relative youth of this field has resulted in many aspects remaining largely unexplored.
-In this section we present relevant past work in the area of NFC security, as well as mobile phone application security in general.
-
-\textbf{Establishing secure channels.}
-Kortvedt\cite{kortvedt2009} presents a view of NFC vulnerabilities and privacy concerns which remains largely unchanged since the paper's publication in 2009.
-He proposes a framework which attempts to provide solutions for establishing a secure channel with mutual authentication via NFC, but it has not gained widespread adoption.
-He suggests using a centralized key authority for distributing keys, which we believe is impractical and unscalable, given that both tag authors and application authors may wish to distribute keys, and users should be able to choose which authors they trust.
-We, on the other hand, seek to provide a decentralized mechanism for trusting and granting trust to a user-defined set of NFC tag authors.
-
-\textbf{Signatures and Certificates}
-\TODO{Cite the standard for ndef signatures}
-Signature Record Types, in which signatures could be placed on NDEF records, was standardized to deal with threats caused by malicious tags including spoofing, phishing and denial of service.
-The standard now focuses on being able to trust the data through a central authority which distributes and validates public keys\cite{rosati2011}.
-However, several vulnerabilities arise with these Signature Record Types due to certain implementation details including different parties being authenticated in partial signatures within the same NDEF message and third party entities having the ability to give trust to other arbitrary entities through certificate chains\cite{roland2011}. 
-
-\TODO{A bit on certificate authorities, perhaps?}
-
 \textbf{Random shit}
 Analysis of smartphone applications in general (though we restrict our focus to Android devices, as iPhones do not yet offer NFC) is a much more thoroughly explored field, and several projects provide valuable insight into application testing.
 
-While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities.
-We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
+%While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities.
+%We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
 
 \TODO{anything in analysis goes into background}
 %\section{Analysis of Apps}
@@ -214,6 +194,28 @@ We leverage this previous exploration to provide large-scale analysis of NFC app
 %** trace exec paths if possible
 %** BEAM
 %*** If you scan an app, it'll take you to the app store
+
+\section{Related Work}
+%Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development and still growing in popularity.
+The NFC Forum\footnote{\url{http://www.nfc-forum.org/}}, which publishes NFC standards\footnote{\url{http://www.nfc-forum.org/specs/spec_list/}} and best practices, was only formed in 2004.
+The relative youth of this field has resulted in many aspects remaining largely unexplored.
+In this section we present relevant past work in the area of NFC security, as well as mobile phone application security in general.
+
+\textbf{Pre-shared keys.}
+One approach for authenticating tags is to share keys between tag readers and tag writers.
+Kortvedt \cite{kortvedt2009} proposes a general framework for providing one-way and mutual authentication over NFC, but requires the use of pre-shared keys.
+He suggests using a centralized key authority associated with mobile carriers such as Over-The-Air (OTA) programming or SMS for distributing keys.
+We believe is impractical and inappropriate for all types of applications given that tag authors may be distinct from application authors and may wish to distribute keys.
+There is also no notion of trust, as a user must trust that the key being shared is legitimate.
+We instead seek to provide a decentralized mechanism for trusting and granting trust to a user-defined set of NFC tag authors.
+
+\textbf{Signatures and Certificates.}
+The NFC Signature Record Type Definition (RTD), which can be used to sign NDEF records, was standardized to deal with threats caused by malicious tags including spoofing, phishing and denial of service.
+Using signatures on a tag causes a performance and space penalty, which are important since NFC tag readers are mobile devices and NFC tags themselves have very limited storage space \cite{kilas2009}.
+The standard now focuses on being able to authenticate the source of data through a certificate authority which distributes and validates public keys \cite{rosati2011}.
+However, several vulnerabilities arise with these signature regarding the \textit{authorization} of tags and the authentication of unsigned and the combination of unsigned tags and tags signed by different authors \cite{roland2010,roland2011}.
+We propose a way for users to authorize keys based on the data type and application, which are enough to determine a fixed behavior (e.g. calling a phone number from a tag, opening a URL stored on a tag).
+
 
 \section{Proposed Solution}
 \todo{make ``tag author'' more general}
