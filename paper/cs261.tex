@@ -145,13 +145,21 @@ Heydt-Benjamin et al.\cite{heydtbenjamin2007} discuss issues involved in early g
 Such attacks remain important considerations due to the growing prominence of smartphone payment applications  (such as Google Wallet), so we keep all of these vulnerabilities in mind as we explore NFC security vulnerabilities.
 This paper presents some countermeasures, but some may be impractical (such as shielding) and others can be improved upon due to more flexible computing options of smartphones.
 
-"Security in NFC, Strengths and Weaknesses"\cite{haselsteiner2006} discusses general security issues with NFC (beyond the scope of just mobile phones). The paper discusses threats of eavesdropping, data corruption, data modification, data insertion, and man-in-the-middle attacks (though MITM is dismissed as practically impossible). The paper recommends establishing a secure channel between devices in order to prevent such attacks, and provides valuable discussion of how this channel would work. The paper does not, however, provide an implementation (as the purpose of the paper was to illustrate general NFC issues). As our focus is restricted to Android devices, we have the ability to recommend and implement Android-specific solutions.
+"Security in NFC, Strengths and Weaknesses"\cite{haselsteiner2006} discusses general security issues with NFC (beyond the scope of just mobile phones).
+The paper discusses threats of eavesdropping, data corruption, data modification, data insertion, and man-in-the-middle attacks (though MITM is dismissed as practically impossible).
+The paper recommends establishing a secure channel between devices in order to prevent such attacks, and provides valuable discussion of how this channel would work.
+The paper does not, however, provide an implementation (as the purpose of the paper was to illustrate general NFC issues).
+As our focus is restricted to Android devices, we have the ability to recommend and implement Android-specific solutions.
 
-Francis et al.\cite{francis2012} discuss the potential for relay attacks on NFC transactions, and implement a software version of this attack which can be used on an NFC-enabled device. A relay attack exploits the assumption that two devices engaged in an NFC transaction are actually adjacent (by placing a proxy in between the two devices). This is a serious potential exploit which must be defended against by any security-conscious application (as it may allow for arbitrary credit card purchases, for example). The paper suggests several potential counters to such attacks; our analysis examines how popular applications employ relay-attack countermeasures, and to what degree they are effective.
+Francis et al.\cite{francis2012} discuss the potential for relay attacks on NFC transactions, and implement a software version of this attack which can be used on an NFC-enabled device.
+A relay attack exploits the assumption that two devices engaged in an NFC transaction are actually adjacent (by placing a proxy in between the two devices).
+This is a serious potential exploit which must be defended against by any security-conscious application (as it may allow for arbitrary credit card purchases, for example).
+The paper suggests several potential counters to such attacks; our analysis examines how popular applications employ relay-attack countermeasures, and to what degree they are effective.
 
 Analysis of smartphone applications in general (though we restrict our focus to Android devices, as iPhones do not yet offer NFC) is a much more thoroughly explored field, and several projects provide valuable insight into application testing.
 
-While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities. We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
+While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities.
+We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
 
 \TODO{A bit on certificate authorities, perhaps?}
 
