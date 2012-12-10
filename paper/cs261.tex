@@ -31,7 +31,7 @@ We also keep in mind the importance of usability, especially in applications whi
 1-2 page version of paper
 
 \section{Background}
-\todo{mention NDEF TNF, type (maybe show a bit level NDEF record layout)
+\todo{mention NDEF TNF, type (maybe show a bit level NDEF record layout)}
 Near Field Communication (NFC) is an emerging technology for wireless communication which allows NFC-enabled devices to transfer small amounts of data at a close proximity, usually no more than a few centimeters.
 At the most basic level, NFC specifies a set of protocols for this wireless communication based off of the radio-frequency identification (RFID) standards.
 NFC offers current and predicted functionality of contactless transactions, data exchange and an alternative to traditional contactless technologies such as RFID and QR codes.
@@ -62,7 +62,7 @@ The core components of an Android application are activated through messages cal
 Intents are used for inter-application and intra-application communication by sending messages with relevant information about operations to be performed to various applications.  
 
 When NFC is enabled and the screen is unlocked, Android devices will always be searching for input from an NFC tag or device. 
-When the device discovers an NFC tag, an intent is sent to the phone with information including which application is most appropriate to handle the data contained in the NFC tag.
+When the device discovers an NFC tag, the Android OS creates an intent which is dispatched to an application which has registered for it.
 This information is processed by Android's special tag dispatch system to determine which activity to launch.
 In the case that more than one application can handle the type of data contained in the tag, the phone will open a prompt for the user to choose among the several applications; however, if there is only one application, the phone will automatically launch this application and process the tag.
 NFC input can force Android phones (with certain settings) to parse images, videos, contacts, and office documents, call or text arbitrary phone numbers, establish bluetooth connections, and open web pages via the browser, all without user interaction.  
@@ -269,43 +269,16 @@ Additionally, if a certificate has been found which is outside its validity peri
 
 
 \subsection{Alternatives}
-% talking points:
-% trust model
-% authentication
-% key management
-% usability
-% 
-% * Goals/non-goals
-% * architecture
-% ** distributed authentication
-% *** generalizable to arbitrary inputs to phone?
-% 
-
-%* idea: associate a tag type or permission with a key in order to trust authors with specific NFC abilities/actions (i.e. let Safeway open URLs, let Yelp call phone numbers)
-
-%* Why it's better than the other solution
-%* Contrary arguments to our solution
-%* Why it's still fast and usable for a developer and a user
-%* Central Authority - implicit trust vs. every user gets to specify what they want to trust
-%* ACLs for NFC tags - mapping of which application are allowed to read which data types from nfc tags signed by certain public keys (ACL: this thing can do this)
-%- Fine-grained access control
-%- Per-app storage of approved tag-type/public key
-%- Allow access addition and revocation
+One access control method we considered was requiring approval when data was handed over to another process, as opposed to approval upon 
 
 \section{Implementation}
-We implemented our authentication system as an Android library that Android developers can include and access in their projects.
+We implemented our access control system as an Android library that Android developers can include and access in their projects.
+Our current implementation 
+
 Our current implementation provides both means of writing and reading tags using our authentication scheme, allowing developers of both tag-reading and tag-writing applications to benefit from increased security.
 We present this implementation as a proof-of-concept; ideally, such additions to the Android NFC stack would be implemented at OS-level.
 There are several advantages to kernel modifications, which are discussed below.
 
-\subsection{SignedNdef}
-The Android NFC API provides access to \texttt{Ndef}, which allows access to the NDEF message contained on a tag.
-Our API offers \texttt{SignedNdef}, which offers the same methods as \texttt{Ndef}, but implicitly handles authentication.
-Android developers can use the API we developed for interfacing with a \texttt{SignedNdef} object, which we designed to closely mimic the existing official Android \texttt{Ndef}\footnote{http://developer.android.com/reference/android/nfc/tech/Ndef.html} object for reading and writing NDEF tags.
-The approach we use for authentication is to use the Elliptic Curve Digital Signature Algorithm (ECDSA) to sign the contents of a message, thus allowing the reader of a tag to verify that the tag was written by a trusted tag author.
-Our data format for secure NDEF tags appends an extra NDEF record to the end of an NDEF message.
-This record contains both information regarding the public key used for signing (discussed in further detail below) and the ECDSA signature of the original Ndef message.
-\TODO{Show figure for the new record format}
 
 \subsection{Key Management}
 Users need to be able to add and remove keys from their base of trusted authors (either manually, or through a tag reader application).
