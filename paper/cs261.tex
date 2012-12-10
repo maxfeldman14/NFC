@@ -43,7 +43,7 @@ In this case both devices are generating their own RF fields.
 
 \subsection{Android NFC}
 
-The Android system sends and receives NFC data in the form of NFC Data Exchange Format (NDEF) messages. These messages, which are stored in the NFC tag, act as a container for one or more NDEF Records which is further broken up into a header and a payload, which contain typed data such as MIME-type media, a URI or a custom application payload.
+The Android system sends and receives NFC data in the form of NFC Data Exchange Format (NDEF) messages. These messages, which are stored in the NFC tag, act as a container for one or more NDEF records which are further broken up into a header and a payload, which contain typed data such as MIME-type media, a URI or a custom application payload.
 
 \begin{figure}[h!]
 \begin{minipage}{\textwidth}
@@ -71,6 +71,7 @@ NFC input can force Android phones (with certain settings) to parse images, vide
 Android applications run in a sandbox which allows areas of the system to be isolated and thus limit access to the security-related parts of the Android API.
 However, access to these resources can be granted to an application if the developer requests the appropriate permissions in the application's manifest.
 Android developers are expected to use least-privilege with their permission requests: limit the permissions requested to only those that are absolutely necessary for the function of their applications. 
+\TODO{Relate this back to NFC.}
 
 \section{Threat Model}
 While NFC is still an emerging technology, there are several vulnerabilities which can afflict applications.
@@ -79,10 +80,11 @@ In our work, we address three of these: malicious NFC tags, more generally, frau
 We define a malicious NFC tag as an NFC tag which contains data that would cause a user to act on data which they did not expect.
 If the attacker has the ability to automatically have the phone call a specified number, then a tolled number could easily be inserted and thus result in a monetary loss on the part of the user. 
 This is a direct and obvious vulnerability in any application the calls an arbitrary phone number specified by a tag.
-An example of an application that does so is Samsung's Tectile application which, when scanning a tag with a phone number and directions to call this number, will do so without any further consideration. 
+An example of an application that does so is Samsung's Tectile application which, when scanning a tag with a phone number and directions to call this number, will do so without any further consideration. \TODO{Is this true? Have we actually tried doing this? And we should put a link to the app page here}
 For example, an attacker could replace the tag on a poster advertising a local event with a new tag, containing a paid phone number.
 When a user swipes the tag to view the event's website, their phone will place a call and their account will be billed.
 \subsection{Fraudulent data inputs}
+\TODO{How is this different than malicious tags?}
 Fraudulent data inputs refer to tags and other means of inputting NFC data which is not intended.
 For example, this applies to an attacker initiating an NFC connection handover, which results in malicious data transfer from the attacker's phone to the victim's.
 
@@ -94,10 +96,10 @@ It may be beneficial for some users to use these tag writing applications to wri
 However, if encryption is not used, an attacker who can gain access to these tags will have unfettered access to their information.
 NFC is also used as a means of initiating connections on higher-bandwidth media (eg. bluetooth), but if this connection handover is interfered with then an attacker may be able to listen in on the new connection.
 
-There are several other threats to consider, which we mention here but are outside the scope of our project.
+There are several other threats to consider, which we mention here, but are outside the scope of our project.
 
 \subsection{Eavesdropping}
-In "Securing Near Field Communication"\cite{kortvedt2009}, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods.
+In ``Securing Near Field Communication'' \cite{kortvedt2009}, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods.
 Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code. 
 \subsection{Relay, Replay, Denial of Service}
 A relay attack results when the attacker positions himself between a sender and receiver of information.
