@@ -75,18 +75,25 @@ In the case that more than one application can handle the type of data contained
 NFC input can force Android phones (with certain settings) to parse images, videos, contacts, and office documents, call or text arbitrary phone numbers, and open web pages via the browser, all without user interaction.  
 
 \subsection{Android Permission System}
-Android applications run in a sandbox which allows areas of the system to be isolated and thus limit access to the security-related parts of the Android API. However, access to these resources can be granted to an application if the developer requests the appropriate permissions in the application's manifest. Android developers are expected to use least-privilege with their permission requests: limit the permissions requested to only those that are absolutely necessary for the function of their applications. By analyzing the use of permissions, one can learn about the potential vulnerabilities introduced in an application. \TODO{Which we do later...}
+Android applications run in a sandbox which allows areas of the system to be isolated and thus limit access to the security-related parts of the Android API.
+However, access to these resources can be granted to an application if the developer requests the appropriate permissions in the application's manifest.
+Android developers are expected to use least-privilege with their permission requests: limit the permissions requested to only those that are absolutely necessary for the function of their applications. 
 
 \subsection{Threat Model}
-As with any new technology, comes the potential for vulnerabilities within the system. Our paper attempts to analyze the potential threats that this new technology may introduce and how the coding practices of NFC applications relate to these threats. We focus predominantly on the ability of an attacker to force a device to scan a malicious tag. However, we consider other threat models including writing sensitive data to an insecure tag, eavesdropping on the data transferred over the NFC connection, and creating a malicious NFC application. 
-
+While NFC is still an emerging technology, there are several vulnerabilities which can afflict applications.
+In our work, we address three of these: malicious NFC tags, more generally, fraudulent data inputs, and threats on user privacy.
 \subsubsection{Malicious Tags}
-It is possible to have a device scan a tag and perform the action specified by the tag without any user interaction, as mentioned previously. If an attacker can scan a tag unnoticed by the user, then the attacker can force the device to perform an arbitrary NFC action simply by writing it as part of a malicious tag. This opens the opportunity to have a phone open an arbitrary web url in the browser or call a specified phone number. 
+We define a malicious NFC tag as an NFC tag which contains data that would cause a user to act on data which they did not expect.
+If the attacker has the ability to automatically have the phone call a specified number, then a tolled number could easily be inserted and thus result in a monetary loss on the part of the user. 
+This is a direct and obvious vulnerability in any application the calls an arbitrary phone number specified by a tag.
+An example of an application that does so is Samsung's Tectile application which, when scanning a tag with a phone number and directions to call this number, will do so without any further consideration. 
+For example, an attacker could replace the tag on a poster advertising a local event with a new tag, containing a paid phone number.
+When a user swipes the tag to view the event's website, their phone will place a call and their account will be billed.
+\subsubsection{Fraudulent data inputs}
+Fraudulent data inputs refer to tags and other means of inputting NFC data which is not intended.
+For example, this applies to an attacker initiating an NFC connection handover, which results in malicious data transfer from the attacker's phone to the victim's.
 
-If the url is malicious in any way, opening it in the browser can cause... \TODO{issues should be talked about here. Talk about how the malicious application might have access to the sensitive information on the phone itself or corrupt the phone in some way. I am not entirely sure what to say here.} 
-
-If the attacker has the ability to automatically have the phone call a specified number, then a tolled number could easily be inserted and thus result in a monetary loss on the part of the user. This is a direct and obvious vulnerability in any application the calls an arbitrary phone number specified by a tag. An example of an application that does so is Samsung's Tectile application which, when scanning a tag with a phone number and directions to call this number, will do so without any further consideration. 
-
+\todo{This is for 294, and should possibly be omitted from other versions}
 \subsubsection{Privacy Concerns}
 Several NFC applications have the possibility of writing information to an NFC tag.
 This means that users have the ability to write anything they want to their own tags.
@@ -94,17 +101,24 @@ It may be beneficial for some users to use these tag writing applications to wri
 However, if encryption is not used, an attacker who can gain access to these tags will have unfettered access to their information.
 NFC is also used as a means of initiating connections on higher-bandwidth media (eg. bluetooth), but if this connection handover is interfered with then an attacker may be able to listen in on the new connection.
 
-\TODO{An example of this might be... }. If the attacker was ever able to gain access to these tags, there is no security stopping him/her from reading the tag and viewing the sensitive content. 
+There are several other threats to consider, which we mention here but are outside the scope of our project.
 
 \subsubsection{Eavesdropping}
-In Securing Near Field Communication, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods. Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code. 
+\todo{should we cite Kortvedt again?}
+In Securing Near Field Communication, Kortvedt shows that it is possible to eavesdrop on NFC communication at distances greater than 10 cm, using simple equipment and methods.
+Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code. 
 
-\TODO{I think the part below is irrelevant}
-%\subsubsection{Malware}
-%The last threat model we consider is that of an attacker creating his/her own malicious application. Given the fact that a majority of users ignore the permissions requested in a given application, an NFC application could easily request unnecessary and misleading permissions that give access to sensitive information from the phone itself. The application could then have access to such things as the contacts list, phone data, emails, and more. If the application also had some way to relay this information back to the attacker, for example, permission to access the Internet, then all of the user's information would be compromised. Since several NFC applications require multiple permissions, a user might not be as easily able to discern the necessary permissions or understand what the permission is being used for, thus making it more likely for the user to simply trust the application. However, this is possible for applications outside of NFC specific ones, and thus we choose not to focus on this attack. 
-%
-%\TODO{How is this different than any other application? Talk more about that. More NFC applications need certain permissions than normal applications, so a user giving access to certain resources might be more likely?}
+\subsection{Relay, Replay, Denial of Service}
+A relay attack results when the attacker positions himself between a sender and receiver of information.
+However, the sender and receiver may not be aware that they are actually communicating with each other.
+\todo{describe this? are these descriptions worth it}
+A replay attack consists of an attacker listening to data transmitted by a victim, and using that information again at a later time.
+Denial of service in the case of NFC applications would result in preventing NFC transactions from occurring.
+This could come from exploiting logic flaws in NFC applications, or merely jamming radio transmissions, for example.
+We omit discussion of these attacks from our paper.
 
+\todo{himself or herself}
+Relay, replay, and denial of service attacks are omitted from our discussion as well.
 
 \section{Related Work}
 Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development and still growing in popularity.
