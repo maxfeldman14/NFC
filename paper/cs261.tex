@@ -49,7 +49,7 @@ Both reading and writing of NFC data in Android is insecure, and developers curr
 
 We propose a solution to the issue of authorization, in the form of access control lists for NFC data.
 We describe a system which attempts to maximize usability and security of reading in NFC data, by allowing users to manage which tag authors they trust in a given context.
-We describe the operations present in this system which are presented to developers to incorporate into their applications, as well as the utilities offered to the user directly by the operating system.
+We describe the operations present in this system, and how the OS both handles marshalling NFC data after verifying access policies, as well as the utilities provided to the user for access control management.
 NFC security in Android applications has not previously been thoroughly addressed; we seek to rectify this and provide a feasible solution to some potential NFC attack vectors.
 There are other means of providing similar NFC security, and we address the merits of select alternatives to our proposal.
 
@@ -311,7 +311,8 @@ While support for this is not strictly necessary for our scheme, which requires 
 Our existing implementation uses a workaround to provide authentication and integrity, which consists of appending a public key and signature to the original NDEF message.
 This does not affect the feasibility of our approach, though, as it does not affect the process of administering access control.
 We begin building a proof-of-concept application which uses this access control API in order to provide security for reading NFC tags.\footnote{Unfortunately, we had to return the phone we were using for testing, which has currently halted our development.}
-This application demonstrates the ease with which an application developer can integrate access control into an NFC application.
+This application demonstrates the ease with which access control can be integrated into an NFC application.
+As developers do not have to do any additional work, this system is also easier to deploy, and can be deployed on existing phones without adversely affecting application behavior.
 \subsection{Usability}
 NFC offers a unique means of quickly performing actions via a single swipe of a tag; to this end, any security solution must therefore be particularly mindful of the tradeoffs between usability and security.
 Our recommendations focus on minimizing the additional interaction required of a user to add more security to their NFC transactions.
@@ -326,8 +327,7 @@ This could be subverted, though, and would likely result in high false positives
 In Section~\ref{sec:futurework} we consider how to test the usability of access control in the presence of both signed and unsigned applications.
 
 \subsection{Security}
-Our proposal lends itself to easy deployment by developers as the API is simple and does not require significant modification to existing applications.
-In our proof-of-concept application, we are able to grant access from a tag using less than 10 additional lines of code.
+The operating system takes care of the access control, so there is no need for additional development of applications, and no risk of developers improperly using (or simply not using) a framework.
 As the NFC application landscape for Android is still growing, it remains to be seen how many applications will benefit from this additional security.
 Of 251 free NFC applications (80\% of the total free NFC applications available for Android), 61\% had the internet permission, 15\% had the permission to place a phone call, and 10\% had the permission to send an SMS message.
 These permissions are indicative of some of the easiest attack surfaces.
@@ -341,21 +341,6 @@ For example, an individual navigating to Google will most likely be able to reco
 However, an individual reading an NFC tag may not know the author of that tag before performing the read.
 A certificate may associate a name with a public key, but that association may not be useful in the first place\cite{ellison2000}, and may be even less useful to an NFC user.
 Certificates can be much more helpful when a user knows who they intend to connect to, and wishes to verify the identity of the individual at the other end of that connection, but NFC tags dictate who is providing the content.
-
-
-%Possible things to consider when measuring security
-%- Economy of mechanism. Designs which are smaller and simpler are easier to inspect and trust.
-%- Fail-safe defaults. By default, access should be denied unless it is explicitly granted.
-%- Complete mediation. Every access to every object should be checked.
-%- Least privilege. Every program should operate with the minimum set of privileges necessary to do its job. This prevents accidental mistakes becoming security problems.
-%- Least common mechanism. Anything which is shared among different programs can be a path for communication and a potential security hole, so as little data as possible should be shared.
-%- Accountability. The system should be able to accurately record “who” is responsible for using a particular privilege.
-%- Psychological acceptability. The system should not place an undue burden on its users. Several other practical issues arise when designing a security system for Java.
-%- Performance. We must consider how our designs constrain system performance. Security checks which must be performed at run-time will have performance costs.
-%- Compatibility. We must consider the number and depth of changes necessary to integrate the security system with the existing Java virtual machine and standard libraries. Some changes may be impractical.
-%- Remote calls. If the security system can be extended cleanly to remote method invocation, that would be a beneﬁt for building secure, distributed systems.
-
-
 
 \section{Future Work}
 \label{sec:futurework}
