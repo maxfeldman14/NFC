@@ -290,7 +290,7 @@ Though we do not seek to offer an alternative to the certificate-based authentic
 The NDEF Signature RTD supports both X9.68 and X.509 certificates, but both of these are designed for Internet authentication.
 NFC tags have less available space, but also present a different use case than that of a user connecting to hosts on the Internet.
 A user connecting to an Internet host will often have at least some idea of who they are attempting to connect to.
-For example, an individual navigating to Google will most likely be able to recognize ``www.google.com'' as the appropriate website.
+For example, an individual navigating to Google will most likely be able to recognize \url{www.google.com} as the appropriate website.
 However, an individual reading an NFC tag may not know the author of that tag before performing the read.
 A certificate may associate a name with a public key, but that association may not be useful in the first place\cite{ellison2000}, and may be even less useful to an NFC user.
 Certificates can be much more helpful when a user knows who they intend to connect to, and wishes to verify the identity of the individual at the other end of that connection, but NFC tags dictate who is providing the content.
@@ -320,7 +320,7 @@ The Android NDEF API could offer this encryption to developers of tag writing ap
 Encryption would prevent leaks of private information from NFC tags even if the physical tag were to be compromised.
 
 
-\subsection{Recommended User Study\footnote{Our group decided to include this as an outline as we are reevaluating the specific user study we had originally agreed upon.}}
+\subsection{Recommended User Study}
 NFC is still emerging in smart phones, and as such there are uses and applications of NFC which have yet to be seen.
 However, there are still several common use cases which are already deployed or in the process of being adopted.
 In the future, we would like to examine common and expected use cases of NFC, and how access controls can provide improved security for these cases.
@@ -332,7 +332,7 @@ Applications which we think would be interesting for this include a SmartPoster 
 We would further like to evaluate these applications, and our system, in the presence of unsigned tags and signed tags, with malicious tags present in both cases.
 We are still evaluating the most accurate way to measure the usability and security effectiveness of our system's deployment.
 NFC demands certain levels of usability, and through a user study we seek to ensure that our system provides such levels while still offering acceptable security.
-Further evaluation of the tradeoffs of usability and security in the context of NFC applications will be crucial to the adoption of our system (or any system which seeks to provide usable security for NFC applications).
+Further evaluation of the tradeoffs of usability and security in the context of NFC applications will be crucial to the adoption of our system (or any system which seeks to provide usable security for NFC applications).\footnote{Our group decided to include this as an outline as we are reevaluating the specific user study we had originally agreed upon.}
 
 
 {\section{Conclusion}
