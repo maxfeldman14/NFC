@@ -36,7 +36,10 @@ At the most basic level, NFC specifies a set of protocols for this wireless comm
 NFC offers current and predicted functionality of contactless transactions, data exchange and an alternative to traditional contactless technologies such as RFID and QR codes.
 NFC-enabled devices can use the protocol in two modes: active and passive.
 In passive mode, there is a device actively generating a radio frequency (RF) field that initiates contact to the passive NFC tag.
+An NFC tag is a passive device which stores data for NFC transmission.
 In this case, the device can read or write information stored on NFC tags and cards without the passive targets needing any power source.
+Active devices are also able to emulate NFC tags by transmitting NFC data.
+For the purpose of discussion within this paper, we use ``tag'' to refer to either a physical tag, or a device which is emulating a tag, as their functionality is the same within the context of our exploration.
 Additionally, NFC phones have the ability to communicate with other NFC-enabled mobile phones to transfer data peer-to-peer in active mode.
 In this case both devices are generating their own RF fields.
 
@@ -79,40 +82,31 @@ In our work, we address three of these: malicious NFC tags, more generally, frau
 \subsection{Malicious Tags}
 We define a malicious NFC tag as an NFC tag which contains data that would cause a user to act on data which they did not expect.
 If the attacker has the ability to automatically have the phone call a specified number, then a tolled number could easily be inserted and thus result in a monetary loss on the part of the user. 
-This is a direct and obvious vulnerability in any application the calls an arbitrary phone number specified by a tag.
-An example of an application that does so is Samsung's Tectile application which, when scanning a tag with a phone number and directions to call this number, will do so without any further consideration. 
-\TODO{Is this true? Have we actually tried doing this? And we should put a link to the app page here}
+An example of an application that does this is Samsung's Tectile\footnote{\url{http://www.samsung.com/us/microsite/tectile}} application which, when scanning a tag with a phone number and directions to call this number, will do so without any further user prompts.
 For example, an attacker could replace the tag on a poster advertising a local event with a new tag, containing a paid phone number.
 When a user swipes the tag to view the event's website, their phone will place a call and their account will be billed.
-\subsection{Fraudulent data inputs}
-\TODO{How is this different than malicious tags? p2p, initiating false beam connections, etc. worth considering?}
-Fraudulent data inputs refer to more general  means of inputting unintended NFC data, including malicious tags.
-For example, this applies to an attacker initiating an NFC connection handover, which results in malicious data transfer from the attacker's phone to the victim's.
 
 \subsection{Privacy Concerns}
-% \TODO{This is for 294, and should possibly be omitted from other versions} is this worth including?
 Several NFC applications have the possibility of writing information to an NFC tag.
 This means that users have the ability to write anything they want to their own tags.
 It may be beneficial for some users to use these tag writing applications to write sensitive or critical information to tags they keep in specific locations.
 However, if encryption is not used, an attacker who can gain access to these tags will have unfettered access to their information.
 NFC is also used as a means of initiating connections on higher-bandwidth media (eg. bluetooth), but if this connection handover is interfered with then an attacker may be able to listen in on the new connection.
 
+\subsection{Threats which we do not address}
+\subsection{Threats which we do not address}
+\subsection{Threats which we do not address}
+\subsection{Threats which we do not address}
+\subsection{Threats which we do not address}
+\subsection{Threats which we do not address}
+\subsection{Threats which we do not address}
+\subsection{Threats which we do not address}
+\subsection{Threats which we do not address}
 There are several other threats to consider, which we mention here, but are outside the scope of our project.
-
-\subsection{Eavesdropping}
 In ``Securing Near Field Communication'' \cite{kortvedt2009}, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods.
 Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code. 
-\subsection{Relay, Replay, Denial of Service}
-A relay attack results when the attacker positions himself between a sender and receiver of information.
-However, the sender and receiver may not be aware that they are actually communicating with each other.
-\TODO{describe this? are these descriptions worth it}
-A replay attack consists of an attacker listening to data transmitted by a victim, and using that information again at a later time.
-Denial of service in the case of NFC applications would result in preventing NFC transactions from occurring.
-This could come from exploiting logic flaws in NFC applications, or merely jamming radio transmissions, for example.
-We omit discussion of these attacks from our paper.
+We also omit discussion of relay, replay, and denial of service attacks.
 
-\todo{himself or herself}
-Relay, replay, and denial of service attacks are omitted from our discussion as well.
 
 \TODO{\subsection{Current Solutions}}
 Related NFC Technology and Security - authenticating tags rather than users
