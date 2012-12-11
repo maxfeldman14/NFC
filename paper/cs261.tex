@@ -71,7 +71,7 @@ NFC input can force Android phones (with certain settings) to parse images, vide
 Android applications run in a sandbox which allows areas of the system to be isolated and thus limit access to the security-related parts of the Android API.
 However, access to these resources can be granted to an application if the developer requests the appropriate permissions in the application's manifest.
 Android developers are expected to use least-privilege with their permission requests: limit the permissions requested to only those that are absolutely necessary for the function of their applications. 
-\TODO{Relate this back to NFC.}
+% not sure we need to \TODO{Relate this back to NFC.}
 
 \section{Threat Model}
 While NFC is still an emerging technology, there are several vulnerabilities which can afflict applications.
@@ -80,16 +80,17 @@ In our work, we address three of these: malicious NFC tags, more generally, frau
 We define a malicious NFC tag as an NFC tag which contains data that would cause a user to act on data which they did not expect.
 If the attacker has the ability to automatically have the phone call a specified number, then a tolled number could easily be inserted and thus result in a monetary loss on the part of the user. 
 This is a direct and obvious vulnerability in any application the calls an arbitrary phone number specified by a tag.
-An example of an application that does so is Samsung's Tectile application which, when scanning a tag with a phone number and directions to call this number, will do so without any further consideration. \TODO{Is this true? Have we actually tried doing this? And we should put a link to the app page here}
+An example of an application that does so is Samsung's Tectile application which, when scanning a tag with a phone number and directions to call this number, will do so without any further consideration. 
+\TODO{Is this true? Have we actually tried doing this? And we should put a link to the app page here}
 For example, an attacker could replace the tag on a poster advertising a local event with a new tag, containing a paid phone number.
 When a user swipes the tag to view the event's website, their phone will place a call and their account will be billed.
 \subsection{Fraudulent data inputs}
-\TODO{How is this different than malicious tags?}
-Fraudulent data inputs refer to tags and other means of inputting NFC data which is not intended.
+\TODO{How is this different than malicious tags? p2p, initiating false beam connections, etc. worth considering?}
+Fraudulent data inputs refer to more general  means of inputting unintended NFC data, including malicious tags.
 For example, this applies to an attacker initiating an NFC connection handover, which results in malicious data transfer from the attacker's phone to the victim's.
 
-\TODO{This is for 294, and should possibly be omitted from other versions}
 \subsection{Privacy Concerns}
+% \TODO{This is for 294, and should possibly be omitted from other versions} is this worth including?
 Several NFC applications have the possibility of writing information to an NFC tag.
 This means that users have the ability to write anything they want to their own tags.
 It may be beneficial for some users to use these tag writing applications to write sensitive or critical information to tags they keep in specific locations.
@@ -320,7 +321,6 @@ We recommend an additional application permission in order to make a modificatio
 This implementation would also allow Android itself to display messages to the user, in order to centralize and standardize any necessary error reporting or warnings.
 
 \TODO{\section{Evaluation}}
-\subsection{Space Performance}
 It has an overhead of this many bytes... 
 \subsection{Usability}
 \subsection{Security}
