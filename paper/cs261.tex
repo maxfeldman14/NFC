@@ -77,9 +77,12 @@ Additionally, NFC phones have the ability to communicate with other NFC-enabled 
 In this case both devices are generating their own RF fields.
 
 \subsection{Android NFC}
-
 The Android system sends and receives NFC data in the form of NFC Data Exchange Format (NDEF) messages.
-These messages, which are stored in the NFC tag, act as a container for one or more NDEF records which are further broken up into a header and a payload, which contain typed data such as MIME-type media, a URI or a custom application payload.
+These messages, which are stored in the NFC tag, act as a container for one or more NDEF records which are further broken up into a header and a payload.
+NDEF records also contain a header, but of this header we find use in two fields: ``TNF'' and ``Type''.
+TNF is a 3-bit field which specifies the type of the type; a TNF value of 1 indicates a well-known type (defined by the NFC Forum) and a TNF value of 2 indicates a MIME-type, for example.
+Type is an arbitrary length field which better describes the type of the data in the NDEF record.
+Type can refer to a well-known type, such as a URI, or text, or it can refer to a MIME-type or custom application type, for example.
 
 \begin{figure}[h!]
 \begin{minipage}{\textwidth}
