@@ -235,31 +235,49 @@ In order to provide fine-grained access control, each application maintains its 
 An entry in this list consists of the TNF of the NDEF record, the Type of the NDEF record, and the public key extracted from the signature which applies to that record.
 This system is intended to be an OS library which allows developers to grant, revoke, and verify access within the context of their application.
 When a tag is read, its data will be marshalled to the appropriate application, if that application is not already running.
+\begin{figure}[h!]
+\begin{minipage}{\textwidth}
+	\centering
+		\includegraphics[width=0.5\textwidth]{ACL_image.png}
+	\caption[Caption for LOF]%
+    {An example of an application utilizing its access control list. The Browser application has three entries in its access control list. Ka is a key which is granted access for URI-type tags. Kb is granted access for all tag types. Kc is granted access for phone numbers, found in a Smart Poster tag. The Browser application interfaces with this access control list via the OS.}
+
+\end{minipage} 
+\end{figure}
 \subsubsection{Verifying Access}
 Before an application acts on NDEF input data, it verifies that the NDEF record's type and public key (from the associated signature record) exist in the access control list.
 The OS provides a method call which allows the application developer to easily check whether this content author has been approved.
+The application developer is encouraged to rely on well-known types, but types examined for access control can ultimately be specified by the developers.
+It is important to allow a degree of developer control over the types examined, as the logic of the application may leverage types in ways which the OS cannot predict.
 This content author can either be approved for a specific type (TNF and Type field), or for all types.
 For example, an author with public key Ka may have a record [001:55:Ka], indicating that their key is trusted for all URI inputs within the context of that application.
 Another author with public key Kb may have a record [*:*:Kb], indicating that they will always be granted access by this application.
 If the lookup of [TNF:TYPE:Key] returns true, then the data's provider has been granted access and operation proceeds uninterrupted.
 If the lookup fails, then a user will be prompted to either allow the operation to proceed once (ie. without granting permanent access), grant permanent access, or deny access and abort the operation.
 \subsubsection{Granting Access}
-If a user elects to grant access upon receipt of NDEF data, then they will be given the option of granting the tag author permanent access for that NDEF type (TNF and Type fields), or for all types (a wildcard match on the TNF and Type fields).
+If a user elects to grant access upon receipt of NDEF data, then they will be given the option of granting the tag author permanent access for that NDEF type (TNF and Type fields, or an application-developer-specified type), or for all types (a wildcard match on the TNF and Type fields).
 The OS will then attempt to deliver the most readable identifier of the public key which the user is about to approve.
 In most cases, extracting the identifying information from the certificate will be sufficient to present the user with a concise identity of the content author.
-The user then chooses the type of access they wish to grant to that public key, and this access choice is written to the access control list for that app.
+The user then chooses the type of access they wish to grant to that public key, and this access choice is written to the access control list for that application.
 \subsubsection{Revoking Access}
 \todo{make this better}
 Users will be provided an interface to the access control lists for their applications by the OS.
 Through this interface, the user can view all authors to which they have granted access (including the human-readable name associated with the public key).
 The user can then choose to revoke access to an author by removing associated entries of that author in relevant lists.
 The user can also remove only one access grant to an author, if they so choose.
-Revocation should additionally support certificate revocation lists; ie. if a tag with a revoked certificate is encountered, that revocation should propagate to the access control list.
+Revocation should additionally support certificate revocation lists; if a tag with a revoked certificate is encountered, that revocation should propagate to the access control list.
 Additionally, if a certificate has been found which is outside its validity period, the access associated with that identity should be revoked.
 
 
 \subsection{Alternatives}
-One access control method we considered was requiring approval when data was handed over to another process, as opposed to approval upon 
+One access control method we considered was requiring approval when data was handed over to another process, as opposed to approval upon reading the data.
+For example, in this scheme if an NFC tag contains a phone number, the user would be prompted to approve the outgoing phone call.
+A method such as this could offer persistent approval, as our proposal offers.
+After a user approves a phone number to make calls, any further calls would not require further user approval.
+We avoid this approach, however, as we feel it is not generalizable in a usable way.
+Opening arbitrary URLs presents a significant attack vector in NFC tags.
+However, usability of such a scheme decreases drastically if a user must approve every new URL encountered on NFC tags.
+We believe that the number of tag authors will be lower than the number of resources a user encounters on NFC tags, and as such, author-based access control provides a more generalizable (and still usable) approach.
 
 \section{Implementation}
 We begin implementing our access control system as an Android library that Android developers can include and access in their projects.
@@ -270,7 +288,7 @@ This emulates the PKI infrastructure provided by certificates, but in a simpler 
 We present this implementation as a proof-of-concept; ideally, such additions to the Android NFC stack would be implemented at OS-level.
 There are several advantages to kernel modifications, which are discussed below.
 
-\subsection{Key Management}
+\subsection{Access Management}
 Users need to be able to grant and revoke access to resources, either manually, or in the context of a tag reader application.
 For our API, we use Android's \texttt{SharedPreferences}, which provides persistent key-value storage.
 Our current implementation provides a unique instance of this access control list (a \texttt{ACL}) to an individual application.
