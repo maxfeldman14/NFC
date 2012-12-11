@@ -209,7 +209,6 @@ We propose a way for users to authorize keys based on the data type and applicat
 
 
 \section{Proposed Solution}
-\todo{make ``tag author'' more general}
 We propose a system of controlling the access that NFC inputs are granted by the Android OS.
 This access control system aims to provide a simple and usable means for phone users to grant access to certain capabilities to trusted tag authors.
 A capability in this case refers to the ability to access a system resource, such as to call a phone or open a URL.
@@ -240,12 +239,12 @@ When a tag is read, its data will be marshalled to the appropriate application, 
 Before an application acts on NDEF input data, it verifies that the NDEF record's type and public key (from the associated signature record) exist in the access control list.
 The OS provides a method call which allows the application developer to easily check whether this content author has been approved.
 This content author can either be approved for a specific type (TNF and Type field), or for all types.
-For example, an author with public key Ka may have a record /[001:55:Ka/], indicating that their key is trusted for all URI inputs within the context of that application.
-Another author with public key Kb may have a record /[*:*:Kb/], indicating that they will always be granted access by this application.
-If the lookup of \todo{how to phrase this?} /[TNF:TYPE:Key/] returns true, then the data's provider has been granted access and operation proceeds uninterrupted.
+For example, an author with public key Ka may have a record [001:55:Ka], indicating that their key is trusted for all URI inputs within the context of that application.
+Another author with public key Kb may have a record /[*:*:Kb], indicating that they will always be granted access by this application.
+If the lookup of \todo{how to phrase this?} [<TNF>:<TYPE>:Key] returns true, then the data's provider has been granted access and operation proceeds uninterrupted.
 If the lookup fails, then a user will be prompted to either allow the operation to proceed once (ie. without granting permanent access), grant permanent access, or deny access and abort the operation.
 \subsubsection{Granting Access}
-If a user elects to grant access upon receipt of NDEF data, then they will be given the option of granting the input author permanent access for that NDEF type (TNF and Type fields), or for all types (a wildcard match on the TNF and Type fields).
+If a user elects to grant access upon receipt of NDEF data, then they will be given the option of granting the tag author permanent access for that NDEF type (TNF and Type fields), or for all types (a wildcard match on the TNF and Type fields).
 The OS will then attempt to deliver the most readable identifier of the public key which the user is about to approve.
 In most cases, extracting the identifying information from the certificate will be sufficient to present the user with a concise identity of the content author.
 The user then chooses the type of access they wish to grant to that public key, and this access choice is written to the access control list for that app.
