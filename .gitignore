@@ -36,6 +36,10 @@ paper/*.aux
 paper/*.temp
 paper/*.fls
 paper/*.pdf
+paper/*.png
+paper/*.bbl
+paper/*.blg
+paper/*.out
 
 #eclipse
 *.classpath
