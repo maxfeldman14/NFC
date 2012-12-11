@@ -27,20 +27,51 @@ We attempt to address the issue of resource access on behalf of external data, i
 We discuss known issues and vulnerabilities with NDEF security, and how our proposal mitigates some of these concerns.
 We also keep in mind the importance of usability, especially in applications that must perform quickly and smoothly--as is the case with NFC applications. Finally, we present the description of a user study that can effectively evaluate the tradeoffs between secure access control and usability.
 
-\TODO{\section{Introduction}}
-1-2 page version of paper
+\section{Introduction}
+NFC-enabled devices have existed for several years, but with NFC deployment in Android phones developers have more power to write NFC applications than was previously available.
+The growing prevalence of NFC devices, and the developer-friendly nature of Android in particular, lead to a rapidly expanding space of both NFC Android applications and insecure development practices in these applications.
+This expansion of applications and functionality bears an expansion of the attack surface as well.
+
+In this paper, we frame the state of NFC vulnerabilities and proposed solutions, and evaluate the practicality of these solutions for Android devices.
+More and more, we see feature-rich applications which perform actions based upon NFC data which is read from an NFC tag or tag emulator.
+This allows for useful functionality and fast, responsive applications, but it also raises concerns regarding untrusted NFC data.
+For example, some Android applications offer the ability to automatically call a phone number if they receive an NFC input specifying a phone number.
+If this application were to be fed a malicious NFC input specifying a paid phone number, then the user's phone could make a call which charged the user's cellular account, all without the user's knowledge.
+There are NFC protocols to provide digital signatures, but Android does not implement these.
+Additionally, there is no standard means of determining authorization after NFC data is authenticated.
+
+We present other NFC-related threats, among them both threats which are in the scope of this paper, and threats which we do not discuss.
+Android allows users to write NFC tags (and transmit NFC data) in addition to performing read operations.
+This allows for richer applications, but also raises concerns regarding users sharing sensitive data over NFC (which is by default unencrypted).
+Although there are protocols and proposals for secure data transfer over NFC, Android does not support these either.
+Both reading and writing of NFC data in Android is insecure, and developers currently must implement their own security solutions if they wish to offer security for these operations.
+
+We propose a solution to the issue of authorization, in the form of access control lists for NFC data.
+We describe a system which attempts to maximize usability and security of reading in NFC data, by allowing users to manage which tag authors they trust in a given context.
+We describe the operations present in this system which are presented to developers to incorporate into their applications, as well as the utilities offered to the user directly by the operating system.
+NFC security in Android applications has not previously been thoroughly addressed; we seek to rectify this and provide a feasible solution to some potential NFC attack vectors.
+There are other means of providing similar NFC security, and we address the merits of select alternatives to our proposal.
+
+In order to evaluate the efficacy of our proposal, we implement basic functionality of our recommended system.
+This requires some hacking in order to emulate NFC digital signature standards which Android does not yet support, but we show that a simple API can provide powerful additional security.
+
+In our future work, we discuss further additions to our system which would be helpful, including additional encryption to protect user privacy when transmitting NFC data.
+This is not a new idea, but Android currently lacks support for secure transmission, outside of the developer linking cryptographic methods with NFC methods on their own.
+Were Android to provide integration of NFC and cryptographic protocols, it would reduce developer work as well as the risk of developers improperly employing cryptography.
+We also pose goals for a future user study which could illuminate user response to our system, and how well our access control integrates with real applications and use cases.
 
 \section{Background}
 Near Field Communication (NFC) is an emerging technology for wireless communication that allows NFC-enabled devices to transfer small amounts of data at a close proximity, usually no more than a few centimeters.
 At the most basic level, NFC specifies a set of protocols for this wireless communication based off of the radio-frequency identification (RFID) standards.
 NFC offers current and predicted functionality of contactless transactions, data exchange and an alternative to traditional contactless technologies such as RFID and QR codes.
+
 NFC-enabled devices can use the protocol in two modes: active and passive.
 In passive mode, there is a device actively generating a radio frequency (RF) field that initiates contact to the passive NFC tag.
 An NFC tag is a passive device that stores data for NFC transmission.
 There are several types of NFC tags, but in general they are a means of persistent storage for NFC data.
 Depending on the type of tag, the data can be overwritten or modified, or require authentication from a reader before transmitting its data.
 In this case, the device can read or write information stored on NFC tags and cards without the passive targets needing any power source.
-Active devices are also able to emulate NFC tags by transmitting NFC data.
+Active devices are also able to emulate NFC tags by transmitting NFC data to a receiver which is also acting as an active device.
 For the purpose of discussion within this paper, we use ``tag'' to refer to either a physical tag, or a device which is emulating a tag, as their functionality is the same within the context of our exploration.
 Additionally, NFC phones have the ability to communicate with other NFC-enabled mobile phones to transfer data peer-to-peer in active mode.
 In this case both devices are generating their own RF fields.
@@ -98,6 +129,7 @@ NFC is also used as a means of initiating connections on higher-bandwidth media 
 There are several other threats to consider, which we mention here, but are outside the scope of our project.
 In ``Securing Near Field Communication'' \cite{kortvedt2009}, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods.
 Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code. 
+Our proposal and implementation do not address the issue of eavesdropping, but we consider the mitigation of this problem in \textit{Future Work}.
 
 We also omit discussion of relay, replay, and denial of service attacks.
 A relay attack exploits the assumption that two devices engaged in an NFC transaction are actually adjacent (by placing a proxy in between the two devices).
@@ -327,6 +359,7 @@ It will also not be difficult to address some of the issues we presented in \tex
 At the very least, when a user writes a tag which they wish to be used by their phone only, they should be provided the option to encrypt that tag.
 The Android NDEF API could offer this encryption to developers of tag writing applications, who could then offer the feature to the user.
 Encryption would prevent leaks of private information from NFC tags even if the physical tag were to be compromised.
+We would also like to explore further generalization of this access control system, and its potential in areas other than NFC inputs.
 
 
 \subsection{Recommended User Study}
