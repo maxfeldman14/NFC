@@ -147,7 +147,7 @@ We instead seek to provide a decentralized mechanism for trusting and granting t
 The NFC Signature Record Type Definition (RTD), which can be used to sign NDEF records, was standardized to deal with threats caused by malicious tags including spoofing, phishing and denial of service.
 Using signatures on a tag causes a performance and space penalty, which are important since NFC tag readers are mobile devices and NFC tags themselves have very limited storage space \cite{kilas2009}.
 The standard now focuses on being able to authenticate the source of data through a certificate authority which distributes and validates public keys \cite{rosati2011}.
-However, several vulnerabilities arise with these signature regarding the \textit{authorization} of tags and the authentication of unsigned and the combination of unsigned tags and tags signed by different authors \cite{roland2010,roland2011}.
+However, vulnerabilities arise with these signature records when mixing signed and unsigned records in a single NDEF message \cite{roland2010,roland2011}.
 We propose a way for users to authorize keys based on the data type and application, which are enough to determine a fixed behavior (e.g. calling a phone number from a tag or opening a URL stored on a tag).
 
 
@@ -221,6 +221,16 @@ Opening arbitrary URLs presents a significant attack vector in NFC tags.
 However, usability of such a scheme decreases drastically if a user must approve every new URL encountered on NFC tags.
 We believe that the number of tag authors will be lower than the number of resources a user encounters on NFC tags, and as such, author-based access control provides a more generalizable (and still usable) approach.
 
+We also considered the merits of allowing access sharing between applications.
+The principal benefit of such a system is that there would no longer be duplicate access granting if a user wishes to trust a tag author within the context of multiple applications.
+While this would easily be possible, it raises two major concerns.
+First, shared access control would open the possibility for malicious applications to inject additional trust for authors who may otherwise be untrusted.
+An additional permission for read and write access to the shared access control list would need to be introduced in order to better manage which applications can alter this control list.
+Second, there are cases in which sharing access would result in a loss of security.
+For example, if one application with limited permissions added a tag author, \textit{A}, as a trusted author for all tag types, this access could be shared with other applications.
+If another application with more permissions (such as \texttt{CALL_PHONE}) saw \textit{A} as having access to all tag types, \textit{A}'s tags would then be able to place phone calls.
+There are means to mitigate this threat, but the management becomes significantly more complicated, and simplicity is a necessary facet of our proposal.
+
 \section{Implementation}
 We begin implementing our access control system as an Android library that Android developers can include and access in their projects.
 Unfortunately, Android does not yet support the NDEF Signature RTD, so much of our work involved working around this.
@@ -275,6 +285,15 @@ We examined 251 applications to determine which permissions they used.
 Of these applications, 61\% had the internet permission, 15\% had the permission to place a phone call, and 10\% had the permission to send an SMS message.
 These permissions are indicative of some of the easiest attack surfaces.
 Further analysis is required to determine to what extent malicious NFC tags could exploit these permissions, but these numbers provide some estimate for applications which could benefit from our system.
+\subsubsection{Certificates}
+Though we do not seek to offer an alternative to the certificate-based authentication used by NDEF signature records, it is worth addressing some issues specific to certificates.
+The NDEF Signature RTD supports both X9.68 and X.509 certificates, but both of these are designed for Internet authentication.
+NFC tags have less available space, but also present a different use case than that of a user connecting to hosts on the Internet.
+A user connecting to an Internet host will often have at least some idea of who they are attempting to connect to.
+For example, an individual navigating to Google will most likely be able to recognize ``www.google.com'' as the appropriate website.
+However, an individual reading an NFC tag may not know the author of that tag before performing the read.
+A certificate may associate a name with a public key, but that association may not be useful in the first place\cite{ellison2000}, and may be even less useful to an NFC user.
+Certificates can be much more helpful when a user knows who they intend to connect to, and wishes to verify the identity of the individual at the other end of that connection, but NFC tags dictate who is providing the content.
 
 
 %Possible things to consider when measuring security
@@ -292,9 +311,10 @@ Further analysis is required to determine to what extent malicious NFC tags coul
 
 
 \section{Future Work}
-* compression/optimization
-* OS perms, kernel mods to support this
-* application sharing and how to do this well
+The next major step for this scheme is its implementation at operating system level.
+An OS implementation will allow for simpler access on the part of developers and additional features (eg. an access administration interface for a user).
+This implementation will also make a more detailed evaluation, as there will be no more speculation about the functionality of the system.
+
 
 \subsection{Recommended User Study}
 There are several potential use cases for the NFC technology which have yet to be established. It is important to consider the usability of a solution such as ours for the various cases in which the technology could be used. Thus, we suggest a user study to test the obtrusiveness and effectiveness of access controls in a realistic setting. 
@@ -304,7 +324,8 @@ Using human participants, the study would attempt to measure the overhead impose
 
 \TODO{\section{Conclusion}}
 
-\TODO{\section{Acknowledgements}}
+\{Acknowledgements}
+We would like to thank Dawn Song and her research group for letting us borrow an NFC-enabled Android phone.
 
 \TODO{\section{References}}
 
