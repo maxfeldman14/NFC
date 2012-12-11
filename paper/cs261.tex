@@ -37,6 +37,8 @@ NFC offers current and predicted functionality of contactless transactions, data
 NFC-enabled devices can use the protocol in two modes: active and passive.
 In passive mode, there is a device actively generating a radio frequency (RF) field that initiates contact to the passive NFC tag.
 An NFC tag is a passive device which stores data for NFC transmission.
+There are several types of NFC tags, but in general they are a means of persistent storage for NFC data.
+Depending on the type of tag, the data can be overwritten or modified, or require authentication from a reader before transmitting its data.
 In this case, the device can read or write information stored on NFC tags and cards without the passive targets needing any power source.
 Active devices are also able to emulate NFC tags by transmitting NFC data.
 For the purpose of discussion within this paper, we use ``tag'' to refer to either a physical tag, or a device which is emulating a tag, as their functionality is the same within the context of our exploration.
@@ -93,14 +95,6 @@ It may be beneficial for some users to use these tag writing applications to wri
 However, if encryption is not used, an attacker who can gain access to these tags will have unfettered access to their information.
 NFC is also used as a means of initiating connections on higher-bandwidth media (eg. bluetooth), but if this connection handover is interfered with then an attacker may be able to listen in on the new connection.
 
-\subsection{Threats which we do not address}
-\subsection{Threats which we do not address}
-\subsection{Threats which we do not address}
-\subsection{Threats which we do not address}
-\subsection{Threats which we do not address}
-\subsection{Threats which we do not address}
-\subsection{Threats which we do not address}
-\subsection{Threats which we do not address}
 \subsection{Threats which we do not address}
 There are several other threats to consider, which we mention here, but are outside the scope of our project.
 In ``Securing Near Field Communication'' \cite{kortvedt2009}, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods.
