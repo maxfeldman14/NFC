@@ -18,9 +18,9 @@
 \section{Abstract}
 Near Field Communication (NFC) is a form of contactless communication that allows devices to transfer data over radio; it is similar to RFID, but with a much smaller range of use.
 NFC has existed for some time, but its implementation in Android phones, along with an API for developers, has only recently gained popularity.
-Upon scanning an NFC tag, Android will automatically run the application that has been associated with the type of data on that tag, sometimes \TODO{oftentimes} without user interaction or approval.
+Upon scanning an NFC tag, Android will automatically run the application that has been associated with the type of data on that tag, often without user interaction or approval.
 The Android NFC API offers application developers a new, more powerful means to access NFC capabilities in mobile devices, but this introduces an increased attack space and additional potential for vulnerability.
-Android provides access to an NFC Data Exchange Format (NDEF) API, but does not offer any of the various security measures that have been proposed \TODO{by the NFC standards group/NFC Forum}.
+Android provides access to an NFC Data Exchange Format (NDEF) API, but does not offer any of the various security measures that have been proposed by the NFC standards group (the NFC Forum).
 
 We examine the growing space of NFC applications offered for Android, and provide a cursory categorization of the functionality and general security practices of these applications.
 Alarmingly, several applications implement features such as SMS messaging or calling given phone numbers, or accessing arbitrary URLs, which are provided by an NFC tag without even prompting the user.
@@ -38,7 +38,7 @@ More and more, we see feature-rich applications which perform actions based upon
 This allows for useful functionality and fast, responsive applications, but it also raises concerns regarding untrusted NFC data.
 For example, some Android applications offer the ability to automatically call a phone number if they receive an NFC input specifying a phone number.
 If this application were to be fed a malicious NFC input specifying a paid phone number, then the user's phone could make a call which charged the user's cellular account, all without the user's knowledge.
-There are NFC protocols to provide digital signatures, but Android \TODO{currently} does not implement these, \TODO{nor do they sufficiently protect against several types of attacks \cite{roland2011}}.
+There are NFC protocols to provide digital signatures, but Android currently does not implement these, nor do they sufficiently protect against several types of attacks \cite{roland2011}.
 Additionally, there is no standard means of determining authorization after NFC data is authenticated.
 
 We present other NFC-related threats, among them both threats which are in the scope of this paper, and threats which we do not discuss.
@@ -54,7 +54,7 @@ NFC security in Android applications has not previously been thoroughly addresse
 There are other means of providing similar NFC security, and we address the merits of select alternatives to our proposal.
 
 In order to evaluate the efficacy of our proposal, we implement basic functionality of our recommended system.
-This requires \TODO{\sout{some hacking in order to}} emulating NFC digital signature standards which Android does not yet support, but we show that a simple API can provide powerful additional security.
+This requires emulating NFC digital signature standards which Android does not yet support, but we show that a simple API can provide powerful additional security.
 
 In our future work, we discuss further additions to our system which would be helpful, including additional encryption to protect user privacy when transmitting NFC data.
 This is not a new idea, but Android currently lacks support for secure transmission, outside of the developer linking cryptographic methods with NFC methods on their own.
