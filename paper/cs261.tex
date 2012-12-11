@@ -298,7 +298,7 @@ This system had the potential to grant more flexibility to developers by allowin
 Our proposal trades minor flexibility for no additional requirements of the developer, and a simple and centralized deployment of access control on the phone.
 
 \section{Implementation}
-We begin implementing our access control system as an Android library that Android developers can include and access in their projects.
+We began implementing our access control system as an Android library that Android developers can include and access in their projects.
 Unfortunately, Android does not yet support the NDEF Signature RTD, so much of our work involved working around this.
 We provide an API as a proof-of-concept for the proposed access control scheme, through which developers can add, verify, and revoke access.
 Our current implementation simply creates a makeshift signature record consisting of a digital signature (created by DSA) appended to the public key used for the signature.
