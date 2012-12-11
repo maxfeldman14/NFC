@@ -331,6 +331,7 @@ This does not affect the feasibility of our approach, though, as it does not aff
 We begin building a proof-of-concept application which uses this access control API in order to provide security for reading NFC tags.\footnote{Unfortunately, we had to return the phone we were using for testing, which has currently halted our development.}
 This application demonstrates the ease with which access control can be integrated into an NFC application.
 As developers do not have to do any additional work, this system is also easier to deploy, and can be deployed on existing phones without adversely affecting application behavior.
+
 \subsection{Usability}
 NFC offers a unique means of quickly performing actions via a single swipe of a tag; to this end, any security solution must therefore be particularly mindful of the tradeoffs between usability and security.
 Our recommendations focus on minimizing the additional interaction required of a user to add more security to their NFC transactions.
@@ -342,6 +343,7 @@ However, this severely inhibits the ease of use of an NFC application.
 Additionally, this behavior would likely result in users being trained to ignore warnings.
 We have not yet found an optimal solution for dealing with unsigned tags, although a balance between usability and security would be to only prompt the user for access approval if the tag types are of high security value, such as a phone number or URL.
 This could be subverted, though, and would likely result in high false positives and high false negatives in warnings.
+One option would be to have a per-application or per-tag-type policy for handling unsigned tags, since a user may want greater security for certain applications and not others.
 In Section~\ref{sec:futurework} we consider how to test the usability of access control in the presence of both signed and unsigned applications.
 
 \subsection{Security}
