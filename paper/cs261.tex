@@ -99,57 +99,37 @@ NFC is also used as a means of initiating connections on higher-bandwidth media 
 There are several other threats to consider, which we mention here, but are outside the scope of our project.
 In ``Securing Near Field Communication'' \cite{kortvedt2009}, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods.
 Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code. 
+
 We also omit discussion of relay, replay, and denial of service attacks.
 
+\TODO{A relay attack exploits the assumption that two devices engaged in an NFC transaction are actually adjacent (by placing a proxy in between the two devices).
+This is a serious potential exploit which must be defended against by any security-conscious application (as it may allow for arbitrary credit card purchases, for example).}
 
-\TODO{\subsection{Current Solutions}}
-Related NFC Technology and Security - authenticating tags rather than users
+\subsection{Relevant NFC Technology and Security}
+It is important to address the related technology to NFC and some of the protocols implemented and proposed that already attempt to deal with the above NFC issues. 
 
-* MiFare: hardware that allows the locking of data and allows symmetric mutual authentication of users and write protection to defend against reading and writing of the tag (privacy)
+MiFare, FeliCa and AFAICT are all contactless smart cards that can acts as tags for NFC devices and each offer different security features. MiFare is hardware that allows the locking of data once it is written on the tag and allows symmetric mutual authentication of users and write protection to defend against reading and writing of the tag. FeliCa provides authenticaton and write protection as well. The purposes of MiFare and FeliCa are to provide privacy to the user; however, the focus is to authenticate users rather than tags. AFAICT has the ability to lock the data to make it not overwritable, but does not provide authentication. 
 
-* FeliCa: authentication and write protection 
-
-* AFAICT: lock the data (not overwritable), but no authentication!
-
-* Signature NDEF Records
-
-* Certificates 
-
-\subsubsection{ \TODO{Dump of things from related work}}
-\textbf{Application level attacks.}
-Kerschberger\cite{kerschberger2011} presents an overview of NFC security and vulnerabilities.
-
-
-\textbf{Network-level attacks.}
-
-One major foray into the analysis of network-level NFC vulnerabilities was presented by Charlie Miller at BlackHat 2012\cite{miller2012}.
+In addition to the security that various NFC technologies have provided, there has been much insight into the vulnerabilities of NFC at the network-level. 
+One major foray into such analysis was presented by Charlie Miller at BlackHat 2012\cite{miller2012}.
 Miller employs fuzz testing to show that carefully crafted NFC payloads can do much more than just crash a device---in some cases phones can be forced to parse arbitrary data or open web pages without user interaction.
 Miller's work provides a wide analysis of the NFC attack surface, but our research will seek to provide much more depth in the exploration of application-level vulnerabilities.
 
 RFID, a precursor to and superset of NFC, has also raised several security issues in the past.
 Though RFID is a much older technology, it is remains relevant as both the foundation for NFC, and as a technology which is still employed in various applications (most prominently touch-activated credit cards).
-Heydt-Benjamin et al.\cite{heydtbenjamin2007} discuss issues involved in early generation deployments of RFID credit cards, and were successfully able to initiate various attacks on three major RFID enabled credit cards (including attacks which access private information or enable arbitrary purchases by the attacker).
-Such attacks remain important considerations due to the growing prominence of smartphone payment applications  (such as Google Wallet), so we keep all of these vulnerabilities in mind as we explore NFC security vulnerabilities.
-This paper presents some countermeasures, but some may be impractical (such as shielding) and others can be improved upon due to more flexible computing options of smartphones.
+Several issues involved in early generation deployments of RFID credit cards were discovered through the successful implementation of various attacks on three major RFID enabled credit cards (including attacks which access private information or enable arbitrary purchases by the attacker)\cite{heydtbenjamin2007} .
+%Such attacks remain important considerations due to the growing prominence of smartphone payment applications  (such as Google Wallet), so we keep all of these vulnerabilities in mind as we explore NFC security vulnerabilities.
 
-Haselsteiner et al\cite{haselsteiner2006} discuss general security issues with NFC (beyond the scope of just mobile phones).
-The paper discusses threats of eavesdropping, data corruption, data modification, data insertion, and man-in-the-middle attacks (though MITM is dismissed as practically impossible).
-The paper recommends establishing a secure channel between devices in order to prevent such attacks, and provides valuable discussion of how this channel would work.
-The paper does not, however, provide an implementation (as the purpose of the paper was to illustrate general NFC issues).
-As our focus is restricted to Android devices, we have the ability to recommend and implement Android-specific solutions.
-
-Francis et al.\cite{francis2012} discuss the potential for relay attacks on NFC transactions, and implement a software version of this attack which can be used on an NFC-enabled device.
-A relay attack exploits the assumption that two devices engaged in an NFC transaction are actually adjacent (by placing a proxy in between the two devices).
-This is a serious potential exploit which must be defended against by any security-conscious application (as it may allow for arbitrary credit card purchases, for example).
-The paper suggests several potential counters to such attacks; our analysis examines how popular applications employ relay-attack countermeasures, and to what degree they are effective.
-
-\textbf{Random shit}
-Analysis of smartphone applications in general (though we restrict our focus to Android devices, as iPhones do not yet offer NFC) is a much more thoroughly explored field, and several projects provide valuable insight into application testing.
-
+%Haselsteiner et al\cite{haselsteiner2006} discuss general security issues with NFC (beyond the scope of just mobile phones).
+There has also been analysis of NFC at the application-level, with discussion of threats of eavesdropping, data corruption, data modification, data insertion, relay attacks\cite{francis2012}, and man-in-the-middle attacks (though MITM is dismissed as practically impossible).
+One solution which involves setting up a secure channel between devices in order to prevent such attacks\cite{haselsteiner2006} is presented but not implemented. As our focus is restricted to Android devices, we have the ability to recommend and implement Android-specific solutions to some of the above attacks. 
+%Francis et al.\cite{francis2012} discuss the potential for relay attacks on NFC transactions, and implement a software version of this attack which can be used on an NFC-enabled device.
+%The paper suggests several potential counters to such attacks; our analysis examines how popular applications employ relay-attack countermeasures, and to what degree they are effective.
+%\textbf{Random shit}
+%Analysis of smartphone applications in general (though we restrict our focus to Android devices, as iPhones do not yet offer NFC) is a much more thoroughly explored field, and several projects provide valuable insight into application testing.
 %While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities.
 %We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
-
-\TODO{anything in analysis goes into background}
+\TODO{\subsection{Potential Analysis Section}}
 %\section{Analysis of Apps}
 %* Intro: Why analyze
 %** general coding practices re: NFC
