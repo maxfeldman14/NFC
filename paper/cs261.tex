@@ -76,7 +76,6 @@ NFC input can force Android phones (with certain settings) to parse images, vide
 Android applications run in a sandbox that allows areas of the system to be isolated and thus limit access to the security-related parts of the Android API.
 However, access to these resources can be granted to an application if the developer requests the appropriate permissions in the application's manifest.
 Android developers are expected to use least-privilege with their permission requests: limit the permissions requested to only those that are absolutely necessary for the function of their applications. 
-% not sure we need to \TODO{Relate this back to NFC.}
 
 \section{Threat Model}
 While NFC is still an emerging technology, there are several vulnerabilities that can afflict applications.
@@ -145,6 +144,16 @@ We instead seek to provide a decentralized mechanism for trusting and granting t
 
 \textbf{Signatures and Certificates.}
 The NFC Signature Record Type Definition (RTD), which can be used to sign NDEF records, was standardized to deal with threats caused by malicious tags including spoofing, phishing and denial of service.
+\begin{figure}[h!]
+\begin{minipage}{\textwidth}
+	\centering
+		\includegraphics[width=0.5\textwidth]{signed_ndef.png}
+	\caption[Caption for LOF]%
+  {An NDEF message in which Signature Record 1 signs Record 1 and Record 2, and Signature Record 2 signs Record 3.}
+
+\end{minipage} 
+\end{figure}
+
 Using signatures on a tag causes a performance and space penalty, which are important since NFC tag readers are mobile devices and NFC tags themselves have very limited storage space \cite{kilas2009}.
 The standard now focuses on being able to authenticate the source of data through a certificate authority which distributes and validates public keys \cite{rosati2011}.
 However, vulnerabilities arise with these signature records when mixing signed and unsigned records in a single NDEF message \cite{roland2010,roland2011}.
