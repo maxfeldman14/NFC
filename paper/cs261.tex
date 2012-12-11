@@ -252,11 +252,12 @@ We do not experience the same problem, because, in practice, each tag type will 
 \end{figure}
 \subsubsection{Verifying Access}
 Before an application can act on NDEF input data, the OS verifies that the NDEF record's type and public key (from the associated signature record) exist in the access control list.
+The format of an entry in the access control list is [TNF:Type:Key].
+If such an entry exists, then the key is granted access for the given TNF and Type.
 If the OS is able to verify the access of a key and record type, operations will proceed and the NDEF data will be handed to the running application, or launch the relevant application (depending on the current state of the phone).
 This content author can either be approved for a specific type (TNF and Type field), or for all types.
-For example, an author with public key $K_a$ may have a record [1:55:$K_a$], indicating that their key is trusted for all URI inputs within the context of that application.
+For example, an author with public key $K_a$ may have a record [Well-known:URI:$K_a$], indicating that their key is trusted for all URI inputs within the context of that application.
 Another author with public key $K_b$ may have a record [*:*:$K_b$], indicating that they will always be granted access by this application.
-If the lookup of [TNF:TYPE:Key] returns true, then the data's provider has been granted access and operation proceeds uninterrupted.
 If the lookup fails, then a user will be prompted to either allow the operation to proceed once (ie. without granting permanent access), grant permanent access, or deny access and abort the operation.
 \subsubsection{Granting Access}
 If a user elects to grant access upon receipt of NDEF data, then they will be given the option of granting the tag author permanent access for that NDEF type (TNF and Type fields, or an application-developer-specified type), or for all types (a wildcard match on the TNF and Type fields).
