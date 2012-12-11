@@ -108,6 +108,7 @@ In the case that more than one application can handle the type of data contained
 NFC input can force Android phones (with certain settings) to parse images, videos, contacts, and office documents, call or text arbitrary phone numbers, establish Bluetooth connections, and open web pages via the browser, all without user interaction.  
 
 \subsection{Android Permission System}
+\label{sec:androidperm}
 Android applications run in a sandbox that allows areas of the system to be isolated and thus limit access to the security-related parts of the Android API.
 However, access to these resources can be granted to an application if the developer requests the appropriate permissions in the application's manifest.
 Android developers are expected to limit the permissions requested to only those that are absolutely necessary for the function of their applications.
@@ -349,7 +350,7 @@ In Section~\ref{sec:futurework} we consider how to test the usability of access 
 \subsection{Security}
 The operating system takes care of the access control, so there is no need for additional development of applications, and no risk of developers improperly using (or simply not using) a framework.
 As the NFC application landscape for Android is still growing, it remains to be seen how many applications will benefit from this additional security.
-Of 251 free NFC applications (80\% of the total free NFC applications available for Android), 61\% had the internet permission, 15\% had the permission to place a phone call, and 10\% had the permission to send an SMS message.
+Of 251 free NFC applications, which constitute 80\% of the total free NFC applications available for Android see~\ref{sec:androidperm}, 61\% had the internet permission, 15\% had the permission to place a phone call, and 10\% had the permission to send an SMS message.
 These permissions are indicative of some of the easiest attack surfaces.
 Further analysis is required to determine to what extent malicious NFC tags could exploit these permissions, but these numbers provide some estimate for applications which could benefit from our system.
 \subsubsection{Certificates}
