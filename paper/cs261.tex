@@ -242,10 +242,8 @@ When a tag is read, its data will be marshalled to the appropriate application, 
 \end{minipage} 
 \end{figure}
 \subsubsection{Verifying Access}
-Before an application acts on NDEF input data, it verifies that the NDEF record's type and public key (from the associated signature record) exist in the access control list.
-The OS provides a method call which allows the application developer to easily check whether this content author has been approved.
-The application developer is encouraged to rely on well-known types, but types examined for access control can ultimately be specified by the developers.
-It is important to allow a degree of developer control over the types examined, as the logic of the application may leverage types in ways which the OS cannot predict.
+Before an application can act on NDEF input data, the OS verifies that the NDEF record's type and public key (from the associated signature record) exist in the access control list.
+If the OS is able to verify the access of a key and record type, operations will proceed and the NDEF data will be handed to the running application, or launch the relevant application (depending on the current state of the phone).
 This content author can either be approved for a specific type (TNF and Type field), or for all types.
 For example, an author with public key Ka may have a record [001:55:Ka], indicating that their key is trusted for all URI inputs within the context of that application.
 Another author with public key Kb may have a record [*:*:Kb], indicating that they will always be granted access by this application.
@@ -275,7 +273,7 @@ Opening arbitrary URLs presents a significant attack vector in NFC tags.
 However, usability of such a scheme decreases drastically if a user must approve every new URL encountered on NFC tags.
 We believe that the number of tag authors will be lower than the number of resources a user encounters on NFC tags, and as such, author-based access control provides a more generalizable (and still usable) approach.
 
-We also considered the merits of allowing access sharing between applications.
+We considered the merits of allowing access sharing between applications.
 The principal benefit of such a system is that there would no longer be duplicate access granting if a user wishes to trust a tag author within the context of multiple applications.
 While this would easily be possible, it raises two major concerns.
 First, shared access control would open the possibility for malicious applications to inject additional trust for authors who may otherwise be untrusted.
@@ -284,6 +282,10 @@ Second, there are cases in which sharing access would result in a loss of securi
 For example, if one application with limited permissions added a tag author, \textit{A}, as a trusted author for all tag types, this access could be shared with other applications.
 If another application with more permissions (such as \texttt{CALL\_PHONE}) saw \textit{A} as having access to all tag types, \textit{A}'s tags would then be able to place phone calls.
 There are means to mitigate this threat, but the management becomes significantly more complicated, and simplicity is a necessary facet of our proposal.
+
+We also considered a system in which the OS provided API calls to developers, in which developers would then have to make decisions regarding access.
+This system had the potential to grant more flexibility to developers by allowing them to interpret and customize which types were granted access, but the resulting overhead would not be worth it.
+Our proposal trades minor flexibility for no additional requirements of the developer, and a simple and centralized deployment of access control on the phone.
 
 \section{Implementation}
 We begin implementing our access control system as an Android library that Android developers can include and access in their projects.
