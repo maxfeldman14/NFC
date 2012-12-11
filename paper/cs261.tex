@@ -236,9 +236,10 @@ When a tag is read, its data will be marshalled to the appropriate application, 
 We argue that having per-application access control lists is both necessary and scalable.
 Keys should not be implicitly shared across different applications because the behavior of one application on a certain data type may be different than one on the same data type.
 For example, upon swiping a tag containing a phone number, an application may choose to call a phone number or it may choose to save that number to the list of contacts.
-In addition, if a user replaces an application which originally handled a specific tag type, then the access control should not automatically be applied to the new application because the behavior may not be the same.
+In addition, if a user replaces an application which originally handled a specific tag type, then the access control should not automatically be applied to the new application because the behavior of that new application may not be the same as the behavior of the original application.
+Different behaviors may warrant different access policies, so it is not safe to maintain the same access control upon behavioral changes.
 One common problem with access control lists is that there may be an exponential number of policies to set, which in general causes them to be difficult for users to maintain.
-We do not experience the same problem, since in practice, each tag type will only have one type of application that it will open automatically, and thus an application's ACL will only need to maintain information about tag types which it is the primary application for.
+We do not experience the same problem, because, in practice, each tag type will only have one type of application that it will open automatically, and thus an application's ACL will only need to maintain information about tag types for which it is the primary application.
 \begin{figure}[h!]
 \begin{minipage}{\textwidth}
 	\centering
