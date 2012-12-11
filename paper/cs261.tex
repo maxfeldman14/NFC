@@ -121,11 +121,11 @@ While NFC is still an emerging technology, there are several vulnerabilities tha
 In our work, we primarily address the threat malicious NFC tags, but also consider threats to a user's privacy. 
 
 \subsection{Malicious Tags}
-We define a malicious NFC tag as an NFC tag that contains data that would cause a user to act on data which they did not expect.
-If the attacker has the ability to automatically have the phone call a specified number, then a tolled number could easily be inserted and thus result in a monetary loss on the part of the user. 
+We define a malicious NFC tag as an NFC tag that contains data that would cause a user to act on data in a way that they did not expect.
+If the attacker has the ability to call to an arbitrary number, then the attacker could call a tolled number and thus result in a monetary loss on the part of the user. 
 An example of an application that does this is Samsung's Tectile\footnote{\url{http://www.samsung.com/us/microsite/tectile}} application which, when scanning a tag with a phone number and directions to call this number, will do so without any further user prompts.
-For example, an attacker could replace the tag on a poster advertising a local event with a new tag, containing a paid phone number.
-When a user swipes the tag to view the event's website, their phone will place a call and their account will be billed.
+For example, an attacker could replace the tag on a poster advertising a local event with a new tag containing a paid phone number.
+When a user swipes the tag to view the event's website, the user's phone will place a call and will be billed for the call.
 
 \subsection{Privacy Concerns}
 Several NFC applications have the possibility of writing information to an NFC tag.
@@ -138,30 +138,30 @@ NFC is also used as a means of initiating connections on higher-bandwidth media 
 
 \subsection{Unaddressed Threats}
 There are several other threats to consider, which we mention here, but are outside the scope of our project.
-In ``Securing Near Field Communication'' \cite{kortvedt2009}, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods.
+In \cite{kortvedt2009}, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods.
 Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code. 
-Our proposal and implementation do not address the issue of eavesdropping, but we consider the mitigation of this problem in \textit{Future Work}.
+Our proposal and implementation do not address the issue of eavesdropping, but we consider the mitigation of this problem in Section~\ref{sec:futurework}.
 
 We also omit discussion of relay, replay, and denial of service attacks.
 
-\subsection{Relevant NFC Technology and Security}
+\section{Relevant NFC Technology and Security}
 It is important to address the related technology to NFC and some of the protocols implemented and proposed that already attempt to deal with the above NFC issues. 
 
 MiFare, FeliCa and AFAICT are all contactless smart cards that can acts as tags for NFC devices and each offer different security features. MiFare is hardware that allows the locking of data once it is written on the tag and allows symmetric mutual authentication of users and write protection to defend against reading and writing of the tag. FeliCa provides authenticaton and write protection as well. The purposes of MiFare and FeliCa are to provide privacy to the user; however, the focus is to authenticate users rather than tags. AFAICT has the ability to lock the data to make it not overwritable, but does not provide authentication. As each type of tag only offers a subset of the security measures that are possible, it is left to the developer to provide some sort of security scheme or use cryptography to provide privacy. 
 
 In addition to the security that various NFC technologies have provided, there has been much insight into the vulnerabilities of NFC at the network-level. 
-One major foray into such analysis was presented by Charlie Miller at BlackHat 2012\cite{miller2012}.
+One major foray into such analysis was presented by Charlie Miller at BlackHat 2012 \cite{miller2012}.
 Miller employs fuzz testing to show that carefully crafted NFC payloads can do much more than just crash a device---in some cases phones can be forced to parse arbitrary data or open web pages without user interaction.
 Miller's work provides a wide analysis of the NFC attack surface, but our research will seek to provide much more depth in the exploration of application-level vulnerabilities.
 
 RFID, a precursor to and superset of NFC, has also raised several security issues in the past.
 Though RFID is a much older technology, it is remains relevant as both the foundation for NFC, and as a technology which is still employed in various applications (most prominently touch-activated credit cards).
-Several issues involved in early generation deployments of RFID credit cards were discovered through the successful implementation of various attacks on three major RFID enabled credit cards (including attacks which access private information or enable arbitrary purchases by the attacker)\cite{heydtbenjamin2007} .
+Several issues involved in early generation deployments of RFID credit cards were discovered through the successful implementation of various attacks on three major RFID enabled credit cards (including attacks which access private information or enable arbitrary purchases by the attacker) \cite{heydtbenjamin2007}.
 %Such attacks remain important considerations due to the growing prominence of smartphone payment applications  (such as Google Wallet), so we keep all of these vulnerabilities in mind as we explore NFC security vulnerabilities.
 
 %Haselsteiner et al\cite{haselsteiner2006} discuss general security issues with NFC (beyond the scope of just mobile phones).
-Further analysis at the application-level has showed threats of eavesdropping, data corruption, data modification, data insertion, relay attacks\cite{francis2012}, and man-in-the-middle attacks (though MITM is dismissed as practically impossible).
-One solution which involves setting up a secure channel between devices in order to prevent such attacks\cite{haselsteiner2006} is presented but not implemented. As our focus is restricted to Android devices, we have the ability to recommend and implement Android-specific solutions to some of the above attacks. 
+Further analysis at the application-level has showed threats of eavesdropping, data corruption, data modification, data insertion, relay attacks \cite{francis2012}, and man-in-the-middle attacks (though MITM is dismissed as practically impossible).
+One solution \cite{haselsteiner2006} which involves setting up a secure channel between devices in order to prevent such attacks is presented but not implemented. As our focus is restricted to Android devices, we have the ability to recommend and implement Android-specific solutions to some of the above attacks. 
 %Francis et al.\cite{francis2012} discuss the potential for relay attacks on NFC transactions, and implement a software version of this attack which can be used on an NFC-enabled device.
 %The paper suggests several potential counters to such attacks; our analysis examines how popular applications employ relay-attack countermeasures, and to what degree they are effective.
 %Analysis of smartphone applications in general (though we restrict our focus to Android devices, as iPhones do not yet offer NFC) is a much more thoroughly explored field, and several projects provide valuable insight into application testing.
@@ -323,7 +323,7 @@ However, this severely inhibits the ease of use of an NFC application.
 Additionally, this behavior would likely result in users being trained to ignore warnings.
 We have not yet found an optimal solution for dealing with unsigned tags, although a balance between usability and security would be to only prompt the user for access approval if the tag types are of high security value, such as a phone number or URL.
 This could be subverted, though, and would likely result in high false positives and high false negatives in warnings.
-In \textit{Future Work} we consider how to test the usability of access control in the presence of both signed and unsigned applications.
+In Section~\ref{sec:futurework} we consider how to test the usability of access control in the presence of both signed and unsigned applications.
 
 \subsection{Security}
 Our proposal lends itself to easy deployment by developers as the API is simple and does not require significant modification to existing applications.
@@ -358,6 +358,7 @@ Certificates can be much more helpful when a user knows who they intend to conne
 
 
 \section{Future Work}
+\label{sec:futurework}
 The next major step for this scheme is its implementation at operating system level.
 An OS implementation will allow for simpler access on the part of developers and additional features (eg. an access administration interface for a user).
 This implementation will also make a more detailed evaluation, as there will be no more speculation about the functionality of the system.
