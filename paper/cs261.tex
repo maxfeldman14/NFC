@@ -228,10 +228,17 @@ These are both goals of the NDEF Signature RTD, and as such we leverage these pr
 This system does not offer an alternative to the certificate scheme support by the NDEF Signature RTD.
 
 \subsection{Approach}
-In order to provide fine-grained access control, each application maintains its own access control list.
+In order to provide fine-grained access control, the operating system maintains a separate access control list for each application.
 An entry in this list consists of the TNF of the NDEF record, the Type of the NDEF record, and the public key extracted from the signature which applies to that record.
 This system is intended to operate at OS level, and perform access control grants and checks after parsing NDEF data (OS-level parsing) but before providing that data to the relevant application.
 When a tag is read, its data will be marshalled to the appropriate application, if that application is not already running.
+
+We argue that having per-application access control lists is both necessary and scalable.
+Keys should not be implicitly shared across different applications because the behavior of one application on a certain data type may be different than one on the same data type.
+For example, upon swiping a tag containing a phone number, an application may choose to call a phone number or it may choose to save that number to the list of contacts.
+In addition, if a user replaces an application which originally handled a specific tag type, then the access control should not automatically be applied to the new application because the behavior may not be the same.
+One common problem with access control lists is that there may be an exponential number of policies to set, which in general causes them to be difficult for users to maintain.
+We do not experience the same problem, since in practice, each tag type will only have one type of application that it will open automatically, and thus an application's ACL will only need to maintain information about tag types which it is the primary application for.
 \begin{figure}[h!]
 \begin{minipage}{\textwidth}
 	\centering
