@@ -254,7 +254,7 @@ We do not experience the same problem, because, in practice, each tag type will 
 Before an application can act on NDEF input data, the OS verifies that the NDEF record's type and public key (from the associated signature record) exist in the access control list.
 If the OS is able to verify the access of a key and record type, operations will proceed and the NDEF data will be handed to the running application, or launch the relevant application (depending on the current state of the phone).
 This content author can either be approved for a specific type (TNF and Type field), or for all types.
-For example, an author with public key Ka may have a record [001:55:Ka], indicating that their key is trusted for all URI inputs within the context of that application.
+For example, an author with public key Ka may have a record [1:55:Ka], indicating that their key is trusted for all URI inputs within the context of that application.
 Another author with public key Kb may have a record [*:*:Kb], indicating that they will always be granted access by this application.
 If the lookup of [TNF:TYPE:Key] returns true, then the data's provider has been granted access and operation proceeds uninterrupted.
 If the lookup fails, then a user will be prompted to either allow the operation to proceed once (ie. without granting permanent access), grant permanent access, or deny access and abort the operation.
