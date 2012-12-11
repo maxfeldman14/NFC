@@ -102,7 +102,7 @@ The core components of an Android application are activated through messages cal
 Intents are used for inter-application and intra-application communication by sending messages with relevant information about operations to be performed to various applications.  
 
 When NFC is enabled and the screen is unlocked, Android devices will always be searching for input from an NFC tag or device. 
-When the device discovers an NFC tag, the Android OS creates an intent that is dispatched to an application that has registered for it.
+When the device discovers an NFC tag, the Android OS creates an intent that is dispatched to an application that has registered for a tag of that type.
 This information is processed by Android's special tag dispatch system to determine which activity to launch.
 In the case that more than one application can handle the type of data contained in the tag, the phone will open a prompt for the user to choose among the several applications; however, if there is only one application, the phone will automatically launch this application and process the tag.
 NFC input can force Android phones (with certain settings) to parse images, videos, contacts, and office documents, call or text arbitrary phone numbers, establish Bluetooth connections, and open web pages via the browser, all without user interaction.  
@@ -110,11 +110,13 @@ NFC input can force Android phones (with certain settings) to parse images, vide
 \subsection{Android Permission System}
 Android applications run in a sandbox that allows areas of the system to be isolated and thus limit access to the security-related parts of the Android API.
 However, access to these resources can be granted to an application if the developer requests the appropriate permissions in the application's manifest.
-Android developers are expected to use least-privilege with their permission requests: limit the permissions requested to only those that are absolutely necessary for the function of their applications. 
+Android developers are expected to \TODO{\sout{use least-privilege with their permission requests:}} limit the permissions requested to only those that are absolutely necessary for the function of their applications.
+\TODO{Access to the NFC hardware is a permission that application developers must request, and many applications which request NFC permission also require other permissions such as Internet access and making phone calls.} \TODO{Stats on this???}
 
 \section{Threat Model}
 While NFC is still an emerging technology, there are several vulnerabilities that can afflict applications.
-In our work, we address three of these: malicious NFC tags, more generally, fraudulent data inputs, and threats on user privacy.
+In our work, we address three of these: malicious NFC tags, more generally, fraudulent data inputs, and threats on user privacy. \TODO{It seems a little confusing how the subsections don't match the three threat models mentioned here.}
+
 \subsection{Malicious Tags}
 We define a malicious NFC tag as an NFC tag that contains data that would cause a user to act on data which they did not expect.
 If the attacker has the ability to automatically have the phone call a specified number, then a tolled number could easily be inserted and thus result in a monetary loss on the part of the user. 
