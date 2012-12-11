@@ -148,7 +148,7 @@ The NFC Signature Record Type Definition (RTD), which can be used to sign NDEF r
 Using signatures on a tag causes a performance and space penalty, which are important since NFC tag readers are mobile devices and NFC tags themselves have very limited storage space \cite{kilas2009}.
 The standard now focuses on being able to authenticate the source of data through a certificate authority which distributes and validates public keys \cite{rosati2011}.
 However, several vulnerabilities arise with these signature regarding the \textit{authorization} of tags and the authentication of unsigned and the combination of unsigned tags and tags signed by different authors \cite{roland2010,roland2011}.
-We propose a way for users to authorize keys based on the data type and application, which are enough to determine a fixed behavior (e.g. calling a phone number from a tag, opening a URL stored on a tag).
+We propose a way for users to authorize keys based on the data type and application, which are enough to determine a fixed behavior (e.g. calling a phone number from a tag or opening a URL stored on a tag).
 
 
 \section{Proposed Solution}
@@ -248,41 +248,34 @@ An OS implementation allows for a consolidated and secure means of providing dev
 In this section we evaluate the feasibility of our suggestions, and their impact on the usability and security of using NFC applications.
 Our experience implementing this scheme did not yield any challenges which could not be dealt with.
 The largest inhibitor of deployment of this scheme is Android's current lack of support for the NDEF Signature RTD.
-While support for this is not strictly necessary for our scheme, which requires only some forms of authentication and integrity, adoption of the Signature RTD standard 
+While support for this is not strictly necessary for our scheme, which requires only some forms of authentication and integrity, adoption of the Signature RTD standard would be ideal.
+Our existing implementation uses a workaround to provide authentication and integrity, which consists of appending a public key and signature to the original NDEF message.
+This does not affect the feasibility of our approach, though, as it does not affect the process of administering access control.
+We begin building a proof-of-concept application which uses this access control API in order to provide security for reading NFC tags.\footnote{Unfortunately, we had to return the phone we were using for testing, which has currently halted our development.}
+This application demonstrates the ease with which an application developer can integrate access control into an NFC application.
 \subsection{Usability}
+NFC offers a unique means of quickly performing actions via a single swipe of a tag; to this end, any security solution must therefore be particularly mindful of the tradeoffs between usability and security.
+Our recommendations focus on minimizing the additional interaction required of a user to add more security to their NFC transactions.
+Users should be offered the option to approve a tag's author permanently (by updating the access control list), as well as to grant the author access on a case-by-case basis.
+Additionally, to ensure backwards compatibility, unsigned NFC tags should not cause the system to break.
+We recommend giving users a choice regarding the handling of an unsigned tag.
+The most secure means of supporting tags without signature records is to warn the user and prompt for approval every time such a tag is encountered.
+However, this severely inhibits the ease of use of an NFC application.
+Additionally, this behavior would likely result in users being trained to ignore warnings.
+We have not yet found an optimal solution for dealing with unsigned tags, although a balance between usability and security would be to only prompt the user for access approval if the tag types are of high security value, such as a phone number or URL.
+This could be subverted, though, and would likely result in high false positives and high false negatives in warnings.
+In \textit{Future Work} we consider how to test the usability of access control in the presence of both signed and unsigned applications.
+
 \subsection{Security}
-* simplicity/overhead for user (warning message?)
-* how many apps can benefit from this?
-* applicability
-** do 3 case studies (examples of applying it to an application)
-** do it on github
-* How many additional lines of code required for using API?
+Our proposal lends itself to easy deployment by developers as the API is simple and does not require significant modification to existing applications.
+In our proof-of-concept application, we are able to grant access from a tag using less than 10 additional lines of code.
+As the NFC application landscape for Android is still growing, it remains to be seen how many applications will benefit from this additional security.
+As of writing this report, there were 315 free NFC-enabled Android applications available for download.
+We examined 251 applications to determine which permissions they used.
+Of these applications, 61\% had the internet permission, 15\% had the permission to place a phone call, and 10\% had the permission to send an SMS message.
+These permissions are indicative of some of the easiest attack surfaces.
+Further analysis is required to determine to what extent malicious NFC tags could exploit these permissions, but these numbers provide some estimate for applications which could benefit from our system.
 
-* (performance (time+space))
-* security of this scheme
-** bits of security (e.g. signature size)
-** assumptions/foundations (e.g. secure key distribution)
-** key storage on Android phones can't be tampered with
-
-* LIMITATIONS
-
-* key add/revoke
-** app perm to add
-** app perm to remove
-** done via syscalls, i.e. android holds this
-*** some intent?
-** some way for app developer to add centralized repo of keys
-** automatic get key
-
-* Does phone already have a pub key pair?
-* backwards compatibility
-** Read NDEF standards and how Android handles them
-
-brainstorm                         works for                           bad
-- NDEF record/type for signature   updated os
-                                   app viewing finite \# records
-- length exclused signature        above                               violates standards
-  + above                          app viewing variable \# of records   
 
 %Possible things to consider when measuring security
 %- Economy of mechanism. Designs which are smaller and simpler are easier to inspect and trust.
@@ -298,17 +291,16 @@ brainstorm                         works for                           bad
 
 
 
-\TODO{\section{Future Work}}
+\section{Future Work}
 * compression/optimization
 * OS perms, kernel mods to support this
 * application sharing and how to do this well
 
 \subsection{Recommended User Study}
-There are several potential use cases for the NFC technology which have yet to be established. It is important to consider the usability of a solution such as ours for the various cases in which the technology could be used. Thus, we suggest a user study to test the obstrusiveness and effectiveness of access controls in a realistic setting. 
+There are several potential use cases for the NFC technology which have yet to be established. It is important to consider the usability of a solution such as ours for the various cases in which the technology could be used. Thus, we suggest a user study to test the obtrusiveness and effectiveness of access controls in a realistic setting. 
 
 Using human participants, the study would attempt to measure the overhead imposed by warnings/approvals presented by our proposed system as well as the effectiveness in blocking against the given attacks, taking into consideration the ability for the user to fall for the attack. There are several implementation choices on the part of the developer which would be of interest to observe. We suggest trying two main implementation approaches, including pop up menus to ask the user for their approval for each given tag, as well as incorporating untrusted tags as a warning into the phone rather than blatant pop ups. Things like how often the warning were ignored and in what cases they were ignored should be measured during the experiment in order to provide insight into the effectiveness of the system. Asking the users a series of questions after their tests, including which tags they believed to be malicious and how easy or intuitive the access control scheme presented was to use would offer additional insight to the usability. 
 
-\subsection{Optimization}
 
 \TODO{\section{Conclusion}}
 
