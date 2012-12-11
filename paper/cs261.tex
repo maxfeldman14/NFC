@@ -95,15 +95,14 @@ It may be beneficial for some users to use these tag writing applications to wri
 However, if encryption is not used, an attacker who can gain access to these tags will have unfettered access to their information.
 NFC is also used as a means of initiating connections on higher-bandwidth media (eg. Bluetooth), but if this connection handover is interfered with then an attacker may be able to listen in on the new connection.
 
-\subsection{Threats which we do not address}
+\subsection{Unaddressed Threats}
 There are several other threats to consider, which we mention here, but are outside the scope of our project.
 In ``Securing Near Field Communication'' \cite{kortvedt2009}, Kortvedt, proves that it is possible to eavesdrop on NFC communication using simple equipment and methods.
 Since the NFC communication protocol does not offer any security or encryption itself, it is up to the developer to implement or use encryption to secure the data within the application's code. 
 
 We also omit discussion of relay, replay, and denial of service attacks.
-
-\TODO{A relay attack exploits the assumption that two devices engaged in an NFC transaction are actually adjacent (by placing a proxy in between the two devices).
-This is a serious potential exploit which must be defended against by any security-conscious application (as it may allow for arbitrary credit card purchases, for example).}
+A relay attack exploits the assumption that two devices engaged in an NFC transaction are actually adjacent (by placing a proxy in between the two devices).
+This is a serious potential exploit which must be defended against by any security-conscious application (as it may allow for arbitrary credit card purchases, for example).
 
 \subsection{Relevant NFC Technology and Security}
 It is important to address the related technology to NFC and some of the protocols implemented and proposed that already attempt to deal with the above NFC issues. 
@@ -129,42 +128,6 @@ One solution which involves setting up a secure channel between devices in order
 %Analysis of smartphone applications in general (though we restrict our focus to Android devices, as iPhones do not yet offer NFC) is a much more thoroughly explored field, and several projects provide valuable insight into application testing.
 %While RFID technology and Android application analysis have both been explored, there has been very limited exploration of Android-specific NFC applications, and their potential vulnerabilities.
 %We leverage this previous exploration to provide large-scale analysis of NFC applications, vulnerabilities, and coding practices, as well as to recommend best practices for preventing NFC attacks.
-\TODO{\subsection{Potential Analysis Section}}
-%\section{Analysis of Apps}
-%* Intro: Why analyze
-%** general coding practices re: NFC
-%** what practices contribute to vulnerabilities of NFC apps
-%** As for as we know, no broad analysis of NFC app level stuff
-%** provide suggestion for NFC app devs (we are in a unique position in that this tech is up and coming)
-
-%\subsection{Application Characteristics}
-%*** tiny - have a specific function and only does one specific thing given a tag. These only require a small subset of permissions. 
-%\\
-%*** superapps - use a lot of permissions and perform several different actions ranging from reading and writing tags, to handling monetary transactions, performing actions on the phone, or transferring musics, pictures, or other data.
-%
-%\subsection{Static Analysis}
-%* static
-%\subsubsection{Permissions}
-%* current apps, what permissions do they use - ML Classifier here
-%\subsubsection{Taint Tracking}
-%trace where data read from NFC tags is ended
-%** other static tools? 
-%\subsubsection{Crypto/Eavesdropping}
-%\TODO{Eavesdropping - Talk about more in analysis portion when we discuss the use of crypto within application's code - the fact that developers aren't using known crypto libraries means they are either implementing crypto themselves or not securing their data at all} 
-%** Overwriting tags- do apps in general 0 out prior data, or not?
-%
-%\subsection{Dynamic Analysis - might not exist}
-%* dynamic
-%** taintdroid
-%** droidblaze
-%
-%\subsection{Manual Analysis}
-%* manual
-%** looked at source code of ~10 applications
-%** played with apps
-%** trace exec paths if possible
-%** BEAM
-%*** If you scan an app, it'll take you to the app store
 
 \section{Related Work}
 %Close range radio wave communication has existed for some time, but the application of NFC in mobile phones is a recent development and still growing in popularity.
