@@ -314,28 +314,38 @@ Certificates can be much more helpful when a user knows who they intend to conne
 The next major step for this scheme is its implementation at operating system level.
 An OS implementation will allow for simpler access on the part of developers and additional features (eg. an access administration interface for a user).
 This implementation will also make a more detailed evaluation, as there will be no more speculation about the functionality of the system.
+It will also not be difficult to address some of the issues we presented in \textit{Privacy Concerns}.
+At the very least, when a user writes a tag which they wish to be used by their phone only, they should be provided the option to encrypt that tag.
+The Android NDEF API could offer this encryption to developers of tag writing applications, who could then offer the feature to the user.
+Encryption would prevent leaks of private information from NFC tags even if the physical tag were to be compromised.
 
 
-\subsection{Recommended User Study}
+\subsection{Recommended User Study\footnote{Our group decided to include this as an outline as we are reevaluating the specific user study we had originally agreed upon.}}
 NFC is still emerging in smart phones, and as such there are uses and applications of NFC which have yet to be seen.
 However, there are still several common use cases which are already deployed or in the process of being adopted.
 In the future, we would like to examine common and expected use cases of NFC, and how access controls can provide improved security for these cases.
 We present some features of a user study which would evaluate the obtrusiveness and effectiveness of access controls in a realistic setting.
 
+The goal of such a user study is to provide a quantitative evaluation of the usability overhead imposed by warning and approval messages which result from employing our access control system, as well as the effectiveness of this system in mitigating attacks.
+We would like to test a breadth of NFC applications which exhibit a range of complexity and potential for attack.
+Applications which we think would be interesting for this include a SmartPoster application, an application for purchasing a bus ticket (using SMS for payment), and an application which allows NFC-grocery-shopping.
+We would further like to evaluate these applications, and our system, in the presence of unsigned tags and signed tags, with malicious tags present in both cases.
+We are still evaluating the most accurate way to measure the usability and security effectiveness of our system's deployment.
+NFC demands certain levels of usability, and through a user study we seek to ensure that our system provides such levels while still offering acceptable security.
+Further evaluation of the tradeoffs of usability and security in the context of NFC applications will be crucial to the adoption of our system (or any system which seeks to provide usable security for NFC applications).
 
-Using human participants, the study would attempt to measure the overhead imposed by warnings/approvals presented by our proposed system as well as the effectiveness in blocking against the given attacks, taking into consideration the ability for the user to fall for the attack.
-There are several implementation choices on the part of the developer which would be of interest to observe. 
-We suggest trying two main implementation approaches, including pop up menus to ask the user for their approval for each given tag, as well as incorporating untrusted tags as a warning into the phone rather than blatant pop ups.
-Things like how often the warning were ignored and in what cases they were ignored should be measured during the experiment in order to provide insight into the effectiveness of the system.
-Asking the users a series of questions after their tests, including which tags they believed to be malicious and how easy or intuitive the access control scheme presented was to use would offer additional insight to the usability. 
 
-
-\TODO{\section{Conclusion}}
+{\section{Conclusion}
+NFC applications and NFC-enabled devices are becoming increasingly popular, and with this popularity will come the attention of attackers.
+We have examined the NFC Data Exchange Format, and in particular its deployment in Android.
+We consider the NDEF Signature RTD, and its uses for providing integrity and authentication.
+From this authentication, we propose a system to provide authorization, via access control lists dictating the access granted to tag authors for specific tag types.
+We partially implement this system, and evaluate its usability and security.
+This access control system addresses several issues present in NFC applications which cannot be directly addressed by signature records alone.
 
 \section{Acknowledgements}
 We would like to thank Dawn Song and her research group for letting us borrow an NFC-enabled Android phone.
 
-\TODO{\section{References}}
 
 \bibliographystyle{abbrv}
 \bibliography{cs261}
