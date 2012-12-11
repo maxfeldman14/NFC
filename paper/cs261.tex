@@ -229,7 +229,7 @@ This system does not offer an alternative to the certificate scheme support by t
 
 \subsection{Approach}
 In order to provide fine-grained access control, the operating system maintains a separate access control list for each application.
-An entry in this list consists of the TNF of the NDEF record, the Type of the NDEF record, and the public key extracted from the signature which applies to that record.
+An entry in this list consists of the TNF of the NDEF record, the Type of the NDEF record, and the public key extracted from the signature which applies to that record (Figure~\ref{fig:solution:acl}).
 This system is intended to operate at OS level, and perform access control grants and checks after parsing NDEF data (OS-level parsing) but before providing that data to the relevant application.
 When a tag is read, its data will be marshalled to the appropriate application, if that application is not already running.
 
@@ -245,6 +245,7 @@ We do not experience the same problem, since in practice, each tag type will onl
 		\includegraphics[width=0.5\textwidth]{ACL_image.png}
 	\caption[Caption for LOF]%
     {An example of an application's access control list. The Browser application has three entries in its access control list. Ka is a key which is granted access for URI-type tags. Kb is granted access for all tag types. Kc is granted access for phone numbers, found in a Smart Poster tag. The OS manages access verification (including user approval, if necessary) before providing the data to the Browser.}
+  \label{fig:solution:acl}
 
 \end{minipage} 
 \end{figure}
