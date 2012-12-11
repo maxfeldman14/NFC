@@ -240,8 +240,8 @@ Before an application acts on NDEF input data, it verifies that the NDEF record'
 The OS provides a method call which allows the application developer to easily check whether this content author has been approved.
 This content author can either be approved for a specific type (TNF and Type field), or for all types.
 For example, an author with public key Ka may have a record [001:55:Ka], indicating that their key is trusted for all URI inputs within the context of that application.
-Another author with public key Kb may have a record /[*:*:Kb], indicating that they will always be granted access by this application.
-If the lookup of \todo{how to phrase this?} [<TNF>:<TYPE>:Key] returns true, then the data's provider has been granted access and operation proceeds uninterrupted.
+Another author with public key Kb may have a record [*:*:Kb], indicating that they will always be granted access by this application.
+If the lookup of [TNF:TYPE:Key] returns true, then the data's provider has been granted access and operation proceeds uninterrupted.
 If the lookup fails, then a user will be prompted to either allow the operation to proceed once (ie. without granting permanent access), grant permanent access, or deny access and abort the operation.
 \subsubsection{Granting Access}
 If a user elects to grant access upon receipt of NDEF data, then they will be given the option of granting the tag author permanent access for that NDEF type (TNF and Type fields), or for all types (a wildcard match on the TNF and Type fields).
@@ -271,15 +271,12 @@ We present this implementation as a proof-of-concept; ideally, such additions to
 There are several advantages to kernel modifications, which are discussed below.
 
 \subsection{Key Management}
-\todo{fix all of this}
-Users need to be able to add and remove keys from their base of trusted authors (either manually, or through a tag reader application).
+Users need to be able to grant and revoke access to resources, either manually, or in the context of a tag reader application.
 For our API, we use Android's \texttt{SharedPreferences}, which provides persistent key-value storage.
-Our current implementation provides a unique instance of this key storage (a \texttt{KeyFile}) to an individual application (ie. a given application can only access and modify its own keys).
-Key sharing between applications is a useful feature which would be simpler to implement securely at OS-level.
-When a user reads a tag, the tag's signature record will either contain a public key in its entirety, or contain a URI pointer to a public key.
-If this public key has been added to the Key File, it is considered trusted, otherwise, the user must add this key.
-\TODO{``tag providers''? or ``tag authors''? what should we name them?}
-When a user writes a tag using this API, the private key for the phone is accessed and a ECDSA signature is generated and appended.
+Our current implementation provides a unique instance of this access control list (a \texttt{ACL}) to an individual application.
+A given application can only access and modify its own access grants (aside from the OS interface provided to the user).
+In order to provide an OS library, as well as key management through OS utilities, the access control system must be implemented at OS-level.
+The Android Library we implement allows developers to effectively leverage access control, but more features and simplicity would be achieved by integration into Android itself.
 
 \subsection{Application Flow}
 \todo{fix all of this}
@@ -293,19 +290,11 @@ If it can locate a valid public key which matches the signature, it will transpa
 In case of any errors, failure to verify the signature or failure to locate a valid public key, reading the tag will throw an exception.
 \TODO{include figure for application flow}
 
-\subsection{Cryptographic protocols}
-\todo{talk about this in background?! or here?}
-One issue regarding the storage of additional authentication data on an NFC tag is the limited size of the tag.
-NDEF Signatures support various signature algorithms, with ECDSA among them.
-ECDSA is able to use smaller keys to provide the same security as DSA with a larger key.
-For example, a 160-bit ECDSA key provides the same security level as a 1024-bit DSA key.
-\TODO{verify the above, which is from wikipedia}
-
 \subsection{Recommendations for Kernel Implementation}
-\todo{refactor}
-Implementing this scheme at OS-level will allow for simpler sharing of keys between applications, by providing a single, shared Key File.
-We recommend an additional application permission in order to make a modification of this Key File; this will provide greater control over which applications have been granted permission to influence the set of trusted tag authors.
-This implementation would also allow Android itself to display messages to the user, in order to centralize and standardize any necessary error reporting or warnings.
+We have presented the advantages of an OS implementation of this system.
+No additional permissions would be required of this implementation, as applications can only modify their own access control lists.
+An application would therefore not be able to falsely influence the access granted on behalf of other applications.
+An OS implementation allows for a consolidated and secure means of providing developers with a library for access control, and users with a centralized means of viewing and managing the access they have granted.
 
 \TODO{\section{Evaluation}}
 It has an overhead of this many bytes... 
