@@ -212,6 +212,7 @@ If we authorize only URL tags created with a specific key, then we can prevent t
 We differentiate this from a permission, which individual applications must request, in that it is more restrictive, and specific to a tag author as identified by their public key.
 This system uses per-application access control to specify approved, unapproved, and unencountered access-requesters.
 We specify the goals and non-goals of our system and then outline the approach in detail, as well as discuss our implementation.
+
 \subsection{Goals}
 The principal goal of this system is to allow users to link their trust with their access policies.
 The user's trust should define the access granted to external entities.
@@ -220,13 +221,12 @@ This system must be fast and unobtrusive, so that the short duration of an NFC i
 The system must also be simple, for both users and application developers.
 Users should be able to understand what access policies they choose to grant, and administer these policies with ease.
 This includes granting additional access and revoking existing access.
+
 \subsection{Non-goals}
-We do not seek to provide trust mechanisms for users.
-At best, we wish to leverage existing trust mechanisms (such as certificates included in Signed NDEF records), but present the information regarding the identity of an author in an easy-to-read format.
-If the signer of a tag is identified in a certificate chain, then it is important to present the user with that identity so that the user can make an informed decision regarding access control.
 We do not seek to offer integrity or authentication.
 These are both goals of the NDEF Signature RTD, and as such we leverage these properties but do not duplicate the effort of providing them.
 This system does not offer an alternative to the certificate scheme support by the NDEF Signature RTD.
+
 \subsection{Approach}
 In order to provide fine-grained access control, each application maintains its own access control list.
 An entry in this list consists of the TNF of the NDEF record, the Type of the NDEF record, and the public key extracted from the signature which applies to that record.
