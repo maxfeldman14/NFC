@@ -228,7 +228,7 @@ First, shared access control would open the possibility for malicious applicatio
 An additional permission for read and write access to the shared access control list would need to be introduced in order to better manage which applications can alter this control list.
 Second, there are cases in which sharing access would result in a loss of security.
 For example, if one application with limited permissions added a tag author, \textit{A}, as a trusted author for all tag types, this access could be shared with other applications.
-If another application with more permissions (such as \texttt{CALL_PHONE}) saw \textit{A} as having access to all tag types, \textit{A}'s tags would then be able to place phone calls.
+If another application with more permissions (such as \texttt{CALL\_PHONE}) saw \textit{A} as having access to all tag types, \textit{A}'s tags would then be able to place phone calls.
 There are means to mitigate this threat, but the management becomes significantly more complicated, and simplicity is a necessary facet of our proposal.
 
 \section{Implementation}
@@ -317,14 +317,22 @@ This implementation will also make a more detailed evaluation, as there will be 
 
 
 \subsection{Recommended User Study}
-There are several potential use cases for the NFC technology which have yet to be established. It is important to consider the usability of a solution such as ours for the various cases in which the technology could be used. Thus, we suggest a user study to test the obtrusiveness and effectiveness of access controls in a realistic setting. 
+NFC is still emerging in smart phones, and as such there are uses and applications of NFC which have yet to be seen.
+However, there are still several common use cases which are already deployed or in the process of being adopted.
+In the future, we would like to examine common and expected use cases of NFC, and how access controls can provide improved security for these cases.
+We present some features of a user study which would evaluate the obtrusiveness and effectiveness of access controls in a realistic setting.
 
-Using human participants, the study would attempt to measure the overhead imposed by warnings/approvals presented by our proposed system as well as the effectiveness in blocking against the given attacks, taking into consideration the ability for the user to fall for the attack. There are several implementation choices on the part of the developer which would be of interest to observe. We suggest trying two main implementation approaches, including pop up menus to ask the user for their approval for each given tag, as well as incorporating untrusted tags as a warning into the phone rather than blatant pop ups. Things like how often the warning were ignored and in what cases they were ignored should be measured during the experiment in order to provide insight into the effectiveness of the system. Asking the users a series of questions after their tests, including which tags they believed to be malicious and how easy or intuitive the access control scheme presented was to use would offer additional insight to the usability. 
+
+Using human participants, the study would attempt to measure the overhead imposed by warnings/approvals presented by our proposed system as well as the effectiveness in blocking against the given attacks, taking into consideration the ability for the user to fall for the attack.
+There are several implementation choices on the part of the developer which would be of interest to observe. 
+We suggest trying two main implementation approaches, including pop up menus to ask the user for their approval for each given tag, as well as incorporating untrusted tags as a warning into the phone rather than blatant pop ups.
+Things like how often the warning were ignored and in what cases they were ignored should be measured during the experiment in order to provide insight into the effectiveness of the system.
+Asking the users a series of questions after their tests, including which tags they believed to be malicious and how easy or intuitive the access control scheme presented was to use would offer additional insight to the usability. 
 
 
 \TODO{\section{Conclusion}}
 
-\{Acknowledgements}
+\section{Acknowledgements}
 We would like to thank Dawn Song and her research group for letting us borrow an NFC-enabled Android phone.
 
 \TODO{\section{References}}
