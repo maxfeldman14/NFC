@@ -203,7 +203,6 @@ The OS will then attempt to deliver the most readable identifier of the public k
 In most cases, extracting the identifying information from the certificate will be sufficient to present the user with a concise identity of the content author.
 The user then chooses the type of access they wish to grant to that public key, and this access choice is written to the access control list for that application.
 \subsubsection{Revoking Access}
-\todo{make this better}
 Users will be provided an interface to the access control lists for their applications by the OS.
 Through this interface, the user can view all authors to which they have granted access (including the human-readable name associated with the public key).
 The user can then choose to revoke access to an author by removing associated entries of that author in relevant lists.
@@ -234,22 +233,10 @@ There are several advantages to kernel modifications, which are discussed below.
 \subsection{Access Management}
 Users need to be able to grant and revoke access to resources, either manually, or in the context of a tag reader application.
 For our API, we use Android's \texttt{SharedPreferences}, which provides persistent key-value storage.
-Our current implementation provides a unique instance of this access control list (a \texttt{ACL}) to an individual application.
+Our current implementation provides a unique instance of this access control list (ACL) to an individual application.
 A given application can only access and modify its own access grants (aside from the OS interface provided to the user).
 In order to provide an OS library, as well as key management through OS utilities, the access control system must be implemented at OS-level.
 The Android Library we implement allows developers to effectively leverage access control, but more features and simplicity would be achieved by integration into Android itself.
-
-\subsection{Application Flow}
-\todo{fix all of this}
-On instantiation, a \texttt{SignedNdef} object will attempt to open up the list of authorized keys saved on the Android device.
-We do not seek to provide trust mechanisms for users.
-At best, we wish to leverage existing trust mechanisms (such as certificates included in Signed NDEF records), 
-It provides methods for opening, closing, reading, and writing NDEF-formatted tags by delegating to a private instance of the \texttt{Ndef} class.
-In addition, it will automatically enforce the security protocols described earlier.
-When reading a tag, it will query the \texttt{KeyManager} to find a public key which matches the signature of the signed Ndef tag.
-If it can locate a valid public key which matches the signature, it will transparently return the non-signature records on the tag.
-In case of any errors, failure to verify the signature or failure to locate a valid public key, reading the tag will throw an exception.
-\TODO{include figure for application flow}
 
 \subsection{Recommendations for Kernel Implementation}
 We have presented the advantages of an OS implementation of this system.
@@ -257,8 +244,11 @@ No additional permissions would be required of this implementation, as applicati
 An application would therefore not be able to falsely influence the access granted on behalf of other applications.
 An OS implementation allows for a consolidated and secure means of providing developers with a library for access control, and users with a centralized means of viewing and managing the access they have granted.
 
-\TODO{\section{Evaluation}}
-It has an overhead of this many bytes... 
+\section{Evaluation}
+In this section we evaluate the feasibility of our suggestions, and their impact on the usability and security of using NFC applications.
+Our experience implementing this scheme did not yield any challenges which could not be dealt with.
+The largest inhibitor of deployment of this scheme is Android's current lack of support for the NDEF Signature RTD.
+While support for this is not strictly necessary for our scheme, which requires only some forms of authentication and integrity, adoption of the Signature RTD standard 
 \subsection{Usability}
 \subsection{Security}
 * simplicity/overhead for user (warning message?)
@@ -319,8 +309,6 @@ There are several potential use cases for the NFC technology which have yet to b
 Using human participants, the study would attempt to measure the overhead imposed by warnings/approvals presented by our proposed system as well as the effectiveness in blocking against the given attacks, taking into consideration the ability for the user to fall for the attack. There are several implementation choices on the part of the developer which would be of interest to observe. We suggest trying two main implementation approaches, including pop up menus to ask the user for their approval for each given tag, as well as incorporating untrusted tags as a warning into the phone rather than blatant pop ups. Things like how often the warning were ignored and in what cases they were ignored should be measured during the experiment in order to provide insight into the effectiveness of the system. Asking the users a series of questions after their tests, including which tags they believed to be malicious and how easy or intuitive the access control scheme presented was to use would offer additional insight to the usability. 
 
 \subsection{Optimization}
-
-\subsection{Application Sharing}
 
 \TODO{\section{Conclusion}}
 
