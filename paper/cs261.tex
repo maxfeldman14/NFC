@@ -299,12 +299,13 @@ Our proposal trades minor flexibility for no additional requirements of the deve
 
 \section{Implementation}
 We began implementing our access control system as an Android library that Android developers can include and access in their projects.
+We implemented this as a library only because time constraints would have made it too difficult to implement at OS-level.
 Unfortunately, Android does not yet support the NDEF Signature RTD, so much of our work involved working around this.
 We provide an API as a proof-of-concept for the proposed access control scheme, through which developers can add, verify, and revoke access.
 Our current implementation simply creates a makeshift signature record consisting of a digital signature (created by DSA) appended to the public key used for the signature.
 This emulates the PKI infrastructure provided by certificates, but in a simpler manner, as the focus of our proof-of-concept is the access control itself.
-We present this implementation as a proof-of-concept; ideally, such additions to the Android NFC stack would be implemented at OS-level.
-There are several advantages to kernel modifications, which are discussed below.
+We present this implementation as a proof-of-concept; this proposal must be implemented at OS-level for full effect.
+There are several advantages to such OS modifications, which are discussed below.
 
 \subsection{Access Management}
 Users need to be able to grant and revoke access to resources, either manually, or in the context of a tag reader application.
