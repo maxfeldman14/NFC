@@ -129,6 +129,7 @@ For example, an attacker could replace the tag on a poster advertising a local e
 When a user swipes the tag to view the event's website, the user's phone will place a call and will be billed for the call.
 
 \subsection{Privacy Concerns}
+\label{sec:threatmodel:privacy}
 Several NFC applications have the possibility of writing information to an NFC tag.
 This means that users have the ability to write anything they want to their own tags.
 It may be beneficial for some users to use these tag writing applications to write sensitive or critical information to tags they keep in specific locations.
@@ -368,7 +369,7 @@ Certificates can be much more helpful when a user knows who they intend to conne
 The next major step for this scheme is its implementation at operating system level.
 An OS implementation is required to keep access control decisions from complicating application logic, as well to provide access control administration interface to the user.
 This implementation will make for a more detailed evaluation, as there will be no more speculation about the functionality of the system.
-It will also not be difficult to address some of the issues we presented in \textit{Privacy Concerns}.
+It will also not be difficult to address some of the issues we presented in Section~\ref{sec:threatmodel:privacy}.
 At the very least, when a user writes a tag which they wish to be used by their phone only, they should be provided the option to encrypt that tag.
 The Android NDEF API could offer this encryption to developers of tag writing applications, who could then offer the feature to the user.
 Encryption would prevent leaks of private information from NFC tags even if the physical tag were to be compromised.
