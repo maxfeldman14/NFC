@@ -184,17 +184,19 @@ We instead seek to provide a decentralized mechanism for trusting and granting t
 
 \textbf{Signatures and Certificates.}
 The NFC Signature Record Type Definition (RTD), which can be used to sign NDEF records, was standardized to deal with threats caused by malicious tags including spoofing, phishing and denial of service.
+A signature record can be used to sign individual records or contiguous groups of records in an NDEF message, as shown in Figure~\ref{fig:relatedwork:signature}.
 \begin{figure}[h!]
 \begin{minipage}{\textwidth}
 	\centering
 		\includegraphics[width=0.5\textwidth]{signed_ndef.png}
 	\caption[Caption for LOF]%
-  {An NDEF message in which Signature Record 1 signs Record 1 and Record 2, and Signature Record 2 signs Record 3.}
+  {An NDEF message in which signature record 3 signs records 1 and 2, and signature record 5 signs record 4.}
+  \label{fig:relatedwork:signature}
 
 \end{minipage} 
 \end{figure}
 
-Using signatures on a tag causes a performance and space penalty, which are important since NFC tag readers are mobile devices and NFC tags themselves have very limited storage space \cite{kilas2009}.
+Using signatures on a tag results in a performance and space penalty, which are important since NFC tag readers are mobile devices and NFC tags themselves have very limited storage space \cite{kilas2009}.
 The standard now focuses on being able to authenticate the source of data through a certificate authority which distributes and validates public keys \cite{rosati2011}.
 However, vulnerabilities arise with these signature records when mixing signed and unsigned records in a single NDEF message \cite{roland2010,roland2011}.
 We propose a way for users to authorize keys based on the data type and application, which are enough to determine a fixed behavior (e.g. calling a phone number from a tag or opening a URL stored on a tag).
