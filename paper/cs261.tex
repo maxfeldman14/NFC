@@ -205,9 +205,13 @@ We propose a way for users to authorize keys based on the data type and applicat
 \section{Proposed Solution}
 We propose a system of controlling the access that NFC inputs are granted by the Android OS.
 This access control system aims to provide a simple and usable means for phone users to grant access to certain capabilities to trusted tag authors.
-A capability in this case refers to the ability to access a system resource, such as to call a phone or open a URL.
-We differentiate this from a permission (which individual applications must request), in that it is more restrictive, and specific to a tag author (as identified by their public key).
-This system uses per-application access control to specify approved, unapproved, and unencountered access-requestors.
+\sout{A capability in this case refers to the ability to access a system resource, such as to call a phone or open a URL.}
+\TODO{A capability in this case refers to the ability for an NFC-enabled application to automatically launch when a tag of a specific \textit{type} and containing data signed with a specific \textit{key}.}
+\TODO{Since the choice of application to launch is determined by the type of a tag, and because the behavior of an application on a specific type of tag is usually deterministic, we can authorize application behavior based on type of data in this way.}
+\TODO{For example, when a user swipes a tag containing a URL, the web browser application will automatically open the URL.}
+\TODO{If we authorize only URL tags created with a specific key, then we can prevent the automatic opening of URLs of untrusted tag.}
+We differentiate this from a permission, which individual applications must request, in that it is more restrictive, and specific to a tag author as identified by their public key.
+This system uses per-application access control to specify approved, unapproved, and unencountered access-requesters.
 We specify the goals and non-goals of our system and then outline the approach in detail, as well as discuss our implementation.
 \subsection{Goals}
 The principal goal of this system is to allow users to link their trust with their access policies.
