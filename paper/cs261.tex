@@ -251,7 +251,7 @@ We do not experience the same problem, because, in practice, each tag type will 
 \end{minipage} 
 \end{figure}
 \subsubsection{Verifying Access}
-Before an application can act on NDEF input data, the OS verifies that the NDEF record's type and public key (from the associated signature record) exist in the access control list.
+Before an application can act on NDEF input data, the OS verifies that the NDEF record's type and public key from the associated signature record exist in the access control list.
 The format of an entry in the access control list is [TNF:Type:Key].
 If such an entry exists, then the key is granted access for the given TNF and Type.
 If the OS is able to verify the access of a key and record type, operations will proceed and the NDEF data will be handed to the running application, or launch the relevant application (depending on the current state of the phone).
@@ -281,7 +281,7 @@ After a user approves a phone number to make calls, any further calls would not 
 We avoid this approach, however, as we feel it is not generalizable in a usable way.
 Opening arbitrary URLs presents a significant attack vector in NFC tags.
 However, usability of such a scheme decreases drastically if a user must approve every new URL encountered on NFC tags.
-We believe that the number of tag authors will be lower than the number of resources a user encounters on NFC tags, and as such, author-based access control provides a more generalizable (and still usable) approach.
+The number of tag authors will be lower than the number of resources a user encounters on NFC tags, and as such, author-based access control provides a more generalizable, but still usable, approach.
 
 We considered the merits of allowing access sharing between applications.
 The principal benefit of such a system is that there would no longer be duplicate access granting if a user wishes to trust a tag author within the context of multiple applications.
