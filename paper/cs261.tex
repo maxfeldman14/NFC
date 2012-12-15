@@ -12,7 +12,7 @@
 
 \begin{document}
 \title{Fine-grained Access Control for NFC Applications}
-\author{Max Feldman \and Stephanie Rogers \and Richard Xia}
+\author{Max Feldman \and Stephanie Rogers (CS261) \and Richard Xia (CS261)}
 \maketitle
 
 \section{Abstract}
@@ -27,6 +27,8 @@ Alarmingly, several applications implement features such as SMS messaging or cal
 We attempt to address the issue of resource access on behalf of external data, in the context of NFC.
 We discuss known issues and vulnerabilities with NDEF security, and how our proposal mitigates some of these concerns.
 We also keep in mind the importance of usability, especially in applications that must perform quickly and smoothly---as is the case with NFC applications. Finally, we present the description of a user study that can effectively evaluate the tradeoffs between secure access control and usability.
+
+\tableofcontents
 
 \section{Introduction}
 NFC-enabled devices have existed for several years, but with NFC deployment in Android phones developers have more power to write NFC applications than was previously available.
@@ -388,7 +390,7 @@ Applications which we think would be interesting for this include a SmartPoster 
 We would further like to evaluate these applications, and our system, in the presence of unsigned tags and signed tags, with malicious tags present in both cases.
 We are still evaluating the most accurate way to measure the usability and security effectiveness of our system's deployment.
 NFC demands certain levels of usability, and through a user study we seek to ensure that our system provides such levels while still offering acceptable security.
-Further evaluation of the tradeoffs of usability and security in the context of NFC applications will be crucial to the adoption of our system (or any system which seeks to provide usable security for NFC applications).\footnote{Our group decided to include this as an outline as we are reevaluating the specific user study we had originally agreed upon.}
+Further evaluation of the tradeoffs of usability and security in the context of NFC applications will be crucial to the adoption of our system (or any system which seeks to provide usable security for NFC applications).
 
 
 {\section{Conclusion}
