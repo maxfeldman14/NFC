@@ -339,6 +339,26 @@ As developers do not have to do any additional work, this system is also easier 
 
 \subsection{Similar Systems}
 We compare and contrast our proposed design with similar approaches which have been previously implemented.
+Each of these systems make some use of certificates or trusted public keys.
+
+\subsubsection{TLS/SSL}
+TLS and its predecessor SSL offer authentication via certificate authorities, which allow a user to verify that the web page is being sent by the true owner of the domain.
+\TODO{move cert stuff here}
+
+\subsubsection{Java Applets and ActiveX}
+A signed Java applet includes a digital signature of the Java binary that can be verified with a certificate belonging to the applet author.
+Signed Java applets have more capabilities than unsigned applets and run outside of the sandbox and essentially have full access to the user's computer.
+When a user navigates to a web page containing a signed Java applet, the user is prompted with a warning asking if the user trusts the certificate, either temporarily or permanently.
+If the user chooses to accept the certificate permanently, then \textit{any} applet signed with the same key can be run automatically with full permissions.
+This represents an ``all-or-nothing'' mentality in which an author is either completely denied access or granted full access.
+In contrast, we offer the user the ability to grant a tag author access to a \textit{particular} resource.
+ActiveX offers essentially the same mechanism as Java applets.
+
+\subsubsection{SSH}
+Users have to choose to accept unknown hosts, given only a digest of their public key.
+This differs from the previous two examples in that there is less certification overhead and a greater burden on the user to trust the right host.
+In addition, the user does not grant authorization to the server.
+\TODO{make less terrible}
 
 \subsection{Case Studies}
 In this subsection, we evaluate the feasibility of our design on specific real-life applications which use NFC.
