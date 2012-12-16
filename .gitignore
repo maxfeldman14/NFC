@@ -39,6 +39,7 @@ paper/*.pdf
 paper/*.bbl
 paper/*.blg
 paper/*.out
+paper/*.toc
 
 #eclipse
 *.classpath
