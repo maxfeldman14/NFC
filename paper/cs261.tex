@@ -326,6 +326,7 @@ An application would therefore not be able to falsely influence the access grant
 An OS implementation allows for a consolidated and secure means of providing developers with a library for access control, and users with a centralized means of viewing and managing the access they have granted.
 
 \section{Evaluation}
+\TODO{Reword/remove.}
 In this section we evaluate the feasibility of our suggestions, and their impact on the usability and security of using NFC applications.
 Our experience implementing this scheme did not yield any challenges which could not be dealt with.
 The largest inhibitor of deployment of this scheme is Android's current lack of support for the NDEF Signature RTD.
@@ -339,6 +340,16 @@ As developers do not have to do any additional work, this system is also easier 
 \subsection{Similar Systems}
 We compare and contrast our proposed design with similar approaches which have been previously implemented.
 
+\subsection{Case Studies}
+In this subsection, we evaluate the feasibility of our design on specific real-life applications which use NFC.
+
+\subsubsection{Smart Poster}
+Smart posters\footnote{\url{http://www.nfc-forum.org/resources/presentations/NFC_Smart_Poster_WIMA_2011.pdf}} are a common application of NFC tags where a normal poster is augmented with an NFC tag that provides additional data.
+For this example we consider movie poster campaign which provides more information to potential moviegoers, such as similar campaign in 2011\footnote{\url{http://www.nfcworld.com/2011/05/23/37591/x-men-nfc-smart-poster-london/}}.
+A malicious user could remove or disable the existing tag and replace it with his or her own tag, which could automatically place a phone call to a tolled number.
+Under the existing scheme, a user's phone would automatically place the phone call without prompting the user, causing the user to spend money.
+Under our scheme, a user would see that the tag is not signed by a key that they trust, and they would have to add the key.
+If the user had already added a key belonging to the organization that created the poster, they would become suspicious of the fact that there is a new key associated with the current poster.
 
 \subsection{Usability}
 NFC offers a unique means of quickly performing actions via a single swipe of a tag; to this end, any security solution must therefore be particularly mindful of the tradeoffs between usability and security.
