@@ -124,7 +124,7 @@ Of these applications, 78\% had the Internet permission, 18\% had the permission
 
 \section{Threat Model}
 While NFC is still an emerging technology, there are several vulnerabilities that can afflict applications.
-In our work, we primarily address the threat malicious NFC tags, but also consider threats to a user's privacy. 
+In our work, we primarily address the threat of malicious NFC tags, but also consider threats to a user's privacy. 
 
 \subsection{Malicious Tags}
 We define a malicious NFC tag as an NFC tag that contains data that would cause a user to act on data in a way that they did not expect.
@@ -137,7 +137,7 @@ When a user swipes the tag to view the event's website, the user's phone will pl
 \label{sec:threatmodel:privacy}
 Several NFC applications have the possibility of writing information to an NFC tag.
 This means that users have the ability to write anything they want to their own tags.
-It may be beneficial for some users to use these tag writing applications to write sensitive or critical information to tags they keep in specific locations.
+It may be beneficial for some users to use these tag-writing applications to write sensitive or critical information to tags they keep in specific locations.
 However, if encryption is not used, an attacker who can gain access to these tags will have unfettered access to their information.
 For example, under certain conditions the Tectile application will write the email address of the user to the tag, unencrypted.
 Tectile uses this as a means of authenticating a tag (we will not discuss the flaws of such an authentication scheme), which means that if a user enables a setting in Tectile, their email address will automatically be written to all future tags they write.
@@ -172,7 +172,7 @@ In this section we present relevant past work in the area of NFC security, as we
 One approach for authenticating tags is to share keys between tag readers and tag writers.
 Kortvedt \cite{kortvedt2009} proposes a general framework for providing one-way and mutual authentication over NFC, but requires the use of pre-shared keys.
 He suggests using a centralized key authority associated with mobile carriers such as Over-The-Air (OTA) programming or SMS for distributing keys.
-We believe is impractical and inappropriate for all types of applications given that tag authors may be distinct from application authors and may wish to distribute keys.
+We believe it is impractical and inappropriate for all types of applications given that tag authors may be distinct from application authors and may wish to distribute keys.
 There is also no notion of trust, as a user must trust that the key being shared is legitimate.
 We instead seek to provide a decentralized mechanism for trusting and granting trust to a user-defined set of NFC tag authors.
 
@@ -220,7 +220,7 @@ One solution \cite{haselsteiner2006} which involves setting up a secure channel 
 We propose a system of controlling the access that NFC inputs are granted by the Android OS.
 This access control system aims to provide a simple and usable means for phone users to grant access to certain capabilities to trusted tag authors.
 A capability in this case refers to the ability for an NFC-enabled application to automatically launch when a tag of a specific \textit{type} and containing data signed with a specific \textit{key}.
-Since the choice of application to launch is determined by the type of a tag, and because the behavior of an application determined by the tag type, we can authorize application behavior based on type of data in this way.
+Since the choice of application to launch is determined by the type of a tag, and because the behavior of an application is determined by the tag type, we can authorize application behavior based on type of data in this way.
 For example, when a user swipes a tag containing a URL, the web browser application will automatically open the URL.
 If we authorize only URL tags created with a specific key, then we can prevent the automatic opening of URLs from untrusted tags.
 We differentiate this from a permission, which individual applications must request, in that it is more restrictive, and specific to a tag author as identified by their public key.
@@ -442,7 +442,7 @@ An OS implementation is required to keep access control decisions from complicat
 This implementation will make for a more detailed evaluation, as there will be no more speculation about the functionality of the system.
 It will also not be difficult to address some of the issues we presented in Section~\ref{sec:threatmodel:privacy}.
 At the very least, when a user writes a tag which they wish to be used by their phone only, they should be provided the option to encrypt and verify the integrity of that tag.
-The Android NDEF API could offer this encryption to developers of tag writing applications, who could then offer the feature to the user.
+The Android NDEF API could offer this encryption to developers of tag-writing applications, who could then offer the feature to the user.
 Encryption would prevent leaks of private information from NFC tags even if the physical tag were to be compromised.
 %We would also like to explore further generalization of this access control system, and its potential in areas other than NFC inputs.
 
