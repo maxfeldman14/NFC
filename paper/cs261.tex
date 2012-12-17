@@ -254,6 +254,20 @@ In addition, if a user replaces an application which originally handled a specif
 Different behaviors may warrant different access policies, so it is not safe to maintain the same access control upon behavioral changes.
 One common problem with access control lists is that there may be a polynomial number of policies to set, which in general causes them to be difficult for users to maintain.
 We do not experience the same problem, because, in practice, each tag type will only have one type of application that it will open automatically (see Section~\ref{sec:background:intents}), and thus an application's ACL will only need to maintain information about tag types for which it is the primary application.
+
+I am referencing the table Table~\ref{tab:threats}.
+
+\begin{table}
+  \center
+  \begin{tabular}{l | p{6cm} | p{6cm} }
+  Threat name & Example & How we solve it \\
+  \hline
+  Tag replaced & Tag is replaced with a paid phone number & The user warned when they encounter a tag created by a previously unencountered author \\
+  \end{tabular}
+  \caption{Threats and Solutions}
+  \label{tab:threats}
+\end{table}
+
 \begin{figure}[h!]
 \begin{minipage}{\textwidth}
 	\centering
