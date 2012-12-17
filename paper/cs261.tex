@@ -15,20 +15,22 @@
 \author{Max Feldman \and Stephanie Rogers \and Richard Xia}
 \maketitle
 
-\section{Abstract}
+\begin{abstract}
 Near Field Communication (NFC) is a form of contactless communication that allows devices to transfer data over radio; it is similar to RFID, but with a much smaller range of use.
 NFC has existed for some time, but its implementation in Android phones, along with an API for developers, has only recently gained popularity.
-Upon scanning an NFC tag, Android will automatically run the application that has been associated with the type of data on that tag, often without user interaction or approval.
-The Android NFC API offers application developers a new, more powerful means to access NFC capabilities in mobile devices, but this introduces an increased attack space and additional potential for vulnerability.
-Android provides access to an NFC Data Exchange Format (NDEF) API, but does not offer any of the various security measures that have been proposed by the NFC standards group (the NFC Forum).
-
-We examine the growing space of NFC applications offered for Android, and provide a cursory categorization of the functionality and general security practices of these applications.
+%Upon scanning an NFC tag, Android will automatically run the application that has been associated with the type of data on that tag, often without user interaction or approval.
 Alarmingly, several applications implement features such as SMS messaging or calling given phone numbers, or accessing arbitrary URLs, which are provided by an NFC tag without even prompting the user.
-We attempt to address the issue of resource access on behalf of external data, in the context of NFC.
-We discuss known issues and vulnerabilities with NDEF security, and how our proposal mitigates some of these concerns.
-We also keep in mind the importance of usability, especially in applications that must perform quickly and smoothly---as is the case with NFC applications. Finally, we present the description of a user study that can effectively evaluate the tradeoffs between secure access control and usability.
+%The Android NFC API offers application developers a new, more powerful means to access NFC capabilities in mobile devices, but this introduces an increased attack space and additional potential for vulnerability.
+%Android provides access to an NFC Data Exchange Format (NDEF) API, but does not offer any of the various security measures that have been proposed by the NFC standards group (the NFC Forum).
 
-\tableofcontents
+We examine the growing space of NFC applications offered for Android, and provide a categorization of the functionality and general security practices of these applications.
+We address the issue of authorization of NFC tags by providing fine-grained access control based on data type and author.
+We discuss known issues and vulnerabilities with NDEF security, and how our proposal mitigates some of these concerns.
+We also keep in mind the importance of usability, especially in applications that minimize user interruption---as is the case with NFC applications.
+%Finally, we present the description of a user study that can effectively evaluate the tradeoffs between secure access control and usability.
+\end{abstract}
+
+%\tableofcontents
 
 \section{Introduction}
 NFC-enabled devices have existed for several years, but with NFC deployment in Android phones developers have more power to write NFC applications than was previously available.
@@ -360,7 +362,7 @@ This differs from the previous two examples in that there is less certification 
 In addition, the user does not grant authorization to the server.
 \TODO{make less terrible}
 
-\subsection{Case Studies}
+\subsection{Use Case}
 In this subsection, we evaluate the feasibility of our design on specific real-life applications which use NFC.
 
 \subsubsection{Smart Poster}
@@ -370,7 +372,8 @@ A malicious user could remove or disable the existing tag and replace it with hi
 Under the existing scheme, a user's phone would automatically place the phone call without prompting the user, causing the user to spend money.
 Under our scheme, a user would see that the tag is not signed by a key that they trust, and they would have to add the key.
 If the user had already added a key belonging to the organization that created the poster, they would become suspicious of the fact that there is a new key associated with the current poster.
-As there is probably a centralized producer of smart posters in many cases, such as an advertising company, once a poster is trusted, a user can scan any other smart poster made by the same company without worrying again. 
+As there is probably a centralized producer of smart posters in many cases, and specifically in this example, once a poster is trusted, a user can scan any other smart poster made by the same company without worrying again. 
+Additionally, as we allow finer-grained access to these tags, if the advertising company's perogative was to instead call a tolled phone number that they provide on the signed tag, our system would prevent the malicious tag writer's attack. The user would have only allowed the movie poster access to certain permissions, not including the CALL PHONE permission in this case.  
 
 \subsection{Usability}
 NFC offers a unique means of quickly performing actions via a single swipe of a tag; to this end, any security solution must therefore be particularly mindful of the tradeoffs between usability and security.
@@ -390,12 +393,12 @@ In Section~\ref{sec:futurework} we consider how to test the usability of access 
 The operating system takes care of the access control, so there is no need for additional development of applications, and no risk of developers improperly using (or simply not using) a framework.
 As the NFC application landscape for Android is still growing, it remains to be seen how many applications will benefit from this additional security.
 
-\TODO{Of 251 free NFC applications, which constitute 80\% of the total free NFC applications available for Android see~\ref{sec:androidperm}, 61\% had the internet permission, 15\% had the permission to place a phone call, and 10\% had the permission to send an SMS message. These permissions are indicative of some of the easiest attack surfaces. Further analysis is required to determine to what extent malicious NFC tags could exploit these permissions, but these numbers provide some estimate for applications which could benefit from our system.} Wagner said this was irrelevant. 
+\TODO{Of 251 free NFC applications, which constitute 80\% of the total free NFC applications available for Android see~\ref{sec:androidperm}, 61\% had the internet permission, 15\% had the permission to place a phone call, and 10\% had the permission to send an SMS message. These permissions are indicative of some of the easiest attack surfaces. Further analysis is required to determine to what extent malicious NFC tags could exploit these permissions, but these numbers provide some estimate for applications which could benefit from our system.} Wagner said this was irrelevant. Also, we put in our analysis(evaluation) that further analysis is required. I don't think these statistics really tell us much and we definitely don't draw conclusions in any meaningful way. 
 
 Next is a security analysis of our design using the standards presented by Saltzer and Shroeder.
 
 \subsubsection{Security Analysis}
-{\it Economy of mechanism}. Designs which are smaller and simpler are easier to inspect and trust. Our design is simple and straightforward. The API we provide offers a simple abstraction away from the actual implementation of the system. \todo{Are we offering an API? Because we say the developer doesn't have to do any additional development with their code... but we also reference an API in other places}
+{\it Economy of mechanism}. Designs which are smaller and simpler are easier to inspect and trust. Our design is simple and straightforward. We simply maintain an access control list which limits the use of certain tags based off of user trust. 
 
 {\it Fail-safe defaults}. By default, access should be denied unless it is explicitly granted. In our design if a tag’s key has not been seen before, we don’t read it unless explicitly granted by the user. However, the idea is that on first time seeing a key, the user has the ability to grant trust to the tag for specific permissions. SSH, as discussed previoudly, uses a similar mechanism to prompt the user for permission to add the key to a trusted list when the key is seen for the first time. In that case, the user has no way to know if the given key is the correct host key. In our design, the user uses the context of the situation to know what permissions to grant the tag. For example, when scanning a tag that is advertised to have a 1-800 number on it to call for more information about the poster’s content, then the user would know to grant permission to the tag to call phone numbers if he/she desired.
 
