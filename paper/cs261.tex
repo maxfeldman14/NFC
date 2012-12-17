@@ -92,7 +92,7 @@ An example breakdown of an NDEF message can be found in Figure~\ref{fig:backgrou
 	\centering
 		\includegraphics[width=0.5\textwidth]{NDEF_Format.png}
 	\caption[Caption for LOF]%
-		{NDEF Message Format. \\{\scriptsize\url{http://www.developer.nokia.com/Community/Wiki/Understanding_NFC_Data_Exchange_Format_(NDEF)_messages}}}
+		{NDEF Message Format. \\{\scriptsize\url{adapted from http://www.developer.nokia.com/Community/Wiki/Understanding_NFC_Data_Exchange_Format_(NDEF)_messages}}}
   \label{fig:background:ndef}
 
 \end{figure}
@@ -156,7 +156,7 @@ MiFare, FeliCa and AFAICT are all contactless smart cards that can acts as tags 
 In addition to the security that various NFC technologies have provided, there has been much insight into the vulnerabilities of NFC at the network-level. 
 One major foray into such analysis was presented by Charlie Miller at BlackHat 2012 \cite{miller2012}.
 Miller employs fuzz testing to show that carefully crafted NFC payloads can do much more than just crash a device---in some cases phones can be forced to parse arbitrary data or open web pages without user interaction.
-Miller's work provides a wide analysis of the NFC attack surface, but our research will seek to provide much more depth in the exploration of application-level vulnerabilities.
+Miller's work provides a wide analysis of the NFC attack surface, but our research will seek to provide more depth in the exploration of application-level vulnerabilities.
 
 RFID, a precursor to and superset of NFC, has also raised several security issues in the past.
 Though RFID is a much older technology, it is remains relevant as both the foundation for NFC, and as a technology which is still employed in various applications (most prominently touch-activated credit cards).
