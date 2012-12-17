@@ -370,7 +370,15 @@ Each of these systems make some use of certificates or trusted public keys.
 
 \subsubsection{TLS/SSL}
 TLS and its predecessor SSL offer authentication via certificate authorities, which allow a user to verify that the web page is being sent by the true owner of the domain.
-\TODO{move cert stuff here}
+\subsubsection{Certificates}
+Though we do not seek to offer an alternative to the certificate-based authentication used by NDEF signature records, it is worth addressing some issues specific to certificates.
+The NDEF Signature RTD supports both X9.68 and X.509 certificates, but both of these are designed for Internet authentication.
+NFC tags have limited available space (on the order of kilobytes), but also present a different use case than that of a user connecting to hosts on the Internet.
+A user connecting to an Internet host will often have at least some idea of who they are attempting to connect to.
+For example, an individual navigating to Google will most likely be able to recognize \url{www.google.com} as the appropriate website.
+However, an individual reading an NFC tag may not know the author of that tag before performing the read.
+A certificate may associate a name with a public key, but that association may not be useful in the first place\cite{ellison2000}, and may be even less useful to an NFC user.
+Certificates can be much more helpful when a user knows who they intend to connect to, and wishes to verify the identity of the individual at the other end of that connection, but NFC tags dictate who is providing the content.
 
 \subsubsection{Java Applets and ActiveX}
 A signed Java applet includes a digital signature of the Java binary that can be verified with a certificate belonging to the applet author.
@@ -419,15 +427,6 @@ The operating system takes care of the access control, so there is no need for a
 As the NFC application landscape for Android is still growing, it remains to be seen how many applications will benefit from this additional security.
 Next is a security analysis of our design using the standards presented by Saltzer and Shroeder.
 
-\subsubsection{Certificates}
-Though we do not seek to offer an alternative to the certificate-based authentication used by NDEF signature records, it is worth addressing some issues specific to certificates.
-The NDEF Signature RTD supports both X9.68 and X.509 certificates, but both of these are designed for Internet authentication.
-NFC tags have limited available space (on the order of kilobytes), but also present a different use case than that of a user connecting to hosts on the Internet.
-A user connecting to an Internet host will often have at least some idea of who they are attempting to connect to.
-For example, an individual navigating to Google will most likely be able to recognize \url{www.google.com} as the appropriate website.
-However, an individual reading an NFC tag may not know the author of that tag before performing the read.
-A certificate may associate a name with a public key, but that association may not be useful in the first place\cite{ellison2000}, and may be even less useful to an NFC user.
-Certificates can be much more helpful when a user knows who they intend to connect to, and wishes to verify the identity of the individual at the other end of that connection, but NFC tags dictate who is providing the content.
 
 \section{Future Work}
 \label{sec:futurework}
