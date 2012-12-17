@@ -372,7 +372,8 @@ A malicious user could remove or disable the existing tag and replace it with hi
 Under the existing scheme, a user's phone would automatically place the phone call without prompting the user, causing the user to spend money.
 Under our scheme, a user would see that the tag is not signed by a key that they trust, and they would have to add the key.
 If the user had already added a key belonging to the organization that created the poster, they would become suspicious of the fact that there is a new key associated with the current poster.
-As there is probably a centralized producer of smart posters in many cases, such as an advertising company, once a poster is trusted, a user can scan any other smart poster made by the same company without worrying again. 
+As there is probably a centralized producer of smart posters in many cases, and specifically in this example, once a poster is trusted, a user can scan any other smart poster made by the same company without worrying again. 
+Additionally, as we allow finer-grained access to these tags, if the advertising company's perogative was to instead call a tolled phone number they provide on the signed tag, our system would not fall trap to this attack by a malicious tag writer. The user would have only allowed the movie poster access to certain permissions, not including the CALL PHONE permission in this case.  
 
 \subsection{Usability}
 NFC offers a unique means of quickly performing actions via a single swipe of a tag; to this end, any security solution must therefore be particularly mindful of the tradeoffs between usability and security.
