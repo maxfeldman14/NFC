@@ -15,20 +15,22 @@
 \author{Max Feldman \and Stephanie Rogers \and Richard Xia}
 \maketitle
 
-\section{Abstract}
+\begin{abstract}
 Near Field Communication (NFC) is a form of contactless communication that allows devices to transfer data over radio; it is similar to RFID, but with a much smaller range of use.
 NFC has existed for some time, but its implementation in Android phones, along with an API for developers, has only recently gained popularity.
-Upon scanning an NFC tag, Android will automatically run the application that has been associated with the type of data on that tag, often without user interaction or approval.
-The Android NFC API offers application developers a new, more powerful means to access NFC capabilities in mobile devices, but this introduces an increased attack space and additional potential for vulnerability.
-Android provides access to an NFC Data Exchange Format (NDEF) API, but does not offer any of the various security measures that have been proposed by the NFC standards group (the NFC Forum).
-
-We examine the growing space of NFC applications offered for Android, and provide a cursory categorization of the functionality and general security practices of these applications.
+%Upon scanning an NFC tag, Android will automatically run the application that has been associated with the type of data on that tag, often without user interaction or approval.
 Alarmingly, several applications implement features such as SMS messaging or calling given phone numbers, or accessing arbitrary URLs, which are provided by an NFC tag without even prompting the user.
-We attempt to address the issue of resource access on behalf of external data, in the context of NFC.
-We discuss known issues and vulnerabilities with NDEF security, and how our proposal mitigates some of these concerns.
-We also keep in mind the importance of usability, especially in applications that must perform quickly and smoothly---as is the case with NFC applications. Finally, we present the description of a user study that can effectively evaluate the tradeoffs between secure access control and usability.
+%The Android NFC API offers application developers a new, more powerful means to access NFC capabilities in mobile devices, but this introduces an increased attack space and additional potential for vulnerability.
+%Android provides access to an NFC Data Exchange Format (NDEF) API, but does not offer any of the various security measures that have been proposed by the NFC standards group (the NFC Forum).
 
-\tableofcontents
+We examine the growing space of NFC applications offered for Android, and provide a categorization of the functionality and general security practices of these applications.
+We address the issue of authorization of NFC tags by providing fine-grained access control based on data type and author.
+We discuss known issues and vulnerabilities with NDEF security, and how our proposal mitigates some of these concerns.
+We also keep in mind the importance of usability, especially in applications that minimize user interruption---as is the case with NFC applications.
+%Finally, we present the description of a user study that can effectively evaluate the tradeoffs between secure access control and usability.
+\end{abstract}
+
+%\tableofcontents
 
 \section{Introduction}
 NFC-enabled devices have existed for several years, but with NFC deployment in Android phones developers have more power to write NFC applications than was previously available.
