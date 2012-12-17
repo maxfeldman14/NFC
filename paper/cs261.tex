@@ -390,10 +390,11 @@ In contrast, we offer the user the ability to grant a tag author access to a \te
 ActiveX offers essentially the same mechanism as Java applets.
 
 \subsubsection{SSH}
-Users have to choose to accept unknown hosts, given only a digest of their public key.
-This differs from the previous two examples in that there is less certification overhead and a greater burden on the user to trust the right host.
-In addition, the user does not grant authorization to the server.
-\TODO{make less terrible}
+The Secure Shell (SSH) protocol asks users to authenticate the host to which they are connecting by examining a digest of the host's public key.
+After accepting this key, the host and corresponding key are stored, so that a user need not authenticate the host's public key again.
+This differs from the previous two examples in that there is less certification overhead at the expense of a greater burden on the user to trust the right host.
+In addition, the user does not grant the server authorization to any local resources, which results in a different threat model than that of NFC.
+We offer users the ability to trust an author once and avoid future prompts for authorization, but our system offers more power to the user by providing them with information regarding the author (and not just a digest of the author's public key).
 
 \subsection{Use Case: Smart Poster}
 Smart posters\footnote{\url{http://www.nfc-forum.org/resources/presentations/NFC_Smart_Poster_WIMA_2011.pdf}} are a common application of NFC tags where a normal poster is augmented with an NFC tag that provides additional data.
@@ -422,8 +423,6 @@ In Section~\ref{sec:futurework} we consider how to test the usability of access 
 \subsection{Security}
 The operating system takes care of the access control, so there is no need for additional development of applications, and no risk of developers improperly using (or simply not using) a framework.
 As the NFC application landscape for Android is still growing, it remains to be seen how many applications will benefit from this additional security.
-Next is a security analysis of our design using the standards presented by Saltzer and Shroeder.
-
 
 \section{Future Work}
 \label{sec:futurework}
