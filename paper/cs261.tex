@@ -5,7 +5,7 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{hyperref}
-\usepackage{ulem}
+%\usepackage{ulem}
 
 \newcommand\TODO[1]{\textcolor{red}{#1}}
 \newcommand\todo[1]{\textcolor{red}{#1}}
@@ -34,7 +34,7 @@ We also keep in mind the importance of usability, especially in applications tha
 
 \section{Introduction}
 NFC-enabled devices have existed for several years, but with NFC deployment in Android phones developers have more power to write NFC applications than was previously available.
-The growing prevalence of NFC devices, and the developer-friendly nature of Android in particular, lead to a rapidly expanding space of both NFC Android applications and insecure development practices in these applications.
+The growing prevalence of NFC devices, and the developer-friendly nature of Android in particular, lead to a rapidly expanding space of NFC Android applications\footnote{\url{http://www.frost.com/sublib/display-report.do?id=9843-00-13-00-00}}.
 This expansion of applications and functionality bears an expansion of the attack surface as well.
 
 In this paper, we frame the state of NFC vulnerabilities and proposed solutions, and evaluate the practicality of these solutions for Android devices.
@@ -42,20 +42,20 @@ More and more, we see feature-rich applications which perform actions based upon
 This allows for useful functionality and fast, responsive applications, but it also raises concerns regarding untrusted NFC data.
 For example, some Android applications offer the ability to automatically call a phone number if they receive an NFC input specifying a phone number.
 If this application were to be fed a malicious NFC input specifying a paid phone number, then the user's phone could make a call which charged the user's cellular account, all without the user's knowledge.
-There are NFC protocols to provide digital signatures, but Android currently does not implement these, nor do they sufficiently protect against several types of attacks \cite{roland2011}.
+There are NFC protocols to provide digital signatures, but Android currently does not implement these, nor do they sufficiently protect against several types of attacks \cite{roland2011, nfcsignaturertd}.
 Additionally, there is no standard means of determining authorization after NFC data is authenticated.
 
 We present other NFC-related threats, among them both threats which are in the scope of this paper, and threats which we do not discuss.
 Android allows users to write NFC tags (and transmit NFC data) in addition to performing read operations.
 This allows for richer applications, but also raises concerns regarding users sharing sensitive data over NFC (which is by default unencrypted).
-Although there are protocols and proposals for secure data transfer over NFC, Android does not support these either.
+Although there are protocols and proposals for secure data transfer over NFC, Android does not support these either \cite{nfcsignaturertd, nfcsec01}.
 Both reading and writing of NFC data in Android is insecure, and developers currently must implement their own security solutions if they wish to offer security for these operations.
 
 We propose a solution to the issue of authorization, in the form of access control lists for NFC data.
 We describe a system which attempts to maximize usability and security of reading in NFC data, by allowing users to manage which tag authors they trust in a given context.
 We describe the operations present in this system, and how the OS both handles marshalling NFC data after verifying access policies, as well as the utilities provided to the user for access control management.
 NFC security in Android applications has not previously been thoroughly addressed; we seek to rectify this and provide a feasible solution to some potential NFC attack vectors.
-There are other means of providing similar NFC security, and we address the merits of select alternatives to our proposal.
+%There are other means of providing similar NFC security, and we address the merits of select alternatives to our proposal.
 
 In order to evaluate the efficacy of our proposal, we implement basic functionality of our recommended system.
 This requires emulating NFC digital signature standards which Android does not yet support, but we show that a simple API can provide powerful additional security.
@@ -66,17 +66,16 @@ Were Android to provide integration of NFC and cryptographic protocols, it would
 We also pose goals for a future user study which could illuminate user response to our system, and how well our access control integrates with real applications and use cases.
 
 \section{Background}
-Near Field Communication (NFC) is an emerging technology for wireless communication that allows NFC-enabled devices to transfer small amounts of data at a close proximity, usually no more than a few centimeters.
+Near Field Communication (NFC) is an emerging technology for wireless communication that allows NFC-enabled devices to transfer small amounts of data at a close proximity, usually no more than a few centimeters \cite{nfcip-1, nfcip-2}.
 At the most basic level, NFC specifies a set of protocols for this wireless communication based off of the radio-frequency identification (RFID) standards.
-NFC offers current and predicted functionality of contactless transactions, data exchange and an alternative to traditional contactless technologies such as RFID and QR codes.
 
 NFC-enabled devices can use the protocol in two modes: active and passive.
 In passive mode, there is a device actively generating a radio frequency (RF) field that initiates contact to the passive NFC tag.
 An NFC tag is a passive device that stores data for NFC transmission.
 There are several types of NFC tags, but in general they are a means of persistent storage for NFC data.
-Depending on the type of tag, the data can be overwritten or modified, or require authentication from a reader before transmitting its data.
+Depending on the type of tag, the data can be overwritten or modified, or require authentication from a reader before transmitting its data \cite{koninggans2008}.
 In this case, the device can read or write information stored on NFC tags and cards without the passive targets needing any power source.
-Active devices are also able to emulate NFC tags by transmitting NFC data to a receiver which is also acting as an active device.
+Active devices are also able to emulate passive NFC tags by transmitting NFC data to a receiver which is acting as an active device.
 For the purpose of discussion within this paper, we use ``tag'' to refer to either a physical tag, or a device which is emulating a tag, as their functionality is the same within the context of our exploration.
 Additionally, NFC phones have the ability to communicate with other NFC-enabled mobile phones to transfer data peer-to-peer in active mode.
 In this case both devices are generating their own RF fields.
@@ -84,9 +83,10 @@ In this case both devices are generating their own RF fields.
 \subsection{Android NFC}
 The Android system sends and receives NFC data in the form of NFC Data Exchange Format (NDEF) messages.
 These messages, which are stored in the NFC tag, act as a container for one or more NDEF records which are further broken up into a header and a payload.
-NDEF records also contain a header, but of this header we find use in two fields: ``TNF'' and ``Type''.
-TNF is a 3-bit field which specifies the type of the type; a TNF value of 1 indicates a well-known type (defined by the NFC Forum) and a TNF value of 2 indicates a MIME-type, for example.
-Type is an arbitrary length field which better describes the type of the data in the NDEF record.
+NDEF records also contain a header which contains two fields for describing the payload type: ``Type Name Format (TNF)'' and ``Type''.
+TNF is a 3-bit field which specifies the format of the type; a TNF value of 1 indicates a well-known type (defined by the NFC Forum) and a TNF value of 2 indicates a MIME-type, for example.
+Descriptions of the other TNF values can be found in the official specification \cite{ndef}.
+Type is field of arbitrary length which more precisely describes the type of the data in the NDEF record.
 Type can refer to a well-known type, such as a URI, or text, or it can refer to a MIME-type or custom application type, for example.
 An example breakdown of an NDEF message can be found in Figure~\ref{fig:background:ndef}
 
@@ -94,7 +94,7 @@ An example breakdown of an NDEF message can be found in Figure~\ref{fig:backgrou
 	\centering
 		\includegraphics[width=0.5\textwidth]{NDEF_Format.png}
 	\caption[Caption for LOF]%
-		{NDEF Message Format. \\{\scriptsize\url{adapted from http://www.developer.nokia.com/Community/Wiki/Understanding_NFC_Data_Exchange_Format_(NDEF)_messages}}}
+		{NDEF Message Format. Figure adapted from \\{\scriptsize\url{http://www.developer.nokia.com/Community/Wiki/Understanding_NFC_Data_Exchange_Format_(NDEF)_messages}}}
   \label{fig:background:ndef}
 
 \end{figure}
@@ -264,7 +264,7 @@ If the OS is able to verify the access of a key and record type, operations will
 This content author can either be approved for a specific type (TNF and Type field), or for all types.
 For example, an author with public key $K_a$ may have a record [Well-known:URI:$K_a$], indicating that their key is trusted for all URI inputs within the context of that application.
 Another author with public key $K_b$ may have a record [*:*:$K_b$], indicating that they will always be granted access by this application.
-If the lookup fails, then a user will be prompted to either allow the operation to proceed once (ie. without granting permanent access), grant permanent access, or deny access and abort the operation.
+If the lookup fails, then a user will be prompted to either allow the operation to proceed once (i.e. without granting permanent access), grant permanent access, or deny access and abort the operation.
 \subsubsection{Granting Access}
 If a user elects to grant access upon receipt of NDEF data, then they will be given the option of granting the tag author permanent access for that NDEF type (TNF and Type fields, or an application-developer-specified type), or for all types (a wildcard match on the TNF and Type fields).
 The OS will then attempt to deliver the most readable identifier of the public key which the user is about to approve.
@@ -466,7 +466,7 @@ This access control system addresses several issues present in NFC applications 
 We would like to thank Dawn Song and her research group for letting us borrow an NFC-enabled Android phone.
 
 
-\bibliographystyle{abbrv}
+\bibliographystyle{acm}
 \bibliography{cs261}
 
 \end{document}
