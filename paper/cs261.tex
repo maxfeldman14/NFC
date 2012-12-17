@@ -35,7 +35,7 @@ We also keep in mind the importance of usability, especially in applications tha
 \section{Introduction}
 NFC-enabled devices have existed for several years, but with NFC deployment in Android phones developers have more power to write NFC applications than was previously available.
 The growing prevalence of NFC devices, and the developer-friendly nature of Android in particular, lead to a rapidly expanding space of NFC Android applications\footnote{\url{http://www.frost.com/sublib/display-report.do?id=9843-00-13-00-00}}.
-This expansion of applications and functionality bears an expansion of the attack surface as well.
+This expansion of applications and functionality may be a sign of an expansion of the attack surface as well.
 
 In this paper, we frame the state of NFC vulnerabilities and proposed solutions, and evaluate the practicality of these solutions for Android devices.
 More and more, we see feature-rich applications which perform actions based upon NFC data which is read from an NFC tag or tag emulator.
@@ -45,7 +45,7 @@ If this application were to be fed a malicious NFC input specifying a paid phone
 There are NFC protocols to provide digital signatures, but Android currently does not implement these, nor do they sufficiently protect against several types of attacks \cite{roland2011, nfcsignaturertd}.
 Additionally, there is no standard means of determining authorization after NFC data is authenticated.
 
-We present other NFC-related threats, among them both threats which are in the scope of this paper, and threats which we do not discuss.
+We identify other NFC-related threats, among them both threats which are in the scope of this paper, and threats which we do not discuss.
 Android allows users to write NFC tags (and transmit NFC data) in addition to performing read operations.
 This allows for richer applications, but also raises concerns regarding users sharing sensitive data over NFC (which is by default unencrypted).
 Although there are protocols and proposals for secure data transfer over NFC, Android does not support these either \cite{nfcsignaturertd, nfcsec01}.
@@ -102,6 +102,7 @@ An example breakdown of an NDEF message can be found in Figure~\ref{fig:backgrou
 Specifically, the Android system offers the ability to read and write NFC tags for passive mode, and beam NDEF messages from one device to another with Android Beam.\footnote{\url{http://developer.android.com/guide/topics/connectivity/nfc/nfc.html}} for active mode. 
 
 \subsection{Android Intents}
+\label{sec:background:intents}
 The core components of an Android application are activated through messages called intents.\footnote{\url{http://developer.android.com/guide/components/intents-filters.html}}
 Intents are used for inter-application and intra-application communication by sending messages with relevant information about operations to be performed to various applications.  
 
@@ -117,10 +118,9 @@ Android applications run in a sandbox that allows areas of the system to be isol
 However, access to these resources can be granted to an application if the developer requests the appropriate permissions in the application's manifest.
 Android developers are expected to limit the permissions requested to only those that are absolutely necessary for the function of their applications.
 Access to the NFC hardware is a permission that application developers must request, and many applications which request NFC permission also require other permissions such as Internet access and making phone calls.
-As of writing this report, there were 315 free NFC-enabled Android applications available for download.
-We examined 251 applications to determine which permissions they used.
-Of these applications, 61\% had the internet permission, 15\% had the permission to place a phone call, and 10\% had the permission to send an SMS message.
-We did not analyze the remaining 64 applications because we were unable to decompile them in order 
+As of writing this report, there were 253 free NFC-enabled Android applications available for download.
+We examined the applications to determine which permissions they used.
+Of these applications, 78\% had the Internet permission, 18\% had the permission to place a phone call, and 10\% had the permission to send an SMS message.
 
 \section{Threat Model}
 While NFC is still an emerging technology, there are several vulnerabilities that can afflict applications.
@@ -253,7 +253,7 @@ For example, upon swiping a tag containing a phone number, an application may ch
 In addition, if a user replaces an application which originally handled a specific tag type, then the access control should not automatically be applied to the new application because the behavior of that new application may not be the same as the behavior of the original application.
 Different behaviors may warrant different access policies, so it is not safe to maintain the same access control upon behavioral changes.
 One common problem with access control lists is that there may be a polynomial number of policies to set, which in general causes them to be difficult for users to maintain.
-We do not experience the same problem, because, in practice, each tag type will only have one type of application that it will open automatically, and thus an application's ACL will only need to maintain information about tag types for which it is the primary application.
+We do not experience the same problem, because, in practice, each tag type will only have one type of application that it will open automatically (see Section~\ref{sec:background:intents}), and thus an application's ACL will only need to maintain information about tag types for which it is the primary application.
 \begin{figure}[h!]
 \begin{minipage}{\textwidth}
 	\centering
@@ -273,18 +273,21 @@ This content author can either be approved for a specific type (TNF and Type fie
 For example, an author with public key $K_a$ may have a record [Well-known:URI:$K_a$], indicating that their key is trusted for all URI inputs within the context of that application.
 Another author with public key $K_b$ may have a record [*:*:$K_b$], indicating that they will always be granted access by this application.
 If the lookup fails, then a user will be prompted to either allow the operation to proceed once (i.e. without granting permanent access), grant permanent access, or deny access and abort the operation.
+
 \subsubsection{Granting Access}
 If a user elects to grant access upon receipt of NDEF data, then they will be given the option of granting the tag author permanent access for that NDEF type (TNF and Type fields, or an application-developer-specified type), or for all types (a wildcard match on the TNF and Type fields).
 The OS will then attempt to deliver the most readable identifier of the public key which the user is about to approve.
 In most cases, extracting the identifying information from the certificate will be sufficient to present the user with a concise identity of the content author.
 The user then chooses the type of access they wish to grant to that public key, and this access choice is written to the access control list for that application.
+
 \subsubsection{Revoking Access}
 Users will be provided an interface to the access control lists for their applications by the OS.
 Through this interface, the user can view all authors to which they have granted access (including the human-readable name associated with the public key).
 The user can then choose to revoke access to an author by removing associated entries of that author in relevant lists.
 The user can also remove only one access grant to an author, if they so choose.
 Revocation should additionally support certificate revocation lists; if a tag with a revoked certificate is encountered, that revocation should propagate to the access control list.
-Additionally, if a certificate has been found which is outside its validity period, the access associated with that identity should be revoked.
+Additionally, if a certificate has been found which is outside its validity period, the access associated with that identity should be revoked by the OS.
+Additional information such as most recent access time could be stored in the ACL to aid users in deciding which access rules are no longer necessary.
 
 
 \subsection{Alternatives}
@@ -299,10 +302,10 @@ The number of tag authors will be lower than the number of resources a user enco
 
 We considered the merits of allowing access sharing between applications.
 The principal benefit of such a system is that there would no longer be duplicate access granting if a user wishes to trust a tag author within the context of multiple applications.
-While this would easily be possible, it raises two major concerns.
-First, shared access control would open the possibility for malicious applications to inject additional trust for authors who may otherwise be untrusted.
-An additional permission for read and write access to the shared access control list would need to be introduced in order to better manage which applications can alter this control list.
-Second, there are cases in which sharing access would result in a loss of security.
+%While this would easily be possible, it raises two major concerns.
+%First, shared access control would open the possibility for malicious applications to inject additional trust for authors who may otherwise be untrusted.
+%An additional permission for read and write access to the shared access control list would need to be introduced in order to better manage which applications can alter this control list.
+There are cases in which sharing access would result in a loss of security.
 For example, if one application with limited permissions added a tag author, \textit{A}, as a trusted author for all tag types, this access could be shared with other applications.
 If another application with more permissions (such as \texttt{CALL\_PHONE}) saw \textit{A} as having access to all tag types, \textit{A}'s tags would then be able to place phone calls.
 There are means to mitigate this threat, but the management becomes significantly more complicated, and simplicity is a necessary facet of our proposal.
@@ -316,7 +319,7 @@ We began implementing our access control system as an Android library that Andro
 We implemented this as a library only because time constraints would have made it too difficult to implement at OS-level.
 Unfortunately, Android does not yet support the NDEF Signature RTD, so much of our work involved working around this.
 We provide an API as a proof-of-concept for the proposed access control scheme, through which developers can add, verify, and revoke access.
-Our current implementation simply creates a makeshift signature record consisting of a digital signature (created by DSA) appended to the public key used for the signature.
+Our current implementation simply creates a makeshift signature record consisting of a digital signature (created by DSA) and the public key used for the signature.
 This emulates the PKI infrastructure provided by certificates, but in a simpler manner, as the focus of our proof-of-concept is the access control itself.
 We present this implementation as a proof-of-concept; this proposal must be implemented at OS-level for full effect.
 There are several advantages to such OS modifications, which are discussed below.
@@ -325,7 +328,7 @@ There are several advantages to such OS modifications, which are discussed below
 Users need to be able to grant and revoke access to resources, either manually, or in the context of a tag reader application.
 For our API, we use Android's \texttt{SharedPreferences}, which provides persistent key-value storage.
 Our current implementation provides a unique instance of this access control list (ACL) to an individual application.
-A given application can only access and modify its own access grants (aside from the OS interface provided to the user).
+%A given application can only access and modify its own access grants (aside from the OS interface provided to the user).
 In order to provide an OS library, as well as key management through OS utilities, the access control system must be implemented at OS-level.
 The Android Library we implement allows developers to effectively leverage access control, but more features and simplicity would be achieved by integration into Android itself.
 
@@ -393,16 +396,13 @@ The most secure means of supporting tags without signature records is to warn th
 However, this severely inhibits the ease of use of an NFC application.
 Additionally, this behavior would likely result in users being trained to ignore warnings.
 We have not yet found an optimal solution for dealing with unsigned tags, although a balance between usability and security would be to only prompt the user for access approval if the tag types are of high security value, such as a phone number or URL.
-This could be subverted, though, and would likely result in high false positives and high false negatives in warnings.
+%This could be subverted, though, and would likely result in high false positives and high false negatives in warnings.
 One option would be to have a per-application or per-tag-type policy for handling unsigned tags, since a user may want greater security for certain applications and not others.
 In Section~\ref{sec:futurework} we consider how to test the usability of access control in the presence of both signed and unsigned applications.
 
 \subsection{Security}
 The operating system takes care of the access control, so there is no need for additional development of applications, and no risk of developers improperly using (or simply not using) a framework.
 As the NFC application landscape for Android is still growing, it remains to be seen how many applications will benefit from this additional security.
-
-\TODO{Of 251 free NFC applications, which constitute 80\% of the total free NFC applications available for Android see~\ref{sec:androidperm}, 61\% had the internet permission, 15\% had the permission to place a phone call, and 10\% had the permission to send an SMS message. These permissions are indicative of some of the easiest attack surfaces. Further analysis is required to determine to what extent malicious NFC tags could exploit these permissions, but these numbers provide some estimate for applications which could benefit from our system.} Wagner said this was irrelevant. Also, we put in our analysis(evaluation) that further analysis is required. I don't think these statistics really tell us much and we definitely don't draw conclusions in any meaningful way. 
-
 Next is a security analysis of our design using the standards presented by Saltzer and Shroeder.
 
 \subsubsection{Security Analysis}
@@ -428,7 +428,7 @@ Next is a security analysis of our design using the standards presented by Saltz
 \subsubsection{Certificates}
 Though we do not seek to offer an alternative to the certificate-based authentication used by NDEF signature records, it is worth addressing some issues specific to certificates.
 The NDEF Signature RTD supports both X9.68 and X.509 certificates, but both of these are designed for Internet authentication.
-NFC tags have less available space, but also present a different use case than that of a user connecting to hosts on the Internet.
+NFC tags have limited available space (on the order of kilobytes), but also present a different use case than that of a user connecting to hosts on the Internet.
 A user connecting to an Internet host will often have at least some idea of who they are attempting to connect to.
 For example, an individual navigating to Google will most likely be able to recognize \url{www.google.com} as the appropriate website.
 However, an individual reading an NFC tag may not know the author of that tag before performing the read.
@@ -441,10 +441,10 @@ The next major step for this scheme is its implementation at operating system le
 An OS implementation is required to keep access control decisions from complicating application logic, as well to provide access control administration interface to the user.
 This implementation will make for a more detailed evaluation, as there will be no more speculation about the functionality of the system.
 It will also not be difficult to address some of the issues we presented in Section~\ref{sec:threatmodel:privacy}.
-At the very least, when a user writes a tag which they wish to be used by their phone only, they should be provided the option to encrypt that tag.
+At the very least, when a user writes a tag which they wish to be used by their phone only, they should be provided the option to encrypt and verify the integrity of that tag.
 The Android NDEF API could offer this encryption to developers of tag writing applications, who could then offer the feature to the user.
 Encryption would prevent leaks of private information from NFC tags even if the physical tag were to be compromised.
-We would also like to explore further generalization of this access control system, and its potential in areas other than NFC inputs.
+%We would also like to explore further generalization of this access control system, and its potential in areas other than NFC inputs.
 
 
 \subsection{Recommended User Study}
