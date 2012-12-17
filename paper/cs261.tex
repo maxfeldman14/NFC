@@ -39,11 +39,11 @@ This expansion of applications and functionality may be a sign of an expansion o
 
 In this paper, we frame the state of NFC vulnerabilities and proposed solutions, and evaluate the practicality of these solutions for Android devices.
 More and more, we see feature-rich applications which perform actions based upon NFC data which is read from an NFC tag or tag emulator.
-This allows for useful functionality and fast, responsive applications, but it also raises concerns regarding untrusted NFC data.
+This allows for useful functionality and fast, responsive applications, but it also raises concerns regarding the input of untrusted NFC data.
 For example, some Android applications offer the ability to automatically call a phone number if they receive an NFC input specifying a phone number.
-If this application were to be fed a malicious NFC input specifying a tolled phone number, then the user's phone could make a call which charged the user's cellular account, all without the user's knowledge.
+If this application were to be fed a malicious NFC input specifying a tolled phone number, then the user's phone could make a call which charges the user's cellular account, all without the user's knowledge.
 There are NFC protocols to provide digital signatures, but Android currently does not implement these, nor do they sufficiently protect against several types of attacks \cite{roland2011, nfcsignaturertd}.
-Additionally, there is no standard means of determining authorization after NFC data is authenticated.
+Additionally, there is no standard means of determining authorization after NFC data is authenticated \cite{roland2011}.
 
 We identify other NFC-related threats, among them both threats which are in the scope of this paper, and threats which we do not discuss.
 Android allows users to write NFC tags (and transmit NFC data) in addition to performing read operations.
@@ -53,7 +53,7 @@ Both reading and writing of NFC data in Android is insecure, and developers curr
 
 We propose a solution to the issue of authorization, in the form of access control lists for NFC data.
 We describe a system which attempts to maximize usability and security of reading in NFC data, by allowing users to manage which tag authors they trust in a given context.
-We describe the operations present in this system, and how the OS both handles marshalling NFC data after verifying access policies, as well as the utilities provided to the user for access control management.
+We describe the operations present in this system, and how the OS both handles marshalling NFC data after verifying access policies and the utilities provided to the user for access control management.
 NFC security in Android applications has not previously been thoroughly addressed; we seek to rectify this and provide a feasible solution to some potential NFC attack vectors.
 %There are other means of providing similar NFC security, and we address the merits of select alternatives to our proposal.
 
@@ -99,7 +99,7 @@ An example breakdown of an NDEF message can be found in Figure~\ref{fig:backgrou
 
 \end{figure}
 
-Specifically, the Android system offers the ability to read and write NFC tags for passive mode, and beam NDEF messages from one device to another with Android Beam.\footnote{\url{http://developer.android.com/guide/topics/connectivity/nfc/nfc.html}} for active mode. 
+Specifically, the Android system offers the ability to read and write NFC tags for passive mode, and beam NDEF messages from one device to another with Android Beam\footnote{\url{http://developer.android.com/guide/topics/connectivity/nfc/nfc.html}} for active mode. 
 
 \subsection{Android Intents}
 \label{sec:background:intents}
@@ -109,7 +109,7 @@ Intents are used for inter-application and intra-application communication by se
 When NFC is enabled and the screen is unlocked, Android devices will always be searching for input from an NFC tag or device. 
 When the device discovers an NFC tag, the Android OS creates an intent that is dispatched to an application that has registered for a tag of that type.
 This information is processed by Android's special tag dispatch system to determine which activity to launch.
-In the case that more than one application can handle the type of data contained in the tag, the phone will open a prompt for the user to choose among the several applications; however, if there is only one application, the phone will automatically launch this application and process the tag.
+In the case that more than one application can handle the type of data contained in the tag, the phone will open a prompt for the user to choose among the several applications; however, if there is only one application, the phone will automatically launch this application and process the tag, \emph{without user interaction}.
 NFC input can force Android phones (with certain settings) to parse images, videos, contacts, and office documents, call or text arbitrary phone numbers, establish Bluetooth connections, and open web pages via the browser, all without user interaction.  
 
 \subsection{Android Permission System}
@@ -244,7 +244,7 @@ This system does not offer an alternative to the certificate scheme supported by
 \subsection{Approach}
 In order to provide fine-grained access control, the operating system maintains a separate access control list for each application.
 An entry in this list consists of the TNF of the NDEF record, the Type of the NDEF record, and the public key extracted from the signature which applies to that record (Figure~\ref{fig:solution:acl}).
-This system is intended to operate at OS level, and perform access control grants and checks after parsing NDEF data, (OS-level parsing) but before providing that data to the relevant application.
+This system is intended to operate at OS level and perform access control grants and checks after parsing NDEF data (OS-level parsing) but before providing that data to the relevant application.
 When a tag is read, its data will be marshalled to the appropriate application, if that application is not already running.
 
 We argue that having per-application access control lists is both necessary and scalable.
@@ -264,7 +264,7 @@ In Table~\ref{tab:threats} we present common threats and how our design solves t
   \hline
   Unsigned tag & Tag from trusted organization is replaced with unsigned malicious tag. & User is warned that the tag is unsigned. User is prompted to accept unsigned tag. User should be suspicious if tag should be signed. \\
   \hline
-  Tag replaced & Tag from trusted organization is replaced with a malicious tag. & User is warned when encountering a tag created by a previously unencountered author. User is prompted to accept or reject the public key of the tag. User should be suspicious of untrusted key from previously trusted organization. \\
+  Tag replaced & Tag from trusted organization is replaced with a signed malicious tag. & User is warned when encountering a tag created by a previously unencountered author. User is prompted to accept or reject the public key of the tag. User should be suspicious of untrusted key from previously trusted organization. \\
   \hline
   Trusted tag author, new tag action & Tag author previously authorized for opening URLs publishes malicious tag which calls a paid phone number. & User is warned when encountering a tag created by a previously encountered author with a different tag data type. User is prompted to accept or reject key for new tag action. User should be suspicious of data from previously trusted tag author on new tag action. \\
   \end{tabular}
@@ -408,17 +408,18 @@ Under the existing scheme, a user's phone would automatically place the phone ca
 Under our scheme, a user would see that the tag is not signed by a key that they trust, and they would have to add the key.
 If the user had already added a key belonging to the organization that created the poster, they would become suspicious of the fact that there is a new key associated with the current poster.
 As there is probably a centralized producer of smart posters in many cases, and specifically in this example, once a poster is trusted, a user can scan any other smart poster made by the same company without worrying again. 
-Additionally, as we allow finer-grained access to these tags, if the advertising company's perogative was to instead call a tolled phone number that they provide on the signed tag, our system would prevent the malicious tag writer's attack. The user would have only allowed the movie poster access to certain permissions, not including the CALL PHONE permission in this case.  
+Additionally, as we allow finer-grained access to these tags, if the advertising company's prerogative was to instead call a tolled phone number that they provide on the signed tag, our system would prevent the malicious tag writer's attack. 
+In this case, the user would have only allowed the movie poster access to certain permissions, not including the \texttt{CALL\_PHONE} permission.
 
 \subsection{Usability}
 NFC offers a unique means of quickly performing actions via a single swipe of a tag; to this end, any security solution must therefore be particularly mindful of the tradeoffs between usability and security.
 Our recommendations focus on minimizing the additional interaction required of a user to add more security to their NFC transactions.
 Users should be offered the option to approve a tag's author permanently (by updating the access control list), as well as to grant the author access on a case-by-case basis.
-Additionally, to ensure backwards compatibility, unsigned NFC tags should not cause the system to break.
+To ensure backwards compatibility, unsigned NFC tags should not cause the system to break.
 We recommend giving users a choice regarding the handling of an unsigned tag.
 The most secure means of supporting tags without signature records is to warn the user and prompt for approval every time such a tag is encountered.
 However, this severely inhibits the ease of use of an NFC application.
-Additionally, this behavior would likely result in users being trained to ignore warnings.
+This behavior would likely result in users being trained to ignore warnings.
 We have not yet found an optimal solution for dealing with unsigned tags, although a balance between usability and security would be to only prompt the user for access approval if the tag types are of high security value, such as a phone number or URL.
 %This could be subverted, though, and would likely result in high false positives and high false negatives in warnings.
 One option would be to have a per-application or per-tag-type policy for handling unsigned tags, since a user may want greater security for certain applications and not others.
