@@ -199,7 +199,7 @@ We propose a way for users to authorize keys based on the data type and applicat
 In addition to the security that various NFC technologies have provided, there has been much insight into the vulnerabilities of NFC at the network-level. 
 One major foray into such analysis was presented by Charlie Miller at BlackHat 2012 \cite{miller2012}.
 Miller employs fuzz testing to show that carefully crafted NFC payloads can do much more than just crash a device---in some cases phones were discovered to fall prey to exploits at the parser level.
-Miller's work provides a wide analysis of the NFC attack surface, but our research will seek to provide more depth in the exploration of application-level vulnerabilities.
+Miller's work provides a wide analysis of the NFC attack surface, but our research will seek to provide exploration of application-level vulnerabilities.
 
 %RFID, a precursor to and superset of NFC, has also raised several security issues in the past.
 %Though RFID is a much older technology, it is remains relevant as both the foundation for NFC, and as a technology which is still employed in various applications (most prominently touch-activated credit cards).
@@ -262,11 +262,11 @@ In Table~\ref{tab:threats} we present common threats and how our design solves t
   \begin{tabular}{p{3cm} | p{6cm} | p{6cm} }
   Threat name & Example & How we solve it \\
   \hline
+  Unsigned tag & Tag from trusted organization is replaced with unsigned malicious tag. & User is warned that the tag is unsigned. User is prompted to accept unsigned tag. User should be suspicious if tag should be signed. \\
+  \hline
   Tag replaced & Tag from trusted organization is replaced with a malicious tag. & User is warned when encountering a tag created by a previously unencountered author. User is prompted to accept or reject the public key of the tag. User should be suspicious of untrusted key from previously trusted organization. \\
   \hline
   Trusted tag author, new tag action & Tag author previously authorized for opening URLs publishes malicious tag which calls a paid phone number. & User is warned when encountering a tag created by a previously encountered author with a different tag data type. User is prompted to accept or reject key for new tag action. User should be suspicious of data from previously trusted tag author on new tag action. \\
-  \hline
-  Unsigned tag & Tag from trusted organization is replaced with unsigned malicious tag. & User is warned that the tag is unsigned. User is prompted to accept unsigned tag. User should be suspicious if tag should be signed. \\
   \end{tabular}
   \caption{Threats and Solutions}
   \label{tab:threats}
@@ -363,7 +363,7 @@ The largest inhibitor of deployment of this scheme is Android's current lack of 
 While support for this is not strictly necessary for our scheme, which requires only some forms of authentication and integrity, adoption of the Signature RTD standard would be ideal.
 Our existing implementation uses a workaround to provide authentication and integrity, which consists of appending a public key and signature to the original NDEF message.
 However, this does not affect the feasibility of our approach, as it does not affect the process of administering access control.
-We begin building a proof-of-concept application which uses this access control API in order to provide security for reading NFC tags.\footnote{Unfortunately, we had to return the phone we were using for testing, which has currently halted our development.}
+We built a proof-of-concept application which uses this access control API in order to provide security for reading NFC tags.\footnote{Unfortunately, we had to return the phone we were using for testing, which has currently halted our development.}
 This application demonstrates the ease with which access control can be integrated into an NFC application.
 As developers do not have to do any additional work, this system is also easier to deploy, and can be deployed on existing phones without adversely affecting application behavior.
 
@@ -373,7 +373,8 @@ Each of these systems make some use of certificates or trusted public keys.
 
 \subsubsection{TLS/SSL}
 TLS and its predecessor SSL offer authentication via certificate authorities, which allow a user to verify that the web page is being sent by the true owner of the domain.
-\subsubsection{Certificates}
+
+\textbf{Certificates}
 Though we do not seek to offer an alternative to the certificate-based authentication used by NDEF signature records, it is worth addressing some issues specific to certificates.
 The NDEF Signature RTD supports both X9.68 and X.509 certificates, but both of these are designed for Internet authentication.
 NFC tags have limited available space (on the order of kilobytes), but also present a different use case than that of a user connecting to hosts on the Internet.
