@@ -255,14 +255,18 @@ Different behaviors may warrant different access policies, so it is not safe to 
 One common problem with access control lists is that there may be a polynomial number of policies to set, which in general causes them to be difficult for users to maintain.
 We do not experience the same problem, because, in practice, each tag type will only have one type of application that it will open automatically (see Section~\ref{sec:background:intents}), and thus an application's ACL will only need to maintain information about tag types for which it is the primary application.
 
-I am referencing the table Table~\ref{tab:threats}.
+In Table~\ref{tab:threats} we present common threats and how our design solves them.
 
 \begin{table}
   \center
-  \begin{tabular}{l | p{6cm} | p{6cm} }
+  \begin{tabular}{p{3cm} | p{6cm} | p{6cm} }
   Threat name & Example & How we solve it \\
   \hline
-  Tag replaced & Tag is replaced with a paid phone number & The user warned when they encounter a tag created by a previously unencountered author \\
+  Tag replaced & Tag from trusted organization is replaced with a malicious tag. & User is warned when encountering a tag created by a previously unencountered author. User is prompted to accept or reject the public key of the tag. User should be suspicious of untrusted key from previously trusted organization. \\
+  \hline
+  Trusted tag author, new tag action & Tag author previously authorized for opening URLs publishes malicious tag which calls a paid phone number. & User is warned when encountering a tag created by a previously encountered author with a different tag data type. User is prompted to accept or reject key for new tag action. User should be suspicious of data from previously trusted tag author on new tag action. \\
+  \hline
+  Unsigned tag & Tag from trusted organization is replaced with unsigned malicious tag. & User is warned that the tag is unsigned. User is prompted to accept unsigned tag. User should be suspicious if tag should be signed. \\
   \end{tabular}
   \caption{Threats and Solutions}
   \label{tab:threats}
