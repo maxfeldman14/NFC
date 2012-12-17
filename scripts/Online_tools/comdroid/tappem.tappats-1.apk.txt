@@ -1,0 +1,189 @@
+
+<html>
+<head>
+	<title> ComDroid </title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+			font-family: "Arial";
+			background: url('stripe.png');
+		}
+		div#outermost {
+			padding: 5%;
+		}
+		div#blurb {
+			font-weight: bold;
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#inner {
+			background-color: #ffffff;
+			padding: 30px;
+			border: #7d7e82 solid 5px;
+		}
+		div.#results {
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#useful {
+			padding-bottom: 3px;
+			margin-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		span.ttitle {
+			color: #106288;
+			font-weight: bold;
+		}
+		li.space {
+			padding-bottom: 15px;
+		}
+		a:link, a:hover, a:active {
+			color: #336666;
+		}
+		a:visited {
+			color: #666666;
+		}
+		img#com { 
+			cursor: pointer; 
+		}
+		span.code {
+			color: #000;
+		}
+		div.leftHalf {
+			float: left;
+			width: 49%;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightHalf {
+			padding-top: 3px;
+			padding-bottom: 3px;
+			float: right;
+			margin-bottom: 5px;
+			word-wrap: break-word;
+			width: 49%;
+			background-color: #eee;
+		}
+		div.leftThird {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 10%;
+		}
+		div.middleThird {
+			float: left;
+			width: 43%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThird {
+			float: right;
+			width: 45%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.leftThirdApi {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 50%;
+		}
+		div.middleThirdApi {
+			float: left;
+			width: 30%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThirdApi {
+			float: right;
+			width: 18%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.row {
+			clear: both;
+		}
+		div.container {
+			padding-bottom: 35px;
+		}
+		ul {
+			margin-bottom: 0px;
+		}
+	</style>
+	<script>
+	  function clickComDroid() {
+	  
+	      document.location="index.html";
+	  }
+	  </script>
+		<script type="text/javascript"> 
+
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-7606088-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+
+	</script>
+</head>
+<body>
+
+	<div id="outermost">
+		<div id="inner">
+		
+			<div id="title"><img src="comdroid.jpg" id="com" alt="ComDroid" onclick="clickComDroid();" /></div> 
+			<div id="blurb">A static analysis tool for identifying application communication-based vulnerabilities.</div> 
+
+			<div id="authors"><a href="http://www.cs.berkeley.edu/~emc/">Erika Chin</a>, <a href="http://www.cs.berkeley.edu/~afelt/">Adrienne Porter Felt</a>,  Kate Greenwood, <a href="http://www.cs.berkeley.edu/~daw/">David Wagner</a> (UC Berkeley)</div> 
+			<div id="contact">Contact: android-security at eecs.berkeley.edu</div> 
+			<br>
+			<div class="results">
+				<span class="ttitle">Exposed Communication</span><br />
+
+				ComDroid has found exposed communication.
+								<br /><ul><li>Possible Activity Hijacking: tappem/tappats/Home/checkVersion()@99, Source Line: 356, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: tappem/tappats/NextBus$1/onTouch(Landroid/view/View;Landroid/view/MotionEvent;)@65, Source Line: 207, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: tappem/tappats/Settings/onClick(Landroid/view/View;)@213, Source Line: 325, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): mobisocial/nfc/Nfc/notifyRemoteNfcInteface(Landroid/nfc/NdefMessage;)@33, Source Line: 589, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Malicious Activity Launch: tappem.tappats.BusTagRead, 0
+</li><li>Possible Malicious Activity Launch: tappem.tappats.SearchableDictionary, 1
+</li><li>Possible Malicious Broadcast Injection: mobisocial.nfc.Nfc$1*mobisocial/nfc/Nfc/installNfcHandoverHandler()@18, 0
+</li></ul>
+		</div>
+
+</body>
+</html>

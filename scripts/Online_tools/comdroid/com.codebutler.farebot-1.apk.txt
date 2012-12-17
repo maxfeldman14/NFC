@@ -1,0 +1,197 @@
+
+<html>
+<head>
+	<title> ComDroid </title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+			font-family: "Arial";
+			background: url('stripe.png');
+		}
+		div#outermost {
+			padding: 5%;
+		}
+		div#blurb {
+			font-weight: bold;
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#inner {
+			background-color: #ffffff;
+			padding: 30px;
+			border: #7d7e82 solid 5px;
+		}
+		div.#results {
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#useful {
+			padding-bottom: 3px;
+			margin-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		span.ttitle {
+			color: #106288;
+			font-weight: bold;
+		}
+		li.space {
+			padding-bottom: 15px;
+		}
+		a:link, a:hover, a:active {
+			color: #336666;
+		}
+		a:visited {
+			color: #666666;
+		}
+		img#com { 
+			cursor: pointer; 
+		}
+		span.code {
+			color: #000;
+		}
+		div.leftHalf {
+			float: left;
+			width: 49%;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightHalf {
+			padding-top: 3px;
+			padding-bottom: 3px;
+			float: right;
+			margin-bottom: 5px;
+			word-wrap: break-word;
+			width: 49%;
+			background-color: #eee;
+		}
+		div.leftThird {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 10%;
+		}
+		div.middleThird {
+			float: left;
+			width: 43%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThird {
+			float: right;
+			width: 45%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.leftThirdApi {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 50%;
+		}
+		div.middleThirdApi {
+			float: left;
+			width: 30%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThirdApi {
+			float: right;
+			width: 18%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.row {
+			clear: both;
+		}
+		div.container {
+			padding-bottom: 35px;
+		}
+		ul {
+			margin-bottom: 0px;
+		}
+	</style>
+	<script>
+	  function clickComDroid() {
+	  
+	      document.location="index.html";
+	  }
+	  </script>
+		<script type="text/javascript"> 
+
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-7606088-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+
+	</script>
+</head>
+<body>
+
+	<div id="outermost">
+		<div id="inner">
+		
+			<div id="title"><img src="comdroid.jpg" id="com" alt="ComDroid" onclick="clickComDroid();" /></div> 
+			<div id="blurb">A static analysis tool for identifying application communication-based vulnerabilities.</div> 
+
+			<div id="authors"><a href="http://www.cs.berkeley.edu/~emc/">Erika Chin</a>, <a href="http://www.cs.berkeley.edu/~afelt/">Adrienne Porter Felt</a>,  Kate Greenwood, <a href="http://www.cs.berkeley.edu/~daw/">David Wagner</a> (UC Berkeley)</div> 
+			<div id="contact">Contact: android-security at eecs.berkeley.edu</div> 
+			<br>
+			<div class="results">
+				<span class="ttitle">Exposed Communication</span><br />
+
+				ComDroid has found exposed communication.
+								<br /><ul><li>Possible Activity Hijacking: android/support/v4/app/NavUtils/navigateUpTo(Landroid/app/Activity;Landroid/content/Intent;)@10, Source Line: 99, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: android/support/v4/app/ShareCompat$IntentBuilder/startChooser()@10, Source Line: 330, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/actionbarsherlock/internal/view/menu/ActionMenuItem/invoke()@33, Source Line: 218, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/actionbarsherlock/internal/view/menu/MenuItemImpl/invoke()@67, Source Line: 159, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/codebutler/farebot/activities/AdvancedCardInfoActivity$2/onClick(Landroid/content/DialogInterface;I)@187, Source Line: 188, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/codebutler/farebot/activities/AdvancedCardInfoActivity/onOptionsItemSelected(Lcom/actionbarsherlock/view/MenuItem;)@93, Source Line: 140, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/codebutler/farebot/activities/MainActivity$1/onClick(Landroid/content/DialogInterface;I)@14, Source Line: 124, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/codebutler/farebot/activities/MainActivity/onOptionsItemSelected(Lcom/actionbarsherlock/view/MenuItem;)@26, Source Line: 99, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/codebutler/farebot/activities/ReadingTagActivity$1/onPostExecute(Lcom/codebutler/farebot/mifare/Card;)@237, Source Line: 119, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/codebutler/farebot/fragments/CardsFragment/onCardsImported([Landroid/net/Uri;)@58, Source Line: 203, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/codebutler/farebot/fragments/CardsFragment/onListItemClick(Landroid/widget/ListView;Landroid/view/View;IJ)@21, Source Line: 114, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/codebutler/farebot/fragments/CardsFragment/onOptionsItemSelected(Lcom/actionbarsherlock/view/MenuItem;)@246, Source Line: 170, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): android/support/v4/content/LocalBroadcastManager/sendBroadcastSync(Landroid/content/Intent;)@5, Source Line: 277, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Malicious Activity Launch: com.codebutler.farebot.activities.CardInfoActivity, 0
+</li><li>Possible Malicious Activity Launch: com.codebutler.farebot.activities.ReadingTagActivity, 1
+</li></ul>
+		</div>
+
+</body>
+</html>

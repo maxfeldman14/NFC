@@ -1,0 +1,229 @@
+
+<html>
+<head>
+	<title> ComDroid </title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+			font-family: "Arial";
+			background: url('stripe.png');
+		}
+		div#outermost {
+			padding: 5%;
+		}
+		div#blurb {
+			font-weight: bold;
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#inner {
+			background-color: #ffffff;
+			padding: 30px;
+			border: #7d7e82 solid 5px;
+		}
+		div.#results {
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#useful {
+			padding-bottom: 3px;
+			margin-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		span.ttitle {
+			color: #106288;
+			font-weight: bold;
+		}
+		li.space {
+			padding-bottom: 15px;
+		}
+		a:link, a:hover, a:active {
+			color: #336666;
+		}
+		a:visited {
+			color: #666666;
+		}
+		img#com { 
+			cursor: pointer; 
+		}
+		span.code {
+			color: #000;
+		}
+		div.leftHalf {
+			float: left;
+			width: 49%;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightHalf {
+			padding-top: 3px;
+			padding-bottom: 3px;
+			float: right;
+			margin-bottom: 5px;
+			word-wrap: break-word;
+			width: 49%;
+			background-color: #eee;
+		}
+		div.leftThird {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 10%;
+		}
+		div.middleThird {
+			float: left;
+			width: 43%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThird {
+			float: right;
+			width: 45%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.leftThirdApi {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 50%;
+		}
+		div.middleThirdApi {
+			float: left;
+			width: 30%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThirdApi {
+			float: right;
+			width: 18%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.row {
+			clear: both;
+		}
+		div.container {
+			padding-bottom: 35px;
+		}
+		ul {
+			margin-bottom: 0px;
+		}
+	</style>
+	<script>
+	  function clickComDroid() {
+	  
+	      document.location="index.html";
+	  }
+	  </script>
+		<script type="text/javascript"> 
+
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-7606088-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+
+	</script>
+</head>
+<body>
+
+	<div id="outermost">
+		<div id="inner">
+		
+			<div id="title"><img src="comdroid.jpg" id="com" alt="ComDroid" onclick="clickComDroid();" /></div> 
+			<div id="blurb">A static analysis tool for identifying application communication-based vulnerabilities.</div> 
+
+			<div id="authors"><a href="http://www.cs.berkeley.edu/~emc/">Erika Chin</a>, <a href="http://www.cs.berkeley.edu/~afelt/">Adrienne Porter Felt</a>,  Kate Greenwood, <a href="http://www.cs.berkeley.edu/~daw/">David Wagner</a> (UC Berkeley)</div> 
+			<div id="contact">Contact: android-security at eecs.berkeley.edu</div> 
+			<br>
+			<div class="results">
+				<span class="ttitle">Exposed Communication</span><br />
+
+				ComDroid has found exposed communication.
+								<br /><ul><li>Action Misuse: broadcast intent:{com/paypal/android/MEP/a/d$1/a()@18} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@277} with {POP_DIALOG}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/MEP/a/d$1/a(I)@51} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@277} with {PUSH_DIALOG_?}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/MEP/a/d$1/b()@18} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@277} with {UPDATE_VIEW}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/MEP/a/d$1/b(I)@35} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@277} with {REPLACE_DIALOG_?}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/MEP/a/d/onClick(Landroid/view/View;)@494} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {LOGIN_SUCCESS}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/MEP/b/a/a(ILjava/lang/Object;)@111} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {CREATE_PAYMENT_SUCCESS}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/MEP/b/a/a(ILjava/lang/Object;)@54} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {CREATE_PAYMENT_SUCCESS}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/MEP/b/d/onClick(Landroid/view/View;)@221} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {CREATE_PAYMENT_SUCCESS}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/MEP/b/d/onClick(Landroid/view/View;)@78} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {CREATE_PAYMENT_SUCCESS}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/a(ILjava/lang/Object;)@157} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {CREATE_PAYMENT_SUCCESS}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/a(ILjava/lang/Object;)@225} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {CREATE_PAYMENT_SUCCESS}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/a(ILjava/lang/Object;)@238} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/a(ILjava/lang/Object;)@298} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {CREATE_PAYMENT_SUCCESS}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/a(ILjava/lang/Object;)@79} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {CREATE_PAYMENT_SUCCESS}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/a(Lorg/w3c/dom/Document;Ljava/lang/String;)@258} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/d(Ljava/lang/String;)@8} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/v()@80} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/x()@78} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/y()@118} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/y()@218} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {}
+</li><li>Action Misuse: broadcast intent:{com/paypal/android/a/b/z()@95} (at Source Line: 22) to dynamicreceiver component:{com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305} with {}
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/MEP/a/d$1/a()@20, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/MEP/a/d$1/a(I)@53, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/MEP/a/d$1/b()@20, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/MEP/a/d$1/b(I)@37, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/MEP/a/d/onClick(Landroid/view/View;)@496, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/MEP/b/a/a(ILjava/lang/Object;)@113, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/MEP/b/a/a(ILjava/lang/Object;)@56, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/MEP/b/d/onClick(Landroid/view/View;)@223, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/MEP/b/d/onClick(Landroid/view/View;)@80, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/a(ILjava/lang/Object;)@159, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/a(ILjava/lang/Object;)@227, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/a(ILjava/lang/Object;)@282, Source Line: 22, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/a(ILjava/lang/Object;)@300, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/a(ILjava/lang/Object;)@81, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/a(Lorg/w3c/dom/Document;Ljava/lang/String;)@334, Source Line: 22, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/d(Ljava/lang/String;)@64, Source Line: 22, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/v()@142, Source Line: 22, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/x()@140, Source Line: 22, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/y()@169, Source Line: 22, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/y()@281, Source Line: 22, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/b/z()@123, Source Line: 22, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/k/run()@427, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/paypal/android/a/k/run()@480, Source Line: 22, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Malicious Activity Launch: de.gadc.moneybeam.ReceiveRequestActivity, 1
+</li><li>Possible Malicious Broadcast Injection: com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@277, 0
+</li><li>Possible Malicious Broadcast Injection: com.paypal.android.MEP.PayPalActivity*com/paypal/android/MEP/PayPalActivity/b()@305, 0
+</li></ul>
+		</div>
+
+</body>
+</html>

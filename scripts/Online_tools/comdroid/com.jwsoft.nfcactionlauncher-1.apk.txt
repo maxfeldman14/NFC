@@ -1,0 +1,235 @@
+
+<html>
+<head>
+	<title> ComDroid </title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+			font-family: "Arial";
+			background: url('stripe.png');
+		}
+		div#outermost {
+			padding: 5%;
+		}
+		div#blurb {
+			font-weight: bold;
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#inner {
+			background-color: #ffffff;
+			padding: 30px;
+			border: #7d7e82 solid 5px;
+		}
+		div.#results {
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#useful {
+			padding-bottom: 3px;
+			margin-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		span.ttitle {
+			color: #106288;
+			font-weight: bold;
+		}
+		li.space {
+			padding-bottom: 15px;
+		}
+		a:link, a:hover, a:active {
+			color: #336666;
+		}
+		a:visited {
+			color: #666666;
+		}
+		img#com { 
+			cursor: pointer; 
+		}
+		span.code {
+			color: #000;
+		}
+		div.leftHalf {
+			float: left;
+			width: 49%;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightHalf {
+			padding-top: 3px;
+			padding-bottom: 3px;
+			float: right;
+			margin-bottom: 5px;
+			word-wrap: break-word;
+			width: 49%;
+			background-color: #eee;
+		}
+		div.leftThird {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 10%;
+		}
+		div.middleThird {
+			float: left;
+			width: 43%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThird {
+			float: right;
+			width: 45%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.leftThirdApi {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 50%;
+		}
+		div.middleThirdApi {
+			float: left;
+			width: 30%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThirdApi {
+			float: right;
+			width: 18%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.row {
+			clear: both;
+		}
+		div.container {
+			padding-bottom: 35px;
+		}
+		ul {
+			margin-bottom: 0px;
+		}
+	</style>
+	<script>
+	  function clickComDroid() {
+	  
+	      document.location="index.html";
+	  }
+	  </script>
+		<script type="text/javascript"> 
+
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-7606088-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+
+	</script>
+</head>
+<body>
+
+	<div id="outermost">
+		<div id="inner">
+		
+			<div id="title"><img src="comdroid.jpg" id="com" alt="ComDroid" onclick="clickComDroid();" /></div> 
+			<div id="blurb">A static analysis tool for identifying application communication-based vulnerabilities.</div> 
+
+			<div id="authors"><a href="http://www.cs.berkeley.edu/~emc/">Erika Chin</a>, <a href="http://www.cs.berkeley.edu/~afelt/">Adrienne Porter Felt</a>,  Kate Greenwood, <a href="http://www.cs.berkeley.edu/~daw/">David Wagner</a> (UC Berkeley)</div> 
+			<div id="contact">Contact: android-security at eecs.berkeley.edu</div> 
+			<br>
+			<div class="results">
+				<span class="ttitle">Exposed Communication</span><br />
+
+				ComDroid has found exposed communication.
+								<br /><ul><li>Possible Activity Hijacking: android/support/v4/app/NavUtils$NavUtilsImplBase/navigateUpTo(Landroid/app/Activity;Landroid/content/Intent;)@11, Source Line: 64, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: android/support/v4/app/ShareCompat$IntentBuilder/startChooser()@10, Source Line: 386, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/actionbarsherlock/internal/view/menu/ActionMenuItem/invoke()@33, Source Line: 218, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/actionbarsherlock/internal/view/menu/MenuItemImpl/invoke()@68, Source Line: 159, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/AddTagOptions$28/onClick(Landroid/view/View;)@21, Source Line: 3016, hasExtras=false, hasRead=false, hasWrite=true
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/AddTagOptions/popNotificationPicker()@48, Source Line: 1900, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/AddTagOptions/popRingtonePicker()@41, Source Line: 1884, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/AddTagOptions/showTaskerConfiguration(Ljava/lang/String;)@93, Source Line: 808, hasExtras=false, hasRead=false, hasWrite=true
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/BuyTags/llClicked(Landroid/view/View;)@53, Source Line: 135, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/Main$7/onClick(Landroid/content/DialogInterface;I)@33, Source Line: 550, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/insertCalendarEvent(JJLjava/lang/String;)@68, Source Line: 657, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/makeBluetoothDiscoverable(I)@62, Source Line: 419, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/operationCheckinFoursquare(Ljava/lang/String;)@30, Source Line: 1491, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/operationCheckinLatitudePlaces()@17, Source Line: 1463, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/operationLaunchApplication(Ljava/lang/String;)@163, Source Line: 1102, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/operationLaunchApplication(Ljava/lang/String;)@82, Source Line: 1094, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/operationNavigate(Ljava/lang/String;Ljava/lang/String;)@71, Source Line: 1140, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/operationSetAlarm(IILjava/lang/String;Ljava/lang/String;)@50, Source Line: 1410, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/parseTagCommandSet([Ljava/lang/String;I)@10079, Source Line: 3967, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/parseTagCommandSet([Ljava/lang/String;I)@10323, Source Line: 4000, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/parseTagCommandSet([Ljava/lang/String;I)@9499, Source Line: 3880, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/NFCActionLauncher/searchCheckinFoursquare()@17, Source Line: 1482, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/TagVcard$1/onClick(Landroid/view/View;)@21, Source Line: 74, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/TagVcard/launchContactPicker(Landroid/view/View;)@16, Source Line: 82, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/UserPreferences/popNotificationPicker()@75, Source Line: 752, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/workerFacebookCheckin/postLocation()@309, Source Line: 180, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/workerFoursquareCheckin/postLocation()@252, Source Line: 172, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/workerLatitudeCheckin/reqToken()@34, Source Line: 122, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/jwsoft/nfcactionlauncher/workerTwitter/reqToken()@34, Source Line: 198, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/stericson/RootTools/RootTools/offerBusyBox(Landroid/app/Activity;)@26, Source Line: 502, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/stericson/RootTools/RootTools/offerBusyBox(Landroid/app/Activity;I)@27, Source Line: 519, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/stericson/RootTools/RootTools/offerSuperUser(Landroid/app/Activity;)@26, Source Line: 533, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/stericson/RootTools/RootTools/offerSuperUser(Landroid/app/Activity;I)@27, Source Line: 550, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): android/support/v4/content/LocalBroadcastManager/sendBroadcastSync(Landroid/content/Intent;)@5, Source Line: 277, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/jwsoft/nfcactionlauncher/NFCActionLauncher/parseTagCommandSet([Ljava/lang/String;I)@6398, Source Line: 3528, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/jwsoft/nfcactionlauncher/NFCActionLauncher/sendUserNotifications()@207, Source Line: 2658, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/jwsoft/nfcactionlauncher/NFCActionLauncher/sendUserNotifications()@252, Source Line: 2663, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/jwsoft/nfcactionlauncher/ToggleNFC/onCreate(Landroid/os/Bundle;)@103, Source Line: 74, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing, Intent theft, Result modification): com/jwsoft/nfcactionlauncher/NFCActionLauncher/mediaPlaybackNext()@41, Source Line: 616, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing, Intent theft, Result modification): com/jwsoft/nfcactionlauncher/NFCActionLauncher/mediaPlaybackNext()@77, Source Line: 622, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing, Intent theft, Result modification): com/jwsoft/nfcactionlauncher/NFCActionLauncher/mediaPlaybackPrevious()@41, Source Line: 634, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing, Intent theft, Result modification): com/jwsoft/nfcactionlauncher/NFCActionLauncher/mediaPlaybackPrevious()@77, Source Line: 640, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing, Intent theft, Result modification): com/jwsoft/nfcactionlauncher/NFCActionLauncher/toggleMediaPlayback()@41, Source Line: 598, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing, Intent theft, Result modification): com/jwsoft/nfcactionlauncher/NFCActionLauncher/toggleMediaPlayback()@77, Source Line: 604, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing, Intent theft, Result modification): com/jwsoft/nfcactionlauncher/workerAirplaneMode/disableAirplaneMode()@54, Source Line: 75, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing, Intent theft, Result modification): com/jwsoft/nfcactionlauncher/workerAirplaneMode/enableAirplaneMode()@54, Source Line: 58, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Malicious Activity Launch: com.jwsoft.nfcactionlauncher.NFCActionLauncher, 1
+</li><li>Possible Malicious Activity Launch: com.jwsoft.nfcactionlauncher.workerLatitudeCheckin, 0
+</li><li>Possible Malicious Activity Launch: com.jwsoft.nfcactionlauncher.workerTwitter, 0
+</li><li>Possible Malicious Broadcast Injection: com.jwsoft.nfcactionlauncher.NFCActionLauncher$1*com/jwsoft/nfcactionlauncher/NFCActionLauncher/registerWifiReceiver()@27, 0
+</li><li>Possible Malicious Broadcast Injection: com.jwsoft.nfcactionlauncher.TagAppWidgetProvider, 1
+</li><li>Possible Malicious Broadcast Injection: com.jwsoft.nfcactionlauncher.TagAppWidgetProviderSmall, 1
+</li><li>Possible Service Hijacking: com/google/analytics/tracking/android/AnalyticsGmsCoreClient/connect()@51, Source Line: 75, hasExtras=true, hasRead=false, hasWrite=false
+</li></ul>
+		</div>
+
+</body>
+</html>

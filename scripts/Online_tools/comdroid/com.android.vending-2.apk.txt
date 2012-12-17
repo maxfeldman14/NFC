@@ -1,0 +1,261 @@
+
+<html>
+<head>
+	<title> ComDroid </title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+			font-family: "Arial";
+			background: url('stripe.png');
+		}
+		div#outermost {
+			padding: 5%;
+		}
+		div#blurb {
+			font-weight: bold;
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#inner {
+			background-color: #ffffff;
+			padding: 30px;
+			border: #7d7e82 solid 5px;
+		}
+		div.#results {
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#useful {
+			padding-bottom: 3px;
+			margin-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		span.ttitle {
+			color: #106288;
+			font-weight: bold;
+		}
+		li.space {
+			padding-bottom: 15px;
+		}
+		a:link, a:hover, a:active {
+			color: #336666;
+		}
+		a:visited {
+			color: #666666;
+		}
+		img#com { 
+			cursor: pointer; 
+		}
+		span.code {
+			color: #000;
+		}
+		div.leftHalf {
+			float: left;
+			width: 49%;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightHalf {
+			padding-top: 3px;
+			padding-bottom: 3px;
+			float: right;
+			margin-bottom: 5px;
+			word-wrap: break-word;
+			width: 49%;
+			background-color: #eee;
+		}
+		div.leftThird {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 10%;
+		}
+		div.middleThird {
+			float: left;
+			width: 43%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThird {
+			float: right;
+			width: 45%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.leftThirdApi {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 50%;
+		}
+		div.middleThirdApi {
+			float: left;
+			width: 30%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThirdApi {
+			float: right;
+			width: 18%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.row {
+			clear: both;
+		}
+		div.container {
+			padding-bottom: 35px;
+		}
+		ul {
+			margin-bottom: 0px;
+		}
+	</style>
+	<script>
+	  function clickComDroid() {
+	  
+	      document.location="index.html";
+	  }
+	  </script>
+		<script type="text/javascript"> 
+
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-7606088-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+
+	</script>
+</head>
+<body>
+
+	<div id="outermost">
+		<div id="inner">
+		
+			<div id="title"><img src="comdroid.jpg" id="com" alt="ComDroid" onclick="clickComDroid();" /></div> 
+			<div id="blurb">A static analysis tool for identifying application communication-based vulnerabilities.</div> 
+
+			<div id="authors"><a href="http://www.cs.berkeley.edu/~emc/">Erika Chin</a>, <a href="http://www.cs.berkeley.edu/~afelt/">Adrienne Porter Felt</a>,  Kate Greenwood, <a href="http://www.cs.berkeley.edu/~daw/">David Wagner</a> (UC Berkeley)</div> 
+			<div id="contact">Contact: android-security at eecs.berkeley.edu</div> 
+			<br>
+			<div class="results">
+				<span class="ttitle">Exposed Communication</span><br />
+
+				ComDroid has found exposed communication.
+								<br /><ul><li>Action Misuse: broadcast intent:{com/google/android/finsky/FinskyApp/switchCurrentAccount(Landroid/accounts/Account;)@61} (at Source Line: 710) to receiver component:{com.google.android.finsky.receivers.UpdateWidgetsReceiver} with {com.google.android.finsky.action.DFE_API_CONTEXT_CHANGED}
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/AuthenticatedActivity$15/run()@10, Source Line: 997, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/AuthenticatedActivity/chooseAccount(Z)@56, Source Line: 400, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/AuthenticatedActivity/handleUserAuthentication(Landroid/content/Intent;)@12, Source Line: 906, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/BackgroundDataDialog$2/onClick(Landroid/content/DialogInterface;I)@25, Source Line: 67, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/CreatorDetailsFragment/onPositiveClick(ILandroid/os/Bundle;)@28, Source Line: 406, hasExtras=false, hasRead=false, hasWrite=true
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/DetailsFragment/onPositiveClick(ILandroid/os/Bundle;)@77, Source Line: 697, hasExtras=false, hasRead=false, hasWrite=true
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/DetailsSummaryMoviesViewBinder$1/onClick(Landroid/view/View;)@73, Source Line: 69, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/FirstRunActivity$1/onClick(Landroid/view/View;)@29, Source Line: 57, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/FirstRunActivity$2/onClick(Landroid/view/View;)@71, Source Line: 73, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/LaunchUrlHandlerActivity/onCreate(Landroid/os/Bundle;)@28, Source Line: 56, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/MainActivity/launchUrlInBrowser(Ljava/lang/String;)@26, Source Line: 860, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/MainActivity/onMyCollectionSelected()@71, Source Line: 845, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/PurchaseFragment/onDownloadWifi()@15, Source Line: 1866, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/PurchaseFragment/onStateChange(Lcom/google/android/finsky/billing/CheckoutPurchase;Lcom/google/android/finsky/billing/CheckoutPurchase$State;Lcom/google/android/finsky/billing/CheckoutPurchase$State;)@123, Source Line: 1556, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/activities/myapps/MyAppsTabbedFragment$3/install()@29, Source Line: 495, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/billing/carrierbilling/fragment/AddCarrierBillingFragment$CarrierTosWebViewClient/shouldOverrideUrlLoading(Landroid/webkit/WebView;Ljava/lang/String;)@25, Source Line: 409, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/exploreactivity/ExploreApplication/doNodeTap(Lcom/google/android/finsky/exploreactivity/DocumentNode;Lcom/jme3/collision/CollisionResult;)@55, Source Line: 497, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/layout/GooglePlusShareSection$2/onResponse(Lorg/json/JSONObject;)@82, Source Line: 225, hasExtras=true, hasRead=false, hasWrite=true
+</li><li>Possible Activity Hijacking: com/google/android/finsky/layout/ListingView$1/onClick(Landroid/view/View;)@13, Source Line: 302, hasExtras=false, hasRead=false, hasWrite=true
+</li><li>Possible Activity Hijacking: com/google/android/finsky/layout/ListingView$2/onClick(Landroid/view/View;)@13, Source Line: 325, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/layout/ReviewItemHeaderLayout$1/onClick(Landroid/view/View;)@19, Source Line: 84, hasExtras=false, hasRead=false, hasWrite=true
+</li><li>Possible Activity Hijacking: com/google/android/finsky/layout/ScreenshotGallery$3/onVideoChildViewTap(I)@55, Source Line: 217, hasExtras=false, hasRead=true, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/layout/YoutubeFrameView$1/onClick(Landroid/view/View;)@41, Source Line: 66, hasExtras=false, hasRead=true, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/navigationmanager/ConsumptionUtils/openItem(Landroid/content/Context;Landroid/support/v4/app/Fragment;Landroid/support/v4/app/FragmentManager;Landroid/accounts/Account;Lcom/google/android/finsky/api/model/Document;)@82, Source Line: 160, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Activity Hijacking: com/google/android/finsky/navigationmanager/NavigationManager$1/onClick(Landroid/view/View;)@31, Source Line: 528, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/FinskyApp/switchCurrentAccount(Landroid/accounts/Account;)@63, Source Line: 710, hasExtras=false, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/activities/DebugActivity/override(Lcom/google/android/finsky/config/GservicesValue;Ljava/lang/String;)@23, Source Line: 333, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/activities/DebugActivity/selectEnvironment(Lcom/google/android/finsky/activities/DebugActivity$EnvironmentOverride;)@85, Source Line: 322, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/billing/iab/MarketBillingService$BillingNotifier/sendPurchaseStateChanged(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)@45, Source Line: 814, hasExtras=true, hasRead=false, hasWrite=true
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/billing/iab/MarketBillingService/sendNotify(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)@37, Source Line: 860, hasExtras=true, hasRead=false, hasWrite=true
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/billing/iab/MarketBillingService/sendResponseCode(Landroid/content/Context;Ljava/lang/String;JLcom/google/android/finsky/billing/iab/MarketBillingService$ResponseCode;)@88, Source Line: 747, hasExtras=true, hasRead=false, hasWrite=true
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/receivers/PackageMonitorReceiver$ReferrerRebroadcaster/broadcastInstallReferrer(Ljava/lang/String;Z)@190, Source Line: 283, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/receivers/UpdateWidgetsReceiver/onReceive(Landroid/content/Context;Landroid/content/Intent;)@52, Source Line: 37, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/services/ConsumptionAppDataCache/updateWidgets(Landroid/content/Context;I)@23, Source Line: 184, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/utils/PackageManagerHelper/addAppShortcut(Landroid/content/Context;Ljava/lang/String;)@156, Source Line: 394, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/widget/BaseWidgetProvider/update(Landroid/content/Context;Ljava/lang/Class;[I)@24, Source Line: 223, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/widget/TrampolineActivity/finish(ILjava/lang/String;)@78, Source Line: 186, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing): com/google/android/finsky/widget/consumption/EnableAppReceiver/onReceive(Landroid/content/Context;Landroid/content/Intent;)@47, Source Line: 36, hasExtras=true, hasRead=false, hasWrite=false
+</li><li>Possible Broadcast Theft (Sniffing, Intent theft, Result modification): com/google/android/finsky/billing/iab/PendingNotificationsService/handlePendingNotifications(Landroid/content/Context;Ljava/lang/String;Lcom/google/android/vending/remoting/protos/VendingProtos$PendingNotificationsProto;Z)@233, Source Line: 324, hasExtras=true, hasRead=false, hasWrite=true
+</li><li>Possible Malicious Activity Launch: com.google.android.finsky.activities.AppCrashProxy, 0
+</li><li>Possible Malicious Activity Launch: com.google.android.finsky.activities.AvailablePromoOfferActivity, 1
+</li><li>Possible Malicious Activity Launch: com.google.android.finsky.activities.LaunchUrlHandlerActivity, 1
+</li><li>Possible Malicious Activity Launch: com.google.android.finsky.activities.MainActivity, 1
+</li><li>Possible Malicious Activity Launch: com.google.android.finsky.activities.QSBSuggestionsActivity2, 0
+</li><li>Possible Malicious Activity Launch: com.google.android.finsky.activities.SettingsActivity, 0
+</li><li>Possible Malicious Activity Launch: com.google.android.finsky.billing.creditcard.SetupWizardAddCreditCardActivity, 1
+</li><li>Possible Malicious Activity Launch: com.google.android.finsky.download.MimeTypeActivity, 0
+</li><li>Possible Malicious Activity Launch: com.google.android.finsky.widget.MarketWidgetTrampolineActivity, 0
+</li><li>Possible Malicious Activity Launch: com.google.android.finsky.widget.consumption.NowPlayingTrampoline, 0
+</li><li>Possible Malicious Activity Launch: com.google.android.finsky.widget.recommendation.RecommendedTrampoline, 0
+</li><li>Possible Malicious Broadcast Injection: com.android.vending.MarketWidgetProvider, 0
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.activities.myapps.MyAppsTabbedFragment$2*com/google/android/finsky/activities/myapps/MyAppsTabbedFragment/onResume()@15, 0
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.billing.carrierbilling.flow.association.SmsSender$1*com/google/android/finsky/billing/carrierbilling/flow/association/SmsSender/send(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/google/android/finsky/billing/carrierbilling/flow/association/SmsSender$SmsSendListener;)@63, 0
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.download.DownloadBroadcastReceiver, 1
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.layout.ExplorePanel$1*com/google/android/finsky/layout/ExplorePanel/configure(Lcom/google/android/finsky/api/model/Document;Landroid/support/v4/app/Fragment;)@48, 0
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.receivers.AccountsChangedReceiver, 0
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.receivers.BillingTickleReceiver, 1
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.receivers.ClearCacheReceiver, 0
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.receivers.ConsumptionAppDataChangedReceiver, 1
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.receivers.DeclineAssetReceiver, 1
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.receivers.DownloadTickleReceiver, 1
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.receivers.PackageMonitorReceiver$RegisteredReceiver, 1
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.receivers.RemoveAssetReceiver, 1
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.receivers.ServerNotificationReceiver, 1
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.receivers.TosAckedReceiver, 1
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.receivers.UpdateWidgetsReceiver, 0
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.widget.consumption.NowPlayingWidgetProvider, 1
+</li><li>Possible Malicious Broadcast Injection: com.google.android.finsky.widget.recommendation.RecommendedWidgetProvider, 0
+</li><li>Possible Malicious Broadcast Injection: com.google.android.gcm.GCMBroadcastReceiver*com/google/android/gcm/GCMRegistrar/setRetryBroadcastReceiver(Landroid/content/Context;)@83, 0
+</li><li>Possible Malicious Broadcast Injection: com.google.android.gcm.GCMBroadcastReceiver, 0
+</li><li>Possible Malicious Broadcast Injection: com.google.android.vending.verifier.PackageVerificationReceiver, 1
+</li><li>Possible Malicious Service Launch: com.google.android.finsky.billing.creditcard.BillingAccountService, 0
+</li><li>Possible Malicious Service Launch: com.google.android.finsky.billing.iab.InAppBillingService, 0
+</li><li>Possible Malicious Service Launch: com.google.android.finsky.billing.iab.MarketBillingService, 0
+</li><li>Possible Malicious Service Launch: com.google.android.finsky.services.LicensingService, 0
+</li><li>Possible Malicious Service Launch: com.google.android.finsky.services.MarketCatalogService, 0
+</li><li>Protected System Broadcast w/o action check: receiver component:{com.google.android.finsky.receivers.BootCompletedReceiver} does not check for {android.intent.action.BOOT_COMPLETED}
+</li><li>Protected System Broadcast w/o action check: receiver component:{com.google.android.finsky.receivers.PackageMonitorReceiver$RegisteredReceiver} does not check for {android.intent.action.PACKAGE_ADDEDandroid.intent.action.PACKAGE_REMOVEDandroid.intent.action.PACKAGE_CHANGED}
+</li></ul>
+		</div>
+
+</body>
+</html>

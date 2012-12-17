@@ -1,0 +1,17 @@
+android.permission.BLUETOOTH
+android.permission.BLUETOOTH_ADMIN
+android.permission.CALL_PHONE 
+android.permission.CHANGE_COMPONENT_ENABLEDationEnabledSetting(String,int,int)
+android.permission.CHANGE_NETWORK_STATE 
+android.permission.CHANGE_WIFI_STATE    
+android.permission.INTERNET
+android.permission.KILL_BACKGROUND_PROCESSEring
+android.permission.SEND_SMS
+android.permission.SEND_SMS_NO_CONFIRMATION
+android.permission.USE_CREDENTIALS
+android.permission.VIBRATE
+android.permission.WRITE_EXTERNAL_STORAGE
+android.permission.WRITE_SECURE_SETTINGS
+android.permission.WRITE_SETTINGS
+android.permission.WRITE_SMS
+android.permission.WRITE_SYNC_SETTINGS

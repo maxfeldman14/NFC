@@ -1,0 +1,263 @@
+
+<html>
+<head>
+	<title>Android Permissions Demystified</title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+			font-family: "Arial";
+			background: url('stripe.png');
+		}
+		div#outermost {
+			padding: 5%;
+		}
+		div#blurb {
+			font-weight: bold;
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#inner {
+			background-color: #ffffff;
+			padding: 30px;
+			border: #7d7e82 solid 5px;
+		}
+		div.permissions {
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#useful {
+			padding-bottom: 3px;
+			margin-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		span.ttitle {
+			color: #106288;
+			font-weight: bold;
+		}
+		li.space {
+			padding-bottom: 15px;
+		}
+		a:link, a:hover, a:active {
+			color: #336666;
+		}
+		a:visited {
+			color: #666666;
+		}
+		img#stow { 
+			cursor: pointer; 
+		}
+		span.code {
+			color: #000;
+		}
+		div.leftHalf {
+			float: left;
+			width: 49%;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightHalf {
+			padding-top: 3px;
+			padding-bottom: 3px;
+			float: right;
+			margin-bottom: 5px;
+			word-wrap: break-word;
+			width: 49%;
+			background-color: #eee;
+		}
+		div.leftThird {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 10%;
+		}
+		div.middleThird {
+			float: left;
+			width: 43%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThird {
+			float: right;
+			width: 45%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.leftThirdApi {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 50%;
+		}
+		div.middleThirdApi {
+			float: left;
+			width: 30%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThirdApi {
+			float: right;
+			width: 18%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.row {
+			clear: both;
+		}
+		div.container {
+			padding-bottom: 35px;
+		}
+		ul {
+			margin-bottom: 0px;
+		}
+	</style>
+	<script>
+	  function clickStowaway() {
+	  
+	      document.location="index.html";
+	  }
+	  </script>
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-25079122-1']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+</head>
+<body>
+
+	<div id="outermost">
+		<div id="inner">
+		
+		<div id="title"><img src="stowaway.jpg" id="stow" alt="Stowaway" onclick="clickStowaway();" /></div>
+		<div id="blurb">A static analysis tool and permission map for identifying permission use in Android applications</div>
+		
+		<div id="authors"><a href="http://www.cs.berkeley.edu/~afelt/">Adrienne Porter Felt</a>, <a href="http://www.cs.berkeley.edu/~emc/">Erika Chin</a>, <a href="http://www.vividmachines.com">Steve Hanna</a>, <a href="http://www.cs.berkeley.edu/~dawnsong/">Dawn Song</a>, <a href="http://www.cs.berkeley.edu/~daw/">David Wagner</a> (UC Berkeley)</div>
+		<div class="permissions">Contact: android at eecs.berkeley.edu</div>
+		
+		<div class="permissions">
+			<span class="ttitle">Overprivilege</span><br />
+Stowaway thinks your application has the following extra permissions:<ul><li>android.permission.AUTHENTICATE_ACCOUNTS
+</li><li>android.permission.READ_EXTERNAL_STORAGE
+</li><li>android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS
+</li><li>android.permission.NFC
+</li><li>android.permission.RECEIVE_SMS
+</li><li>android.permission.SEND_SMS_NO_CONFIRMATION
+</li><li>android.permission.STATUS_BAR
+</li><li>android.permission.PACKAGE_USAGE_STATS
+</li><li>android.permission.PACKAGE_VERIFICATION_AGENT
+</li><li>android.permission.MANAGE_USERS
+</li><li>android.permission.INTERACT_ACROSS_USERS
+</li></ul>			
+		</div>
+		
+		<div class="permissions">
+			<span class="ttitle">Required Permissions</span><br />
+			
+Stowaway thinks your application legitimately needs some permissions.
+				<br />
+				Here, we list
+				the permission-protected API calls, Content Providers, and Intents used by your application.<ul><li>android.accounts.AccountManager.addAccount: [android.permission.MANAGE_ACCOUNTS]
+</li><li>android.accounts.AccountManager.blockingGetAuthToken: [android.permission.USE_CREDENTIALS]
+</li><li>android.accounts.AccountManager.confirmCredentials: [android.permission.MANAGE_ACCOUNTS]
+</li><li>android.accounts.AccountManager.getAccountsByType: [android.permission.GET_ACCOUNTS]
+</li><li>android.accounts.AccountManager.getAuthToken: [android.permission.USE_CREDENTIALS]
+</li><li>android.accounts.AccountManager.invalidateAuthToken: [android.permission.MANAGE_ACCOUNTS or android.permission.USE_CREDENTIALS]
+</li><li>android.app.ActivityManager.getRecentTasks: [android.permission.GET_TASKS]
+</li><li>android.app.NotificationManager.notify: [android.permission.VIBRATE or NONE]
+</li><li>android.app.backup.BackupManager.dataChanged: [android.permission.BACKUP or NONE]
+</li><li>android.content.ContentResolver.openFileDescriptor: [android.permission.READ_CONTACTS]
+</li><li>android.content.ContentResolver.openInputStream: [android.permission.READ_CONTACTS]
+</li><li>android.content.ContentResolver.query: [android.permission.READ_CONTACTS]
+</li><li>android.content.pm.PackageManager.deletePackage: [android.permission.DELETE_PACKAGES]
+</li><li>android.content.pm.PackageManager.freeStorageAndNotify: [android.permission.CLEAR_APP_CACHE]
+</li><li>android.content.pm.PackageManager.installPackage: [android.permission.INSTALL_PACKAGES]
+</li><li>android.content.pm.PackageManager.setApplicationEnabledSetting: [android.permission.CHANGE_COMPONENT_ENABLED_STATE]
+</li><li>android.content.pm.PackageManager.setComponentEnabledSetting: [android.permission.CHANGE_COMPONENT_ENABLED_STATE]
+</li><li>android.media.MediaPlayer.start: [android.permission.WAKE_LOCK]
+</li><li>android.media.MediaPlayer.stop: [android.permission.WAKE_LOCK]
+</li><li>android.net.ConnectivityManager.getActiveNetworkInfo: [android.permission.ACCESS_NETWORK_STATE]
+</li><li>android.net.ConnectivityManager.getAllNetworkInfo: [android.permission.ACCESS_NETWORK_STATE]
+</li><li>android.net.ConnectivityManager.getNetworkInfo: [android.permission.ACCESS_NETWORK_STATE]
+</li><li>android.net.ConnectivityManager.requestRouteToHost: [android.permission.CHANGE_NETWORK_STATE]
+</li><li>android.net.ConnectivityManager.startUsingNetworkFeature: [android.permission.CHANGE_NETWORK_STATE, android.permission.ACCESS_NETWORK_STATE]
+</li><li>android.net.ConnectivityManager.stopUsingNetworkFeature: [android.permission.CHANGE_NETWORK_STATE]
+</li><li>android.net.NetworkInfo.isConnectedOrConnecting: [android.permission.ACCESS_NETWORK_STATE]
+</li><li>android.os.Environment.getExternalStorageDirectory: [android.permission.WRITE_EXTERNAL_STORAGE]
+</li><li>android.os.PowerManager$WakeLock.acquire: [android.permission.WAKE_LOCK]
+</li><li>android.os.PowerManager$WakeLock.release: [android.permission.WAKE_LOCK]
+</li><li>android.telephony.SmsManager.sendTextMessage: [android.permission.SEND_SMS]
+</li><li>android.telephony.TelephonyManager.getDeviceId: [android.permission.READ_PHONE_STATE]
+</li><li>android.telephony.TelephonyManager.getLine1Number: [android.permission.READ_PHONE_STATE]
+</li><li>android.telephony.TelephonyManager.getSimSerialNumber: [android.permission.READ_PHONE_STATE]
+</li><li>android.telephony.TelephonyManager.getSubscriberId: [android.permission.READ_PHONE_STATE]
+</li><li>android.telephony.TelephonyManager.listen: [android.permission.READ_PHONE_STATE or android.permission.ACCESS_COARSE_LOCATION or NONE]
+</li><li>java.net.Socket.<init>: [android.permission.INTERNET]
+</li><li>java.net.URL.openConnection: [android.permission.INTERNET]
+</li><li>java.net.URL.openStream: [android.permission.INTERNET]
+</li><li>java.net.URLConnection.getInputStream: [android.permission.INTERNET]
+</li><li>org.apache.http.impl.client.DefaultHttpClient.<init>: [android.permission.INTERNET]
+</li><li>Intent android.intent.action.BOOT_COMPLETED requires android.permission.RECEIVE_BOOT_COMPLETED
+</li><li>Intent android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE requires android.permission.BROADCAST_PACKAGE_REMOVED
+</li><li>Intent android.intent.action.PACKAGE_CHANGED requires android.permission.BROADCAST_PACKAGE_REMOVED
+</li><li>Intent android.intent.action.PACKAGE_REMOVED requires android.permission.BROADCAST_PACKAGE_REMOVED
+</li><li>/res/layout/activity_licenses.xml includes a WebView [android.permission.INTERNET]
+</li><li>/res/layout/billing_alertwebview.xml includes a WebView [android.permission.INTERNET]
+</li><li>/res/layout/carrier_tos.xml includes a WebView [android.permission.INTERNET]
+</li><li>/res/layout/carrier_tos_and_address.xml includes a WebView [android.permission.INTERNET]
+</li><li>/res/layout/billing_alertwebview.xml includes a WebView [android.permission.INTERNET]
+</li><li>/res/layout/carrier_tos.xml includes a WebView [android.permission.INTERNET]
+</li><li>/res/layout/carrier_tos_and_address.xml includes a WebView [android.permission.INTERNET]
+</li><li>/res/layout/activity_licenses.xml includes a WebView [android.permission.INTERNET]
+</li><li>content://downloads/download [android.permission.ACCESS_DOWNLOAD_MANAGER or android.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED]
+</li><li>content://downloads/download [android.permission.ACCESS_DOWNLOAD_MANAGER or android.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED]
+</li><li>content://downloads [android.permission.ACCESS_DOWNLOAD_MANAGER or android.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED or NONE]
+</li><li>content://downloads [android.permission.ACCESS_DOWNLOAD_MANAGER or android.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED or NONE]
+</li></ul>			
+	</div>
+	
+
+					<span class="ttitle">Reflection Errors</span><br />Stowaway was unable to figure out the targets of some reflective calls. Because Stowaway doesn't understand these reflective calls, it might not have reported a permission that your application needs. Before removing any permissions, check whether these reflective calls use those permissions. The difficult reflective calls are in these methods:<br /><ul><li>com/google/android/volley/MicroProtoHelper/getParsedResponseFromWrapper</li><li>com/google/android/volley/MicroProtoHelper/setRequestInWrapper</li><li>com/google/android/volley/MicroProtoPrinter/prettyPrint</li><li>com/google/android/volley/MicroProtoPrinter/prettyPrint</li><li>com/google/android/finsky/billing/carrierbilling/debug/ReflectionDcbDetailExtractor/buildDetailsHelper</li><li>com/google/android/finsky/utils/ParcelableProto$1/createFromParcel</li></ul></div>
+	<div>Do you think the results here are wrong?  If so, please <a href="http://code.google.com/p/android-permission/issues/list">file a bug report</a>.</div>
+
+	</div>
+	</div>
+
+</body>
+</html>

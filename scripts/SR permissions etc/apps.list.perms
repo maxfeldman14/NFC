@@ -1,0 +1,93 @@
+control Near Field Communication
+modify/delete USB storage contents modify/delete SD card contents
+prevent tablet from sleeping prevent phone from sleeping
+use the authentication credentials of an account
+fine (GPS) location
+1 create Bluetooth connections
+7 full Internet access #WHAT
+2 Bluetooth administration
+modify global system settings
+change Wi-Fi state
+write sync settings
+change network connectivity
+disable keylock
+discover known accounts
+control vibrator
+view Wi-Fi state
+view network state
+read sync settings
+modify secure system settings
+display system-level alerts
+send sticky broadcast
+coarse (network-based) location
+read calendar events plus confidential information
+read contact data
+read Browser's history and bookmarks
+read phone state and identity
+3 directly call phone numbers #WHAT
+send SMS messages
+add or modify calendar events and send email to guests without owners' knowledge
+take pictures and videos
+modify battery statistics
+access extra location provider commands
+automatically start at boot
+write Browser's history and bookmarks
+write contact data
+7 receive data from Internet #WHAT
+Broadcast data messages to apps.
+control location update notifications
+kill background processes
+read SMS or MMS
+edit SMS or MMS
+Market billing service
+record audio
+manage the accounts list
+retrieve running apps
+reorder running apps
+change your UI settings
+modify phone state
+read sync statistics
+3? directly call any phone numbers #WHAT
+monitor and control all app launching
+receive SMS
+power tablet on or off power phone on or off
+read sensitive log data
+allow Wi-Fi Multicast reception
+mount and unmount filesystems
+modify/delete internal media storage contents
+force stop other apps
+intercept outgoing calls
+make app always run
+read Google service configuration
+mock location sources for testing
+read your profile data
+delete all app cache data
+change/intercept network settings and traffic
+expand/collapse status bar
+View WiMAX state
+Change WiMAX state
+manage preferences and permissions for USB devices
+disable or modify status bar
+test hardware
+directly install apps
+manage network policy
+act as an account authenticator
+act as the AccountManagerService
+contacts data in Google accounts
+receive WAP
+view configured accounts
+download files without notification
+choose widgets
+read subscribed feeds
+set preferred apps
+change screen orientation
+force tablet reboot force phone reboot
+read user-defined dictionary
+write to user-defined dictionary
+reset system to factory defaults
+Access download manager.
+delete other apps' data
+access checkin properties
+update component usage statistics
+move app resources
+delete apps

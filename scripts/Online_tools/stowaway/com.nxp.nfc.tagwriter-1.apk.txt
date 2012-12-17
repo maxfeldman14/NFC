@@ -1,0 +1,222 @@
+
+<html>
+<head>
+	<title>Android Permissions Demystified</title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+			font-family: "Arial";
+			background: url('stripe.png');
+		}
+		div#outermost {
+			padding: 5%;
+		}
+		div#blurb {
+			font-weight: bold;
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#inner {
+			background-color: #ffffff;
+			padding: 30px;
+			border: #7d7e82 solid 5px;
+		}
+		div.permissions {
+			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		div#useful {
+			padding-bottom: 3px;
+			margin-bottom: 15px;
+			border-bottom: 1px #c7cad7 solid;
+		}
+		span.ttitle {
+			color: #106288;
+			font-weight: bold;
+		}
+		li.space {
+			padding-bottom: 15px;
+		}
+		a:link, a:hover, a:active {
+			color: #336666;
+		}
+		a:visited {
+			color: #666666;
+		}
+		img#stow { 
+			cursor: pointer; 
+		}
+		span.code {
+			color: #000;
+		}
+		div.leftHalf {
+			float: left;
+			width: 49%;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightHalf {
+			padding-top: 3px;
+			padding-bottom: 3px;
+			float: right;
+			margin-bottom: 5px;
+			word-wrap: break-word;
+			width: 49%;
+			background-color: #eee;
+		}
+		div.leftThird {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 10%;
+		}
+		div.middleThird {
+			float: left;
+			width: 43%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThird {
+			float: right;
+			width: 45%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.leftThirdApi {
+			float: left;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+			width: 50%;
+		}
+		div.middleThirdApi {
+			float: left;
+			width: 30%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.rightThirdApi {
+			float: right;
+			width: 18%;
+			margin-right: 5px;
+			word-wrap: break-word;
+			background-color: #eee;
+			margin-bottom: 5px;
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
+		div.row {
+			clear: both;
+		}
+		div.container {
+			padding-bottom: 35px;
+		}
+		ul {
+			margin-bottom: 0px;
+		}
+	</style>
+	<script>
+	  function clickStowaway() {
+	  
+	      document.location="index.html";
+	  }
+	  </script>
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-25079122-1']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+</head>
+<body>
+
+	<div id="outermost">
+		<div id="inner">
+		
+		<div id="title"><img src="stowaway.jpg" id="stow" alt="Stowaway" onclick="clickStowaway();" /></div>
+		<div id="blurb">A static analysis tool and permission map for identifying permission use in Android applications</div>
+		
+		<div id="authors"><a href="http://www.cs.berkeley.edu/~afelt/">Adrienne Porter Felt</a>, <a href="http://www.cs.berkeley.edu/~emc/">Erika Chin</a>, <a href="http://www.vividmachines.com">Steve Hanna</a>, <a href="http://www.cs.berkeley.edu/~dawnsong/">Dawn Song</a>, <a href="http://www.cs.berkeley.edu/~daw/">David Wagner</a> (UC Berkeley)</div>
+		<div class="permissions">Contact: android at eecs.berkeley.edu</div>
+		
+		<div class="permissions">
+			<span class="ttitle">Overprivilege</span><br />
+Stowaway thinks your application has the following extra permissions:<ul><li>android.permission.NFC
+</li></ul>			
+		</div>
+		
+		<div class="permissions">
+			<span class="ttitle">Required Permissions</span><br />
+			
+Stowaway thinks your application legitimately needs some permissions.
+				<br />
+				Here, we list
+				the permission-protected API calls, Content Providers, and Intents used by your application.<ul><li>android.app.ActivityManager.getRunningTasks: [android.permission.GET_TASKS]
+</li><li>android.app.NotificationManager.notify: [android.permission.VIBRATE or NONE]
+</li><li>android.bluetooth.BluetoothAdapter.cancelDiscovery: [android.permission.BLUETOOTH_ADMIN]
+</li><li>android.bluetooth.BluetoothAdapter.getAddress: [android.permission.BLUETOOTH]
+</li><li>android.bluetooth.BluetoothAdapter.getName: [android.permission.BLUETOOTH]
+</li><li>android.bluetooth.BluetoothAdapter.isEnabled: [android.permission.BLUETOOTH]
+</li><li>android.content.ContentResolver.query: [android.permission.READ_CONTACTS]
+</li><li>android.content.pm.PackageManager.setComponentEnabledSetting: [android.permission.CHANGE_COMPONENT_ENABLED_STATE]
+</li><li>android.location.LocationManager.getProviders: [android.permission.ACCESS_FINE_LOCATION or android.permission.ACCESS_COARSE_LOCATION]
+</li><li>android.location.LocationManager.isProviderEnabled: [android.permission.ACCESS_FINE_LOCATION or android.permission.ACCESS_COARSE_LOCATION]
+</li><li>android.location.LocationManager.requestLocationUpdates: [android.permission.ACCESS_FINE_LOCATION or android.permission.ACCESS_COARSE_LOCATION]
+</li><li>android.media.MediaPlayer.start: [android.permission.WAKE_LOCK]
+</li><li>android.os.Environment.getExternalStorageDirectory: [android.permission.WRITE_EXTERNAL_STORAGE]
+</li><li>android.os.Vibrator.vibrate: [android.permission.VIBRATE]
+</li><li>android.provider.ContactsContract$Contacts.openContactPhotoInputStream: [android.permission.READ_CONTACTS]
+</li><li>android.telephony.SmsManager.sendTextMessage: [android.permission.SEND_SMS]
+</li><li>android.bluetooth.BluetoothDevice.createBond: [android.permission.BLUETOOTH_ADMIN]
+</li><li>Intent android.intent.action.CALL requires android.permission.CALL_PHONE
+</li><li>/res/layout/help.xml includes a WebView [android.permission.INTERNET]
+</li><li>/res/layout/purchase_upgrades.xml includes a WebView [android.permission.INTERNET]
+</li><li>/res/layout/purchase_upgrades.xml includes a WebView [android.permission.INTERNET]
+</li><li>/res/layout/help.xml includes a WebView [android.permission.INTERNET]
+</li><li>content://browser/bookmarks [com.android.browser.permission.WRITE_HISTORY_BOOKMARKS or com.android.browser.permission.READ_HISTORY_BOOKMARKS]
+</li><li>content://com.android.contacts/contacts [android.permission.WRITE_CONTACTS or android.permission.READ_CONTACTS]
+</li><li>content://com.android.contacts/data [android.permission.WRITE_CONTACTS or android.permission.READ_CONTACTS]
+</li></ul>			
+	</div>
+	
+
+					<span class="ttitle">Reflection Errors</span><br />Stowaway was unable to figure out the targets of some reflective calls. Because Stowaway doesn't understand these reflective calls, it might not have reported a permission that your application needs. Before removing any permissions, check whether these reflective calls use those permissions. The difficult reflective calls are in these methods:<br /><ul><li>com/actionbarsherlock/ActionBarSherlock/wrap</li><li>com/actionbarsherlock/internal/nineoldandroids/animation/PropertyValuesHolder$FloatPropertyValuesHolder/setAnimatedValue</li><li>com/actionbarsherlock/internal/nineoldandroids/animation/PropertyValuesHolder/setupValue</li><li>com/actionbarsherlock/internal/nineoldandroids/animation/PropertyValuesHolder/setAnimatedValue</li><li>com/actionbarsherlock/internal/nineoldandroids/animation/PropertyValuesHolder/setupSetterAndGetter</li><li>com/actionbarsherlock/internal/nineoldandroids/animation/PropertyValuesHolder$IntPropertyValuesHolder/setAnimatedValue</li><li>com/actionbarsherlock/view/MenuInflater$MenuState/newInstance</li></ul></div>
+	<div>Do you think the results here are wrong?  If so, please <a href="http://code.google.com/p/android-permission/issues/list">file a bug report</a>.</div>
+
+	</div>
+	</div>
+
+</body>
+</html>
